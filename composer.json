@@ -1,0 +1,29 @@
+{
+  "name": "akeneo/cloudinary-connector",
+  "description": "Connector between Akeneo PIM and Cloudinary",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Akeneo",
+      "homepage": "http://www.akeneo.com"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    }
+  },
+  "require": {
+    "cloudinary/cloudinary_php": "dev-master",
+    "akeneo/api-php-client-ee": "dev-asset-family",
+    "php-http/guzzle6-adapter": "^2.0"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:akeneo/api-php-client-ee.git"
+    }
+  ],
+  "minimum-stability": "dev"
+}
