@@ -17,7 +17,8 @@
   "require": {
     "cloudinary/cloudinary_php": "dev-master",
     "akeneo/api-php-client-ee": "dev-asset-family",
-    "php-http/guzzle6-adapter": "^2.0"
+    "php-http/guzzle6-adapter": "^2.0",
+    "http-interop/http-factory-guzzle":"^1.0"
   },
   "repositories": [
     {

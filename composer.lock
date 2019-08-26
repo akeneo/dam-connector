@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d328397207b3bbc6fc7a27e828133c3e",
-    "content-hash": "dc3903923936237939e9199bbb7685fa",
+    "hash": "8f040fd9f8705e10943e8d788df4bac0",
+    "content-hash": "5e7bf1ec42087f6dc6a479ba5838afcf",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:akeneo/api-php-client-ee.git",
-                "reference": "edc2ae4c71cc6bdd648b5d1022c69edc353a48f1"
+                "reference": "4b8643dcc5cf8e35470a9dc644f76316fc9b14a6"
             },
             "require": {
                 "akeneo/api-php-client": "dev-master"
@@ -104,7 +104,7 @@
                 }
             ],
             "description": "Akeneo PIM ENTERPRISE client for the API",
-            "time": "2019-08-21 09:48:46"
+            "time": "2019-08-22 16:06:34"
         },
         {
             "name": "cloudinary/cloudinary_php",
@@ -347,6 +347,56 @@
             "time": "2019-08-13 16:05:52"
         },
         {
+            "name": "http-interop/http-factory-guzzle",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/http-interop/http-factory-guzzle.git",
+                "reference": "34861658efb9899a6618cef03de46e2a52c80fc0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/http-interop/http-factory-guzzle/zipball/34861658efb9899a6618cef03de46e2a52c80fc0",
+                "reference": "34861658efb9899a6618cef03de46e2a52c80fc0",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "^1.4.2",
+                "psr/http-factory": "^1.0"
+            },
+            "provide": {
+                "psr/http-factory-implementation": "^1.0"
+            },
+            "require-dev": {
+                "http-interop/http-factory-tests": "^0.5",
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Http\\Factory\\Guzzle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "An HTTP Factory using Guzzle PSR7",
+            "keywords": [
+                "factory",
+                "http",
+                "psr-17",
+                "psr-7"
+            ],
+            "time": "2018-07-31 19:32:56"
+        },
+        {
             "name": "php-http/discovery",
             "version": "dev-master",
             "source": {
@@ -587,24 +637,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/multipart-stream-builder.git",
-                "reference": "60d37c0d405c36fd5e4693bc0cede613492e68d8"
+                "reference": "5d73adad53cf1d674dcc6c5b288a3ff3f76c4849"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/multipart-stream-builder/zipball/60d37c0d405c36fd5e4693bc0cede613492e68d8",
-                "reference": "60d37c0d405c36fd5e4693bc0cede613492e68d8",
+                "url": "https://api.github.com/repos/php-http/multipart-stream-builder/zipball/5d73adad53cf1d674dcc6c5b288a3ff3f76c4849",
+                "reference": "5d73adad53cf1d674dcc6c5b288a3ff3f76c4849",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0",
-                "php-http/discovery": "^1.0",
+                "php": "^7.1",
+                "php-http/discovery": "^1.7",
                 "php-http/message-factory": "^1.0.2",
+                "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0"
             },
             "require-dev": {
+                "nyholm/psr7": "^1.0",
                 "php-http/message": "^1.5",
-                "phpunit/phpunit": "^4.8 || ^5.4",
-                "zendframework/zend-diactoros": "^1.3.5"
+                "phpunit/phpunit": "^7.5 || ^8.3"
             },
             "type": "library",
             "extra": {
@@ -636,7 +687,7 @@
                 "multipart stream",
                 "stream"
             ],
-            "time": "2017-11-22 21:56:04"
+            "time": "2019-08-22 14:13:19"
         },
         {
             "name": "php-http/promise",
