@@ -1,0 +1,3 @@
+services:
+    AkeneoDAMConnector\Infrastructure\DAM\Bynder\:
+        resource: '../../src/Infrastructure/DAM/Bynder/*'
