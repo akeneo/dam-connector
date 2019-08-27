@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Infrastructure\Pim;
 
-use AkeneoDAMConnector\Domain\AssetFamily;
-use AkeneoDAMConnector\Application\AssetFamilyApiInterface;
+use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetFamilyApiInterface;
 
-class AssetFamilyApi implements AssetFamilyApiInterface
+class AssetFamilyApi
 {
     /** @var AssetFamilyApiInterface */
     private $api;
@@ -17,21 +16,8 @@ class AssetFamilyApi implements AssetFamilyApiInterface
         $this->api = $clientBuilder->getClient()->getAssetFamilyApi();
     }
 
-    public function getAssetFamily(string $familyCode): AssetFamily
+    public function upsertFamily(string $familyCode, array $data): int
     {
-        $response = $this->api->get($familyCode);
-
-        return new AssetFamily($response['code'], $response['labels']);
-    }
-
-    public function listAssetFamilies(): array
-    {
-        $assetFamilies = $this->api->all();
-        $families = [];
-        foreach ($assetFamilies as $family) {
-            $families[] = new AssetFamily($family['code'], $family['labels']);
-        }
-
-        return $families;
+        return $this->api->upsert($familyCode, $data);
     }
 }
