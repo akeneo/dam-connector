@@ -1,30 +1,81 @@
 {
-  "name": "akeneo/cloudinary-connector",
-  "description": "Connector between Akeneo PIM and Cloudinary",
-  "license": "MIT",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Akeneo",
-      "homepage": "http://www.akeneo.com"
+    "name": "akeneo/dam-connector",
+    "description": "Connector between Akeneo PIM and DAM",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Akeneo",
+            "homepage": "http://www.akeneo.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "symfony/console": "4.3.*",
+        "symfony/dotenv": "4.3.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/framework-bundle": "4.3.*",
+        "symfony/yaml": "4.3.*",
+        "cloudinary/cloudinary_php": "dev-master",
+        "akeneo/api-php-client-ee": "dev-asset-family",
+        "php-http/guzzle6-adapter": "^2.0",
+        "http-interop/http-factory-guzzle":"^1.0",
+        "bynder/bynder-php-sdk": "^1.0"
+    },
+    "require-dev": {
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:akeneo/api-php-client-ee.git"
+        }
+    ],
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "AkeneoDAMConnector\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AkeneoDAMConnector\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "minimum-stability": "dev",
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "4.3.*"
+        }
     }
-  ],
-  "autoload": {
-    "psr-0": {
-      "": "src/"
-    }
-  },
-  "require": {
-    "cloudinary/cloudinary_php": "dev-master",
-    "akeneo/api-php-client-ee": "dev-asset-family",
-    "php-http/guzzle6-adapter": "^2.0",
-    "http-interop/http-factory-guzzle":"^1.0"
-  },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "git@github.com:akeneo/api-php-client-ee.git"
-    }
-  ],
-  "minimum-stability": "dev"
 }

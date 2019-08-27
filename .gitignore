@@ -1,2 +1,10 @@
-vendor/
+###> symfony/framework-bundle ###
 .env
+/.env.local
+/.env.local.php
+/.env.*.local
+/public/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+.idea/
