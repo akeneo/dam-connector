@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  dam-fpm:
+    image: 'akeneo/fpm:php-7.2'
+    user: 'docker'
+    volumes:
+      - './:/srv/dam-connector'
+    working_dir: '/srv/dam-connector'
+
+  mysql:
+    image: 'mysql:5.7'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'dam-connector'
+      MYSQL_PASSWORD: 'dam-connector'
+      MYSQL_DATABASE: 'dam-connector'
