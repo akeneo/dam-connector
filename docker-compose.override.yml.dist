@@ -1,0 +1,24 @@
+version: '3'
+
+# Copy this file as "docker-compose.override.yml", and use it to override/add configuration on your containers.
+# You can find a detailed documentation here: https://docs.akeneo.com/master/install_pim/docker/installation_docker.html
+
+# To access the docker-compose networks of an Akeneo PIM running localy, uncomment the "networks" configs.
+# networks:
+#   akeneo:
+#     external:
+#       name: [docker_compose_project_name]_akeneo
+
+services:
+  dam-fpm:
+    environment:
+      COMPOSER_HOME: '/home/docker/.composer'
+      PHP_IDE_CONFIG: 'serverName=dam-connector-cli'
+      PHP_XDEBUG_ENABLED: "${PHP_XDEBUG_ENABLED:-0}"
+      XDEBUG_CONFIG: 'remote_host=172.17.0.1'
+    env_file:
+      - .env
+    volumes:
+      - '~/.composer:/home/docker/.composer'
+    # networks:
+    #     - akeneo
