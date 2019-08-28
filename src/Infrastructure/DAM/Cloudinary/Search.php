@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Infrastructure\Cloudinary;
+namespace AkeneoDAMConnector\Infrastructure\DAM\Cloudinary;
 
 class Search
 {
