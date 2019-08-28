@@ -6,7 +6,7 @@ namespace AkeneoDAMConnector\Infrastructure\Cloudinary\Command;
 
 use AkeneoDAMConnector\Infrastructure\DAM\Cloudinary\Search;
 use AkeneoDAMConnector\Infrastructure\Pim\AssetFamilyApi;
-use AkeneoDAMConnector\Infrastructure\Pim\AssetFamilyAttributeApi;
+use AkeneoDAMConnector\Infrastructure\Pim\AssetAttributeApi;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,8 +19,8 @@ class PushStructureToPimCommand extends Command
     /** @var Search */
     private $cloudinarySearch;
 
-    /** @var AssetFamilyAttributeApi */
-    private $assetFamilyAttributeApi;
+    /** @var AssetAttributeApi */
+    private $assetAttributeApi;
 
     protected function configure()
     {
@@ -32,11 +32,11 @@ class PushStructureToPimCommand extends Command
     public function __construct(
         Search $cloudinarySearch,
         AssetFamilyApi $assetFamilyApi,
-        AssetFamilyAttributeApi $assetFamilyAttributeApi
+        AssetAttributeApi $assetAttributeApi
     ) {
         $this->assetFamilyApi = $assetFamilyApi;
         $this->cloudinarySearch = $cloudinarySearch;
-        $this->assetFamilyAttributeApi = $assetFamilyAttributeApi;
+        $this->assetAttributeApi = $assetAttributeApi;
 
         parent::__construct();
     }
