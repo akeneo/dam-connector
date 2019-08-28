@@ -19,7 +19,7 @@ use AkeneoDAMConnector\Domain\Assets;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-interface GetFilteredAssets
+interface GetAssets
 {
     /**
      * Fetches assets on DAM third party system depending on the last fetch date

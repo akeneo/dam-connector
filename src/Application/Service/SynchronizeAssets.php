@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\Service;
 
-use AkeneoDAMConnector\Application\DamAdapter\GetFilteredAssets;
+use AkeneoDAMConnector\Application\DamAdapter\GetAssets;
 use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
 
 /**
@@ -21,12 +21,12 @@ use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
  */
 class SynchronizeAssets
 {
-    private $getFilteredAssets;
+    private $getAssets;
     private $clientBuilder;
 
-    public function __construct(GetFilteredAssets $getFilteredAssets, ClientBuilder $clientBuilder)
+    public function __construct(GetAssets $getAssets, ClientBuilder $clientBuilder)
     {
-        $this->getFilteredAssets = $getFilteredAssets;
+        $this->getAssets = $getAssets;
         $this->clientBuilder = $clientBuilder;
     }
 
@@ -34,10 +34,10 @@ class SynchronizeAssets
     {
         $lastFetchDate = new \DateTime('2019-08-12T15:38:00Z');
 
-        $assets = $this->getFilteredAssets->fetch($lastFetchDate, null);
+        $assets = $this->getAssets->fetch($lastFetchDate, null);
         foreach ($assets as $asset) {
             // TODO: Algo to prepare conversion to Akeneo PIM Asset
-            
+
         }
     }
 }
