@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Domain\Asset;
 
-use AkeneoDAMConnector\Domain\PimAssetFamily;
+use AkeneoDAMConnector\Domain\AssetFamily;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
@@ -24,7 +24,7 @@ class DamAsset
     private $pimLocale;
     private $values;
 
-    public function __construct(PimAssetFamily $assetFamily, string $pimLocale)
+    public function __construct(AssetFamily $assetFamily, string $pimLocale)
     {
         if (1 !== preg_match('/^[a-z]{2}_[A-Z]{2}$/', $pimLocale)) {
             throw new \Exception('Incorrect locale format!');
