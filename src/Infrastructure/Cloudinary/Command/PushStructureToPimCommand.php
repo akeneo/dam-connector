@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Infrastructure\Cloudinary\Command;
 
-use AkeneoDAMConnector\Infrastructure\Cloudinary\Search;
+use AkeneoDAMConnector\Infrastructure\DAM\Cloudinary\Search;
 use AkeneoDAMConnector\Infrastructure\Pim\AssetFamilyApi;
 use AkeneoDAMConnector\Infrastructure\Pim\AssetFamilyAttributeApi;
 use Symfony\Component\Console\Command\Command;
