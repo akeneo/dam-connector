@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\DamAdapter;
 
+use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
 use AkeneoDAMConnector\Domain\AssetFamily;
-use AkeneoDAMConnector\Domain\Assets;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
@@ -27,9 +27,9 @@ interface FetchAssets
      * TODO: AssetFamily is optional because not implemented yet
      *
      * @param \DateTime $lastFetchDate
-     * @param AssetFamily|null $assetFamily
+     * @param AssetFamily $assetFamily
      *
-     * @return Assets
+     * @return DamAssetCollection
      */
-    public function fetch(\DateTime $lastFetchDate, AssetFamily $assetFamily = null): Assets;
+    public function fetch(\DateTime $lastFetchDate, AssetFamily $assetFamily): DamAssetCollection;
 }

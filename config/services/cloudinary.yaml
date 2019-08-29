@@ -1,4 +1,9 @@
 services:
+    _defaults:
+        autowire: true # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false
+
     AkeneoDAMConnector\Infrastructure\DAM\Cloudinary\:
         resource: '../../src/Infrastructure/DAM/Cloudinary/*'
 
@@ -8,5 +13,4 @@ services:
             $apiKey: '%env(CLOUDINARY_API_KEY)%'
             $apiSecret: '%env(CLOUDINARY_API_SECRET)%'
 
-    AkeneoDAMConnector\Application\DamAdapter\FetchAssets:
-        alias: 'AkeneoDAMConnector\Infrastructure\DAM\Cloudinary\CloudinaryFetchAssets'
+    AkeneoDAMConnector\Application\DamAdapter\FetchAssets: '@AkeneoDAMConnector\Infrastructure\DAM\Cloudinary\FetchAssets'

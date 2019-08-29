@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Service;
 
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
+use AkeneoDAMConnector\Domain\AssetFamily;
 use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
 
 /**
@@ -34,10 +35,9 @@ class SynchronizeAssets
     {
         $lastFetchDate = new \DateTime('2019-08-12T15:38:00Z');
 
-        $assets = $this->fetchAssets->fetch($lastFetchDate, null);
+        $assets = $this->fetchAssets->fetch($lastFetchDate, new AssetFamily('illustration pictures'));
         foreach ($assets as $asset) {
             // TODO: Algo to prepare conversion to Akeneo PIM Asset
-
         }
     }
 }
