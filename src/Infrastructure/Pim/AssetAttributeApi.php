@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Infrastructure\Pim;
 
-use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetFamilyAttributeApiInterface;
+use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetAttributeApiInterface;
 use AkeneoDAMConnector\Domain\Pim\AssetAttribute;
 
 class AssetAttributeApi
 {
-    /** @var AssetFamilyAttributeApiInterface */
+    /** @var AssetAttributeApiInterface */
     private $api;
 
     public function __construct(ClientBuilder $clientBuilder)
     {
-        $this->api = $clientBuilder->getClient()->getAssetFamilyAttributeApi();
+        $this->api = $clientBuilder->getClient()->getAssetAttributeApi();
     }
 
     public function fetchAll(string $familyCode): array

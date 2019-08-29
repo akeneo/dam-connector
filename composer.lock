@@ -67,12 +67,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeneo/api-php-client-ee.git",
-                "reference": "4b8643dcc5cf8e35470a9dc644f76316fc9b14a6"
+                "reference": "c459b39b0bf6f25e40448c7a1a8aec6a9b20e2c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeneo/api-php-client-ee/zipball/4b8643dcc5cf8e35470a9dc644f76316fc9b14a6",
-                "reference": "4b8643dcc5cf8e35470a9dc644f76316fc9b14a6",
+                "url": "https://api.github.com/repos/akeneo/api-php-client-ee/zipball/c459b39b0bf6f25e40448c7a1a8aec6a9b20e2c3",
+                "reference": "c459b39b0bf6f25e40448c7a1a8aec6a9b20e2c3",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "source": "https://github.com/akeneo/api-php-client-ee/tree/asset-family",
                 "issues": "https://github.com/akeneo/api-php-client-ee/issues"
             },
-            "time": "2019-08-22T16:06:34+00:00"
+            "time": "2019-08-29T15:22:55+00:00"
         },
         {
             "name": "bynder/bynder-php-sdk",
@@ -1050,12 +1050,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+                "reference": "efd67d1dc14a7ef4fc4e518e7dee91c271d524e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/efd67d1dc14a7ef4fc4e518e7dee91c271d524e4",
+                "reference": "efd67d1dc14a7ef4fc4e518e7dee91c271d524e4",
                 "shasum": ""
             },
             "require": {
@@ -1092,7 +1092,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2019-08-29T13:16:46+00:00"
         },
         {
             "name": "psr/log",
