@@ -52,4 +52,9 @@ class DamAsset
     {
         return $this->assetFamily;
     }
+
+    public function pimLocale(): string
+    {
+        return $this->pimLocale;
+    }
 }

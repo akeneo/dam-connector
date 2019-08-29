@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\AssetAttribute;
 use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\Pim\Asset;
+use AkeneoDAMConnector\Domain\Pim\AssetAttribute;
+use AkeneoDAMConnector\Domain\Pim\AssetValue;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
@@ -50,10 +52,11 @@ class AssetTransformer
         return $this->mapping[$assetFamily->getCode()];
     }
 
-    public function damToPim(DamAsset $damAsset): PimAsset
+    public function damToPim(DamAsset $damAsset): Asset
     {
-        $mapping = $this->getAssetFamilyMapping($damAsset->assetFamily());
+        $assetFamilyMapping = $this->getAssetFamilyMapping($damAsset->assetFamily());
 
+        $assetValues = [];
         foreach ($damAsset->getValues() as $damAssetValue) {
             // 1. Filter values we don't want
             if (!isset($this->mapping[$damAssetValue->property()])) {
@@ -61,7 +64,7 @@ class AssetTransformer
             }
 
             // 2. Map DAM property to PIM attribute
-            $assetAttribute = $this->mapping[$damAssetValue->property()];
+            $assetAttribute = $assetFamilyMapping[$damAssetValue->property()];
 
             // 3. Transform DAM Asset Value into a PIM Asset Value
             switch ($assetAttribute->getType()) {
@@ -69,20 +72,17 @@ class AssetTransformer
 
                     break;
                 case 'single_option':
-                    
+
                     break;
                 case 'multiple_option':
 
                     break;
                 default:
+                    $assetValues[] = new AssetValue($assetAttribute, $damAssetValue->value(), $damAsset->pimLocale(), null)
                     break;
             }
-
-            new AssetValue($assetAttribute, $damAssetValue->value())
-
-
         }
 
-        return new PimAsset();
+        return new Asset('my_code', $assetValues);
     }
 }
