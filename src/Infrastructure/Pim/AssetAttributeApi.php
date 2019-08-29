@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Infrastructure\Pim;
 
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetFamilyAttributeApiInterface;
-use AkeneoDAMConnector\Domain\AssetAttribute;
+use AkeneoDAMConnector\Domain\Pim\AssetAttribute;
 
 class AssetAttributeApi
 {

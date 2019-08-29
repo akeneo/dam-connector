@@ -9,15 +9,6 @@ use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 
 class ClientBuilder
 {
-    /** @var string */
-    private $clientId;
-
-    /** @var string */
-    private $secret;
-
-    /** @var string */
-    private $baseUri;
-
     /** @var AkeneoPimEnterpriseClientInterface */
     private $client;
 
@@ -28,13 +19,10 @@ class ClientBuilder
         string $username,
         string $password
     ) {
-        $this->baseUri = $baseUri;
-        $this->clientId = $clientId;
-        $this->secret = $secret;
-        $clientBuilder = new AkeneoPimEnterpriseClientBuilder($this->baseUri);
+        $clientBuilder = new AkeneoPimEnterpriseClientBuilder($baseUri);
         $this->client = $clientBuilder->buildAuthenticatedByPassword(
-            $this->clientId,
-            $this->secret,
+            $clientId,
+            $secret,
             $username,
             $password
         );
