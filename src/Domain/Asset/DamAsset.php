@@ -39,4 +39,17 @@ class DamAsset
     {
         $this->values[(string) $property] = new DamAssetValue($property, $value);
     }
+
+    /**
+     * @return DamAssetValue[]
+     */
+    public function getValues(): array
+    {
+        return $this->values;
+    }
+
+    public function assetFamily(): AssetFamily
+    {
+        return $this->assetFamily;
+    }
 }
