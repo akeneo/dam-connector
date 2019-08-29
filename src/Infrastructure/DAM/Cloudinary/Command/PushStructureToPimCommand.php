@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Infrastructure\Cloudinary\Command;
+namespace AkeneoDAMConnector\Infrastructure\DAM\Cloudinary\Command;
 
 use AkeneoDAMConnector\Infrastructure\DAM\Cloudinary\Search;
 use AkeneoDAMConnector\Infrastructure\Pim\AssetFamilyApi;
