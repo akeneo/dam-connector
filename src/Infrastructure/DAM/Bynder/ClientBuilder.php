@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Infrastructure\DAM\Bynder;
 
-use \Bynder\Api\BynderApiFactory;
+use Bynder\Api\BynderApiFactory;
 use Bynder\Api\Impl\BynderApi;
 
 class ClientBuilder
