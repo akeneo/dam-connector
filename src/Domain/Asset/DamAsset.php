@@ -14,32 +14,50 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Domain\Asset;
 
 use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\Locale;
+use AkeneoDAMConnector\Domain\ResourceType;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
 class DamAsset
 {
+    /** @var DamAssetIdentifier */
     private $damAssetIdentifier;
+
+    /** @var AssetFamily */
     private $assetFamily;
-    private $pimLocale;
+
+    /** @var Locale */
+    private $locale;
+
+    /** @var []DamAssetValue */
     private $values;
 
-    public function __construct(DamAssetIdentifier $damAssetIdentifier, AssetFamily $assetFamily, string $pimLocale)
-    {
-        if (1 !== preg_match('/^[a-z]{2}_[A-Z]{2}$/', $pimLocale)) {
-            throw new \Exception('Incorrect locale format!');
-        }
+    /** @var ResourceType */
+    private $resourceType;
 
+    public function __construct(
+        DamAssetIdentifier $damAssetIdentifier,
+        AssetFamily $assetFamily,
+        Locale $locale,
+        ResourceType $resourceType
+    ) {
         $this->damAssetIdentifier = $damAssetIdentifier;
         $this->assetFamily = $assetFamily;
-        $this->pimLocale = $pimLocale;
+        $this->locale = $locale;
+        $this->resourceType = $resourceType;
         $this->values = [];
     }
 
     public function addValue(string $property, string $value): void
     {
         $this->values[(string) $property] = new DamAssetValue($property, $value);
+    }
+
+    public function getResourceType(): ResourceType
+    {
+        return $this->resourceType;
     }
 
     /**
@@ -55,9 +73,9 @@ class DamAsset
         return $this->assetFamily;
     }
 
-    public function pimLocale(): string
+    public function locale(): Locale
     {
-        return $this->pimLocale;
+        return $this->locale;
     }
 
     public function damAssetIdentifier(): DamAssetIdentifier

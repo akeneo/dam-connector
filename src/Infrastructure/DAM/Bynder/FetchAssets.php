@@ -8,6 +8,8 @@ use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterfac
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
 use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\Locale;
+use AkeneoDAMConnector\Domain\ResourceType;
 use Bynder\Api\Impl\BynderApi;
 
 /**
@@ -32,7 +34,7 @@ class FetchAssets implements FetchAssetsInterface
         $collection = new DamAssetCollection();
 
         foreach ($mediaList as $media) {
-            $damAsset = new DamAsset($assetFamily, 'en_US');
+            $damAsset = new DamAsset($assetFamily, new Locale('en_US'), new ResourceType($media['type']));
             foreach ($media as $property => $value) {
                 if (is_array($value)) {
                     foreach ($value as $subProperty => $subValue) {
