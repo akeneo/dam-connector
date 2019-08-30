@@ -7,6 +7,7 @@ namespace AkeneoDAMConnector\Infrastructure\DAM\Cloudinary;
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterface;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
+use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\AssetFamily;
 
 class FetchAssets implements FetchAssetsInterface
@@ -28,7 +29,7 @@ class FetchAssets implements FetchAssetsInterface
         $damAssets = new DamAssetCollection();
         $assets = $response['resources'] ?? [];
         foreach ($assets as $asset) {
-            $damAsset = new DamAsset($assetFamily, 'en_US');
+            $damAsset = new DamAsset(new DamAssetIdentifier($asset['filename']), $assetFamily, 'en_US');
 
             foreach ($staticAttributes as $staticAttribute) {
                 $damAsset->addValue($staticAttribute, $asset[$staticAttribute]);

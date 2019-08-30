@@ -14,7 +14,11 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Service;
 
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
+use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\Asset\DamAsset;
+use AkeneoDAMConnector\Domain\Pim\AssetCollection;
+use AkeneoDAMConnector\Infrastructure\Pim\AssetApi;
 use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
 
 /**
@@ -24,20 +28,34 @@ class SynchronizeAssets
 {
     private $fetchAssets;
     private $clientBuilder;
+    private $assetTransformer;
+    private $assetApi;
 
-    public function __construct(FetchAssets $fetchAssets, ClientBuilder $clientBuilder)
+    public function __construct(FetchAssets $fetchAssets, ClientBuilder $clientBuilder, AssetTransformer $assetTransformer, AssetApi $assetApi)
     {
         $this->fetchAssets = $fetchAssets;
         $this->clientBuilder = $clientBuilder;
+        $this->assetTransformer = $assetTransformer;
+        $this->assetApi = $assetApi;
     }
 
     public function execute()
     {
         $lastFetchDate = new \DateTime('2019-08-12T15:38:00Z');
 
-        $assets = $this->fetchAssets->fetch($lastFetchDate, new AssetFamily('illustration pictures'));
-        foreach ($assets as $asset) {
-            // TODO: Algo to prepare conversion to Akeneo PIM Asset
+        // 1. Fetch PIM asset families
+        $assetFamily = new AssetFamily('illustration pictures');
+
+        // 2. Fetch assets by family from the DAM
+        $damAssets = $this->fetchAssets->fetch($lastFetchDate, $assetFamily);
+
+        $pimAssets = new AssetCollection();
+        foreach ($damAssets as $damAsset) {
+            // 3. Transform DAM Asset to PIM Asset filtering and mapping fields
+            $pimAssets->addAsset($this->assetTransformer->damToPim($damAsset));
         }
+
+        // 4. Push assets in the PIM
+        $this->assetApi->upsertList($assetFamily, $pimAssets);
     }
 }
