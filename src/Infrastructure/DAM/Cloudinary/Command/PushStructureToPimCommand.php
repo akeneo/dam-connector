@@ -69,7 +69,7 @@ class PushStructureToPimCommand extends Command
             $this->assetFamilyApi->upsertFamily($familyCode, ['code' => $familyCode]);
             switch ($familyCode) {
                 case 'illustration_picture':
-                    $this->assetFamilyAttributeApi->upsertFamilyAttribute($familyCode, 'picture', [
+                    $this->assetAttributeApi->upsert($familyCode, 'picture', [
                         'code' => 'picture',
                         'type' => 'media_link',
                         'media_type' => 'image',
@@ -81,7 +81,7 @@ class PushStructureToPimCommand extends Command
                     ]);
                     break;
                 case 'illustration_video':
-                    $this->assetFamilyAttributeApi->upsertFamilyAttribute($familyCode, 'video', [
+                    $this->assetAttributeApi->upsert($familyCode, 'video', [
                         'code' => 'video',
                         'labels' => [],
                         'type' => 'media_link',
@@ -95,7 +95,7 @@ class PushStructureToPimCommand extends Command
                     break;
             }
             foreach ($familyAttributes as $attribute) {
-                $this->assetFamilyAttributeApi->upsertFamilyAttribute($familyCode, $attribute, [
+                $this->assetAttributeApi->upsert($familyCode, $attribute, [
                     'code' => $attribute,
                     'type' => 'text',
                     'value_per_locale' => false,
