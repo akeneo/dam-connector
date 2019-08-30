@@ -78,11 +78,11 @@ class AssetTransformer
 
                     break;
                 default:
-                    $assetValues[] = new AssetValue($assetAttribute, $damAssetValue->value(), $damAsset->pimLocale(), null)
+                    $assetValues[] = new AssetValue($assetAttribute, $damAssetValue->value(), $damAsset->pimLocale(), null);
                     break;
             }
         }
 
-        return new Asset('my_code', $assetValues);
+        return new Asset((string) $damAsset->damAssetIdentifier(), $assetValues);
     }
 }

@@ -20,16 +20,18 @@ use AkeneoDAMConnector\Domain\AssetFamily;
  */
 class DamAsset
 {
+    private $damAssetIdentifier;
     private $assetFamily;
     private $pimLocale;
     private $values;
 
-    public function __construct(AssetFamily $assetFamily, string $pimLocale)
+    public function __construct(DamAssetIdentifier $damAssetIdentifier, AssetFamily $assetFamily, string $pimLocale)
     {
         if (1 !== preg_match('/^[a-z]{2}_[A-Z]{2}$/', $pimLocale)) {
             throw new \Exception('Incorrect locale format!');
         }
 
+        $this->damAssetIdentifier = $damAssetIdentifier;
         $this->assetFamily = $assetFamily;
         $this->pimLocale = $pimLocale;
         $this->values = [];
@@ -56,5 +58,10 @@ class DamAsset
     public function pimLocale(): string
     {
         return $this->pimLocale;
+    }
+
+    public function damAssetIdentifier(): DamAssetIdentifier
+    {
+        return $this->damAssetIdentifier;
     }
 }

@@ -10,9 +10,9 @@ class AssetCollection implements \Iterator
 
     private $assets;
 
-    public function __construct(array $assets = [])
+    public function addAsset(Asset $asset): void
     {
-        $this->assets = $assets;
+        $this->assets[] = $asset;
     }
 
     public function normalize(): array
