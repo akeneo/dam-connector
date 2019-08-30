@@ -9,6 +9,8 @@ use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
 use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\Locale;
+use AkeneoDAMConnector\Domain\ResourceType;
 
 class FetchAssets implements FetchAssetsInterface
 {
@@ -25,11 +27,16 @@ class FetchAssets implements FetchAssetsInterface
         $expression = sprintf('tags:akeneo AND folder="%s"', $assetFamily->getCode());
         $response = $this->search->search($expression, ['tags', 'context']);
 
-        $staticAttributes = ['resource_type', 'filename', 'url', 'secure_url', 'status', 'public_id'];
+        $staticAttributes = ['filename', 'url', 'secure_url', 'status', 'public_id'];
         $damAssets = new DamAssetCollection();
         $assets = $response['resources'] ?? [];
         foreach ($assets as $asset) {
-            $damAsset = new DamAsset(new DamAssetIdentifier($asset['filename']), $assetFamily, 'en_US');
+            $damAsset = new DamAsset(
+                new DamAssetIdentifier($asset['filename']),
+                $assetFamily,
+                new Locale('en_US'),
+                new ResourceType($asset['resource_type'])
+            );
 
             foreach ($staticAttributes as $staticAttribute) {
                 $damAsset->addValue($staticAttribute, $asset[$staticAttribute]);
