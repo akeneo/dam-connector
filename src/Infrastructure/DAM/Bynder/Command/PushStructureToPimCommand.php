@@ -6,7 +6,7 @@ namespace AkeneoDAMConnector\Infrastructure\DAM\Bynder\Command;
 
 use AkeneoDAMConnector\Infrastructure\DAM\Bynder\ClientBuilder;
 use AkeneoDAMConnector\Infrastructure\Pim\AssetFamilyApi;
-use AkeneoDAMConnector\Infrastructure\Pim\AssetFamilyAttributeApi;
+use AkeneoDAMConnector\Infrastructure\Pim\AssetAttributeApi;
 use Bynder\Api\Impl\BynderApi;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,8 +17,8 @@ class PushStructureToPimCommand extends Command
     /** @var AssetFamilyApi */
     private $assetFamilyApi;
 
-    /** @var AssetFamilyAttributeApi */
-    private $assetFamilyAttributeApi;
+    /** @var AssetAttributeApi */
+    private $assetAttributeApi;
 
     /** @var BynderApi */
     private $bynderClient;
@@ -33,11 +33,11 @@ class PushStructureToPimCommand extends Command
     public function __construct(
         ClientBuilder $clientBuilder,
         AssetFamilyApi $assetFamilyApi,
-        AssetFamilyAttributeApi $assetFamilyAttributeApi
+        AssetAttributeApi $assetAttributeApi
     ) {
         $this->bynderClient = $clientBuilder->getClient();
         $this->assetFamilyApi = $assetFamilyApi;
-        $this->assetFamilyAttributeApi = $assetFamilyAttributeApi;
+        $this->assetAttributeApi = $assetAttributeApi;
 
         parent::__construct();
     }
@@ -102,7 +102,7 @@ class PushStructureToPimCommand extends Command
                     'type' => 'text',
                     'max_characters' => 100,
                 ];
-                $this->assetFamilyAttributeApi->upsertFamilyAttribute(
+                $this->assetAttributeApi->upsert(
                     $damAssetFamilyCode,
                     $pimAssetAttributeCode,
                     $pimAttributeData
@@ -115,7 +115,7 @@ class PushStructureToPimCommand extends Command
                     'type' => 'media_link',
                     'media_type' => 'image',
                 ];
-                $this->assetFamilyAttributeApi->upsertFamilyAttribute(
+                $this->assetAttributeApi->upsert(
                     $damAssetFamilyCode,
                     $pimMediaLinkCode,
                     $pimAttributeData
