@@ -48,6 +48,7 @@ class SynchronizeAssetsStructure
 
             // 2. Adds attribute to family
             foreach ($assetFamilyConfig['attributes'] as $assetAttributeConfig) {
+                // TODO: Try/catch done because an error http code is sent when no change on attribute
                 try {
                     $this->assetAttributeApi->upsert($assetFamilyCode, $assetAttributeConfig['code'], $assetAttributeConfig);
                 } catch (UnprocessableEntityHttpException $e) {
