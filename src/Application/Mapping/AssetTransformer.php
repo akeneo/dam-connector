@@ -31,10 +31,10 @@ class AssetTransformer
 
     public function damToPim(DamAsset $damAsset): Asset
     {
-        $pimAssetFamily = $damAsset->assetFamily();
-        if (null === $assetFamilyMapping = $this->mapping[$pimAssetFamily->getCode()]) {
+        $assetFamilyCode = $damAsset->assetFamilyCode();
+        if (null === $assetFamilyMapping = $this->mapping[(string) $assetFamilyCode]) {
             throw new \RuntimeException(
-                sprintf('No mapping for asset family "%s" defined.', $pimAssetFamily->getCode())
+                sprintf('No mapping for asset family "%s" defined.', (string) $assetFamilyCode)
             );
         }
 

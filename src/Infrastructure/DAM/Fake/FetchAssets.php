@@ -8,15 +8,15 @@ use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterfac
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
 use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
-use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Locale;
 use AkeneoDAMConnector\Domain\ResourceType;
 
 class FetchAssets implements FetchAssetsInterface
 {
-    public function fetch(\DateTime $lastFetchDate, AssetFamily $assetFamily): DamAssetCollection
+    public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): DamAssetCollection
     {
-        $pimAssetFamily = new AssetFamily('packshot');
+        $assetFamilyCode = new AssetFamilyCode('packshot');
 
         $collection = new DamAssetCollection();
 
@@ -24,7 +24,7 @@ class FetchAssets implements FetchAssetsInterface
             $id = (string)$i;
 
             $asset = new DamAsset(
-                new DamAssetIdentifier("id_{$id}"), $pimAssetFamily, new Locale('en_US'), new ResourceType('image')
+                new DamAssetIdentifier("id_{$id}"), $assetFamilyCode, new Locale('en_US'), new ResourceType('image')
 
             );
             $asset->addValue('sku', "sku_{$id}");

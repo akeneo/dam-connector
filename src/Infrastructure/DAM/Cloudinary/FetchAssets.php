@@ -8,7 +8,7 @@ use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterfac
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
 use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
-use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Locale;
 use AkeneoDAMConnector\Domain\ResourceType;
 
@@ -22,9 +22,9 @@ class FetchAssets implements FetchAssetsInterface
         $this->search = $search;
     }
 
-    public function fetch(\DateTime $lastFetchDate, AssetFamily $assetFamily): DamAssetCollection
+    public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): DamAssetCollection
     {
-        $expression = sprintf('tags:akeneo AND folder="%s"', $assetFamily->getCode());
+        $expression = sprintf('tags:akeneo AND folder="%s"', (string) $assetFamilyCode);
         $response = $this->search->search($expression, ['tags', 'context']);
 
         $staticAttributes = ['filename', 'url', 'secure_url', 'status', 'public_id'];
@@ -33,7 +33,7 @@ class FetchAssets implements FetchAssetsInterface
         foreach ($assets as $asset) {
             $damAsset = new DamAsset(
                 new DamAssetIdentifier($asset['filename']),
-                $assetFamily,
+                $assetFamilyCode,
                 new Locale('en_US'),
                 new ResourceType($asset['resource_type'])
             );

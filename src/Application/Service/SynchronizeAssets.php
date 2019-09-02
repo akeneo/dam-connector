@@ -15,7 +15,7 @@ namespace AkeneoDAMConnector\Application\Service;
 
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
 use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
-use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Pim\AssetCollection;
 use AkeneoDAMConnector\Infrastructure\Pim\UpdateAssetApi;
@@ -44,7 +44,7 @@ class SynchronizeAssets
         $lastFetchDate = new \DateTime('2019-08-12T15:38:00Z');
 
         // 1. Fetch PIM asset families
-        $assetFamily = new AssetFamily('illustration pictures');
+        $assetFamily = new AssetFamilyCode('illustration pictures');
 
         // 2. Fetch assets by family from the DAM
         $damAssets = $this->fetchAssets->fetch($lastFetchDate, $assetFamily);

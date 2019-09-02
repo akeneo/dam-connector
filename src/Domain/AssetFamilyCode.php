@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Domain;
 
-class AssetFamily
+class AssetFamilyCode
 {
     private $code;
 
@@ -13,7 +13,7 @@ class AssetFamily
         $this->code = $code;
     }
 
-    public function getCode(): string
+    public function __toString(): string
     {
         return $this->code;
     }

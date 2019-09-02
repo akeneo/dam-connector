@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Domain\Asset;
 
-use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Locale;
 use AkeneoDAMConnector\Domain\ResourceType;
 
@@ -25,8 +25,8 @@ class DamAsset
     /** @var DamAssetIdentifier */
     private $damAssetIdentifier;
 
-    /** @var AssetFamily */
-    private $assetFamily;
+    /** @var AssetFamilyCode */
+    private $assetFamilyCode;
 
     /** @var Locale */
     private $locale;
@@ -39,12 +39,12 @@ class DamAsset
 
     public function __construct(
         DamAssetIdentifier $damAssetIdentifier,
-        AssetFamily $assetFamily,
+        AssetFamilyCode $assetFamilyCode,
         Locale $locale,
         ResourceType $resourceType
     ) {
         $this->damAssetIdentifier = $damAssetIdentifier;
-        $this->assetFamily = $assetFamily;
+        $this->assetFamilyCode = $assetFamilyCode;
         $this->locale = $locale;
         $this->resourceType = $resourceType;
         $this->values = [];
@@ -68,9 +68,9 @@ class DamAsset
         return $this->values;
     }
 
-    public function assetFamily(): AssetFamily
+    public function assetFamilyCode(): AssetFamilyCode
     {
-        return $this->assetFamily;
+        return $this->assetFamilyCode;
     }
 
     public function locale(): Locale
