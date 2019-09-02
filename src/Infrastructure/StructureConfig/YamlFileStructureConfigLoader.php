@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace AkeneoDAMConnector\Infrastructure\StructureConfiguration;
+namespace AkeneoDAMConnector\Infrastructure\StructureConfig;
 
 use AkeneoDAMConnector\Application\StructureConfig\StructureConfigLoader;
 use Symfony\Component\Yaml\Parser;
