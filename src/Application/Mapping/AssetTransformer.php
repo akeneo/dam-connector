@@ -24,7 +24,8 @@ class AssetTransformer
             'packshot' => [
                 'sku' => new AssetAttribute('product_sku', 'text', false),
                 'url' => new AssetAttribute('preview', 'media_link', false),
-                'colors' => new AssetAttribute('colors', 'multiple_options', false)
+                'colors' => new AssetAttribute('colors', 'multiple_options', false),
+                'country' => new AssetAttribute('country', 'single_option', false),
             ],
         ];
     }

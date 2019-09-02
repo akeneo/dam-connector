@@ -31,6 +31,7 @@ class FetchAssets implements FetchAssetsInterface
             $asset->addValue('unused_property', 'unused_value');
             $asset->addValue('url', "/preview/{$id}.png");
             $asset->addValue('colors', 'blue, red, green');
+            $asset->addValue('country', 'France');
 
             $collection->addAsset($asset);
         }
