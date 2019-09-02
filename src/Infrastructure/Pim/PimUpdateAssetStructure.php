@@ -29,12 +29,12 @@ class PimUpdateAssetStructure implements UpdateAssetStructure
         $this->assetAttributeApi = $clientBuilder->getClient()->getAssetAttributeApi();
     }
 
-    public function updateAssetAttribute(string $familyCode, string $attributeCode, array $data): void
+    public function upsertAttribute(string $familyCode, string $attributeCode, array $data): void
     {
         $this->assetAttributeApi->upsert($familyCode, $attributeCode, $data);
     }
 
-    public function updateAssetFamily(string $familyCode, array $data): void
+    public function upsertFamily(string $familyCode, array $data): void
     {
         $this->assetFamilyApi->upsert($familyCode, $data);
     }

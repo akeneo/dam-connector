@@ -19,7 +19,7 @@ namespace AkeneoDAMConnector\Application\PimAdapter;
  */
 interface UpdateAssetStructure
 {
-    public function updateAssetAttribute(string $familyCode, string $attributeCode, array $data): void;
+    public function upsertAttribute(string $familyCode, string $attributeCode, array $data): void;
 
-    public function updateAssetFamily(string $familyCode, array $data): void;
+    public function upsertFamily(string $familyCode, array $data): void;
 }
