@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
 use AkeneoDAMConnector\Domain\Pim\Asset;
 use AkeneoDAMConnector\Domain\Pim\AssetAttribute;
 use AkeneoDAMConnector\Domain\Pim\AssetValue;
@@ -39,27 +38,22 @@ class AssetTransformer
             );
         }
 
-        $filteredDamAssetValues = array_filter(
-            $damAsset->getValues(),
-            function (DamAssetValue $damAssetValue) use ($assetFamilyMapping) {
-                return isset($assetFamilyMapping[$damAssetValue->property()]);
-            }
-        );
-
         /** @var AssetValue[] $pimAssetValues */
-        $pimAssetValues = array_map(
-            function (DamAssetValue $damAssetValue) use ($assetFamilyMapping, $damAsset) {
-                /** @var AssetAttribute $assetAttribute */
-                $assetAttribute = $assetFamilyMapping[$damAssetValue->property()];
+        $pimAssetValues = [];
+        foreach ($damAsset->getValues() as $damAssetValue) {
+            if (!isset($assetFamilyMapping[$damAssetValue->property()])) {
+                continue;
+            }
 
-                return $this->converterRegistry->getConverter($assetAttribute->getType())->convert(
-                    $damAsset,
-                    $damAssetValue,
-                    $assetAttribute
-                );
-            },
-            $filteredDamAssetValues
-        );
+            /** @var AssetAttribute $assetAttribute */
+            $assetAttribute = $assetFamilyMapping[$damAssetValue->property()];
+
+            $pimAssetValues[] = $this->converterRegistry->getConverter($assetAttribute->getType())->convert(
+                $damAsset,
+                $damAssetValue,
+                $assetAttribute
+            );
+        }
 
         return new Asset((string)$damAsset->damAssetIdentifier(), $pimAssetValues);
     }
