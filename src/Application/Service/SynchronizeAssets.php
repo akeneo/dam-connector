@@ -17,7 +17,7 @@ use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
 use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Pim\AssetCollection;
+use AkeneoDAMConnector\Domain\Asset\PimAssetCollection;
 use AkeneoDAMConnector\Infrastructure\Pim\UpdateAssetApi;
 use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
 
@@ -49,7 +49,7 @@ class SynchronizeAssets
         // 2. Fetch assets by family from the DAM
         $damAssets = $this->fetchAssets->fetch($lastFetchDate, $assetFamily);
 
-        $pimAssets = new AssetCollection();
+        $pimAssets = new PimAssetCollection();
         foreach ($damAssets as $damAsset) {
             // 3. Transform DAM Asset to PIM Asset filtering and mapping fields
             $pimAssets->addAsset($this->assetTransformer->damToPim($damAsset));

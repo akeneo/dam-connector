@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain\Pim;
+namespace AkeneoDAMConnector\Domain\Asset;
 
-class AssetValue
+class PimAssetValue
 {
     private $attribute;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain\Pim;
+namespace AkeneoDAMConnector\Domain;
 
 class AssetAttribute
 {
