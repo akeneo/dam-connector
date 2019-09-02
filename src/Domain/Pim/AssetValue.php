@@ -14,7 +14,10 @@ class AssetValue
 
     private $channel;
 
-    public function __construct(AssetAttribute $attribute, string $data, string $locale = null, string $channel = null)
+    /**
+     * @param $data string|string[]
+     */
+    public function __construct(AssetAttribute $attribute, $data, string $locale = null, string $channel = null)
     {
         $this->attribute = $attribute;
         $this->data = $data;
@@ -27,7 +30,10 @@ class AssetValue
         return $this->attribute;
     }
 
-    public function getData(): string
+    /**
+     * @return string|string[]
+     */
+    public function getData()
     {
         return $this->data;
     }
