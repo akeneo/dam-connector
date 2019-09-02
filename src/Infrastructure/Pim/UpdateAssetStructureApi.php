@@ -18,7 +18,7 @@ use AkeneoDAMConnector\Application\PimAdapter\UpdateAssetStructure;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class PimUpdateAssetStructure implements UpdateAssetStructure
+class UpdateAssetStructureApi implements UpdateAssetStructure
 {
     private $assetAttributeApi;
     private $assetFamilyApi;

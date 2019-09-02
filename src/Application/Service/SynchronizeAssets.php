@@ -18,7 +18,7 @@ use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Domain\AssetFamily;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Pim\AssetCollection;
-use AkeneoDAMConnector\Infrastructure\Pim\AssetApi;
+use AkeneoDAMConnector\Infrastructure\Pim\UpdateAssetApi;
 use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
 
 /**
@@ -31,7 +31,7 @@ class SynchronizeAssets
     private $assetTransformer;
     private $assetApi;
 
-    public function __construct(FetchAssets $fetchAssets, ClientBuilder $clientBuilder, AssetTransformer $assetTransformer, AssetApi $assetApi)
+    public function __construct(FetchAssets $fetchAssets, ClientBuilder $clientBuilder, AssetTransformer $assetTransformer, UpdateAssetApi $assetApi)
     {
         $this->fetchAssets = $fetchAssets;
         $this->clientBuilder = $clientBuilder;
