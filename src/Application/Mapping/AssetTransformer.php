@@ -2,87 +2,64 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Akeneo PIM Enterprise Edition.
- *
- * (c) 2019 Akeneo SAS (http://www.akeneo.com)
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
 use AkeneoDAMConnector\Domain\Pim\Asset;
 use AkeneoDAMConnector\Domain\Pim\AssetAttribute;
 use AkeneoDAMConnector\Domain\Pim\AssetValue;
 
-/**
- * @author Romain Monceau <romain@akeneo.com>
- */
 class AssetTransformer
 {
-    private $mapping = [];
+    private $converterRegistry;
 
-    /**
-     * @param AssetFamily $assetFamily
-     *
-     * TODO: To implement
-     */
-    public function loadAssetFamilyMapping(AssetFamily $assetFamily): void
+    private $mapping;
+
+    public function __construct(AssetValueConverterRegistry $converterRegistry)
     {
+        $this->converterRegistry = $converterRegistry;
+
         $this->mapping = [
-            'pdf_notices' => [
-                'filetype' => new AssetAttribute('filetype', 'text', false),
-                'filesize' => new AssetAttribute('size', 'text', false),
-                'author'   => new AssetAttribute('photograph', 'single_option', false),
-                'original' => new AssetAttribute('preview', 'media_link', false),
-            ]
+            'packshot' => [
+                'sku' => new AssetAttribute('product_sku', 'text', false),
+                'url' => new AssetAttribute('preview', 'media_link', false),
+                'colors' => new AssetAttribute('colors', 'multiple_options', false)
+            ],
         ];
-    }
-
-    private function getAssetFamilyMapping(AssetFamily $assetFamily): array
-    {
-        if (!isset($this->mapping[$assetFamily->getCode()])) {
-            $this->loadAssetFamilyMapping($assetFamily);
-        }
-
-        return $this->mapping[$assetFamily->getCode()];
     }
 
     public function damToPim(DamAsset $damAsset): Asset
     {
-        $assetFamilyMapping = $this->getAssetFamilyMapping($damAsset->assetFamily());
-
-        $assetValues = [];
-        foreach ($damAsset->getValues() as $damAssetValue) {
-            // 1. Filter values we don't want
-            if (!isset($this->mapping[$damAssetValue->property()])) {
-                continue;
-            }
-
-            // 2. Map DAM property to PIM attribute
-            $assetAttribute = $assetFamilyMapping[$damAssetValue->property()];
-
-            // 3. Transform DAM Asset Value into a PIM Asset Value
-            switch ($assetAttribute->getType()) {
-                case 'media_link':
-
-                    break;
-                case 'single_option':
-
-                    break;
-                case 'multiple_option':
-
-                    break;
-                default:
-                    $assetValues[] = new AssetValue($assetAttribute, $damAssetValue->value(), $damAsset->locale(), null);
-                    break;
-            }
+        $pimAssetFamily = $damAsset->assetFamily();
+        if (null === $assetFamilyMapping = $this->mapping[$pimAssetFamily->getCode()]) {
+            throw new \RuntimeException(
+                sprintf('No mapping for asset family "%s" defined.', $pimAssetFamily->getCode())
+            );
         }
 
-        return new Asset((string) $damAsset->damAssetIdentifier(), $assetValues);
+        $filteredDamAssetValues = array_filter(
+            $damAsset->getValues(),
+            function (DamAssetValue $damAssetValue) use ($assetFamilyMapping) {
+                return isset($assetFamilyMapping[$damAssetValue->property()]);
+            }
+        );
+
+        /** @var AssetValue[] $pimAssetValues */
+        $pimAssetValues = array_map(
+            function (DamAssetValue $damAssetValue) use ($assetFamilyMapping, $damAsset) {
+                /** @var AssetAttribute $assetAttribute */
+                $assetAttribute = $assetFamilyMapping[$damAssetValue->property()];
+
+                return $this->converterRegistry->getConverter($assetAttribute->getType())->convert(
+                    $damAsset,
+                    $damAssetValue,
+                    $assetAttribute
+                );
+            },
+            $filteredDamAssetValues
+        );
+
+        return new Asset((string)$damAsset->damAssetIdentifier(), $pimAssetValues);
     }
 }
