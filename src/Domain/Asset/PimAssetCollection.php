@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain\Pim;
+namespace AkeneoDAMConnector\Domain\Asset;
 
-class AssetCollection implements \Iterator
+class PimAssetCollection implements \Iterator
 {
     private $key = 0;
 
     private $assets;
 
-    public function addAsset(Asset $asset): void
+    public function addAsset(PimAsset $asset): void
     {
         $this->assets[] = $asset;
     }
 
     public function normalize(): array
     {
-        return array_map(function (Asset $asset) {
+        return array_map(function (PimAsset $asset) {
             return $asset->normalize();
         }, $this->assets);
     }
 
-    public function current(): Asset
+    public function current(): PimAsset
     {
         return $this->assets[$this->key];
     }

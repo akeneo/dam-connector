@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Pim\Asset;
-use AkeneoDAMConnector\Domain\Pim\AssetAttribute;
-use AkeneoDAMConnector\Domain\Pim\AssetValue;
+use AkeneoDAMConnector\Domain\Asset\PimAsset;
+use AkeneoDAMConnector\Domain\AssetAttribute;
+use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
 
 class AssetTransformer
 {
@@ -29,16 +29,16 @@ class AssetTransformer
         ];
     }
 
-    public function damToPim(DamAsset $damAsset): Asset
+    public function damToPim(DamAsset $damAsset): PimAsset
     {
-        $pimAssetFamily = $damAsset->assetFamily();
-        if (null === $assetFamilyMapping = $this->mapping[$pimAssetFamily->getCode()]) {
+        $assetFamilyCode = $damAsset->assetFamilyCode();
+        if (null === $assetFamilyMapping = $this->mapping[(string) $assetFamilyCode]) {
             throw new \RuntimeException(
-                sprintf('No mapping for asset family "%s" defined.', $pimAssetFamily->getCode())
+                sprintf('No mapping for asset family "%s" defined.', (string) $assetFamilyCode)
             );
         }
 
-        /** @var AssetValue[] $pimAssetValues */
+        /** @var PimAssetValue[] $pimAssetValues */
         $pimAssetValues = [];
         foreach ($damAsset->getValues() as $damAssetValue) {
             if (!isset($assetFamilyMapping[$damAssetValue->property()])) {
@@ -55,6 +55,6 @@ class AssetTransformer
             );
         }
 
-        return new Asset((string)$damAsset->damAssetIdentifier(), $pimAssetValues);
+        return new PimAsset((string)$damAsset->damAssetIdentifier(), $pimAssetValues);
     }
 }

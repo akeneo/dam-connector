@@ -6,8 +6,8 @@ namespace AkeneoDAMConnector\Infrastructure\Pim;
 
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetApiInterface;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAsset;
-use AkeneoDAMConnector\Domain\AssetFamily;
-use AkeneoDAMConnector\Domain\Pim\AssetCollection;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Asset\PimAssetCollection;
 
 class UpdateAssetApi implements UpdateAsset
 {
@@ -19,8 +19,8 @@ class UpdateAssetApi implements UpdateAsset
         $this->api = $clientBuilder->getClient()->getAssetManagerApi();
     }
 
-    public function upsertList(AssetFamily $family, AssetCollection $assets): void
+    public function upsertList(AssetFamilyCode $assetFamilyCode, PimAssetCollection $assets): void
     {
-        $this->api->upsertList($family->getCode(), $assets->normalize());
+        $this->api->upsertList((string) $assetFamilyCode, $assets->normalize());
     }
 }

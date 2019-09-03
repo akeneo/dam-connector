@@ -7,7 +7,7 @@ namespace AkeneoDAMConnector\Infrastructure\DAM\Bynder;
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterface;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
-use AkeneoDAMConnector\Domain\AssetFamily;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Locale;
 use AkeneoDAMConnector\Domain\ResourceType;
 use Bynder\Api\Impl\BynderApi;
@@ -28,13 +28,13 @@ class FetchAssets implements FetchAssetsInterface
     /**
      * {@inheritdoc}
      */
-    public function fetch(\DateTime $lastFetchDate, AssetFamily $assetFamily): DamAssetCollection
+    public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): DamAssetCollection
     {
-        $mediaList = $this->fetchMediaList($lastFetchDate, $assetFamily);
+        $mediaList = $this->fetchMediaList($lastFetchDate, $assetFamilyCode);
         $collection = new DamAssetCollection();
 
         foreach ($mediaList as $media) {
-            $damAsset = new DamAsset($assetFamily, new Locale('en_US'), new ResourceType($media['type']));
+            $damAsset = new DamAsset($assetFamilyCode, new Locale('en_US'), new ResourceType($media['type']));
             foreach ($media as $property => $value) {
                 if (is_array($value)) {
                     foreach ($value as $subProperty => $subValue) {
@@ -49,7 +49,7 @@ class FetchAssets implements FetchAssetsInterface
         return $collection;
     }
 
-    private function fetchMediaList(\DateTime $lastFetchDate, AssetFamily $assetFamily): array
+    private function fetchMediaList(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): array
     {
         $metaPropertyForFamiliesId = '753C2082-F36F-4AD3-9CBD2A238FDFC761';
         $metaPropertyForFamilies = $this->client->getAssetBankManager()->getMetaproperty($metaPropertyForFamiliesId)->wait();
@@ -57,13 +57,13 @@ class FetchAssets implements FetchAssetsInterface
 
         $damFamilyId = '';
         foreach ($damFamilies as $damFamily) {
-            if ($assetFamily->getCode() === $damFamily['name']) {
+            if ((string) $assetFamilyCode === $damFamily['name']) {
                 $damFamilyId = $damFamily['id'];
                 break;
             }
         }
         if ('' === $damFamilyId) {
-            throw new \Exception(sprintf('Family "%" not found in Bynder.', $assetFamily->getCode()));
+            throw new \Exception(sprintf('Family "%" not found in Bynder.', (string) $assetFamilyCode));
         }
         $mediaFilter = [
             'propertyOptionId' => $damFamilyId,

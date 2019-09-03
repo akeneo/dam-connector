@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain\Pim;
+namespace AkeneoDAMConnector\Domain\Asset;
 
-class Asset
+class PimAsset
 {
     private $code;
 
@@ -27,7 +27,7 @@ class Asset
             'code' => $this->code,
             'values' => array_reduce(
                 $this->values,
-                function (array $values, AssetValue $value) {
+                function (array $values, PimAssetValue $value) {
                     $values[$value->getAttribute()->getCode()] = $value->normalize();
                     return $values;
                 },

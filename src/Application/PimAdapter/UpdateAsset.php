@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\PimAdapter;
 
-use AkeneoDAMConnector\Domain\AssetFamily;
-use AkeneoDAMConnector\Domain\Pim\AssetCollection;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Asset\PimAssetCollection;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
 interface UpdateAsset
 {
-    public function upsertList(AssetFamily $assetFamily, AssetCollection $assets): void;
+    public function upsertList(AssetFamilyCode $assetFamilyCode, PimAssetCollection $assets): void;
 }
