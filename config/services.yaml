@@ -4,7 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    DAM: fake
+    app.dam_name: fake
+    app.pim_structure.config_path: '%kernel.project_dir%/config/resources/pim-assets-structure.yml'
+    app.dam_to_pim_mapping.config_path: '%kernel.project_dir%/config/resources/dam-to-pim-mapping.yaml'
 
 services:
     # default configuration for services in *this* file
@@ -29,3 +31,25 @@ services:
             $secret: '%env(AKENEO_SECRET)%'
             $username: '%env(AKENEO_USERNAME)%'
             $password: '%env(AKENEO_PASSWORD)%'
+
+    app.pim_structure.config_loader:
+        class: AkeneoDAMConnector\Infrastructure\YamlConfigLoader
+        arguments:
+            $path: '%app.pim_structure.config_path%'
+
+    app.dam_to_pim_mapping.config_loader:
+        class: AkeneoDAMConnector\Infrastructure\YamlConfigLoader
+        arguments:
+            $path: '%app.dam_to_pim_mapping.config_path%'
+
+    AkeneoDAMConnector\Application\Mapping\AssetMapper:
+        arguments:
+            $mappingConfigLoader: '@app.dam_to_pim_mapping.config_loader'
+
+    AkeneoDAMConnector\Application\Mapping\AssetAttributeBuilder:
+        arguments:
+            $structureConfigLoader: '@app.pim_structure.config_loader'
+
+    AkeneoDAMConnector\Application\Service\SynchronizeAssetsStructure:
+        arguments:
+            $structureConfigLoader: '@app.pim_structure.config_loader'

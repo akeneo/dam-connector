@@ -12,14 +12,14 @@ class AssetAttribute
 
     private $localizable;
 
-    public function __construct(string $code, string $type, bool $localizable)
+    public function __construct(AssetAttributeCode $code, string $type, bool $localizable)
     {
         $this->code = $code;
         $this->type = $type;
         $this->localizable = $localizable;
     }
 
-    public function getCode(): string
+    public function getCode(): AssetAttributeCode
     {
         return $this->code;
     }

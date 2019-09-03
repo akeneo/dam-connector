@@ -28,7 +28,7 @@ class PimAsset
             'values' => array_reduce(
                 $this->values,
                 function (array $values, PimAssetValue $value) {
-                    $values[$value->getAttribute()->getCode()][] = $value->normalize();
+                    $values[(string)$value->getAttributeCode()][] = $value->normalize();
 
                     return $values;
                 },

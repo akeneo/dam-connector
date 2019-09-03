@@ -18,7 +18,6 @@ use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Asset\PimAssetCollection;
 use AkeneoDAMConnector\Infrastructure\Pim\UpdateAssetApi;
-use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
@@ -26,14 +25,12 @@ use AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder;
 class SynchronizeAssets
 {
     private $fetchAssets;
-    private $clientBuilder;
     private $assetTransformer;
     private $assetApi;
 
-    public function __construct(FetchAssets $fetchAssets, ClientBuilder $clientBuilder, AssetTransformer $assetTransformer, UpdateAssetApi $assetApi)
+    public function __construct(FetchAssets $fetchAssets, AssetTransformer $assetTransformer, UpdateAssetApi $assetApi)
     {
         $this->fetchAssets = $fetchAssets;
-        $this->clientBuilder = $clientBuilder;
         $this->assetTransformer = $assetTransformer;
         $this->assetApi = $assetApi;
     }
@@ -56,5 +53,7 @@ class SynchronizeAssets
 
         // 4. Push assets in the PIM
         $results = $this->assetApi->upsertList($assetFamily, $pimAssets);
+
+        var_dump($results);
     }
 }

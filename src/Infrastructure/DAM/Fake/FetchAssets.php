@@ -16,16 +16,16 @@ class FetchAssets implements FetchAssetsInterface
 {
     public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): DamAssetCollection
     {
-        $assetFamilyCode = new AssetFamilyCode('packshot');
-
         $collection = new DamAssetCollection();
 
         for ($i = 0; $i < 2; $i++) {
             $id = (string)$i;
 
             $asset = new DamAsset(
-                new DamAssetIdentifier("id_{$id}"), $assetFamilyCode, new Locale('en_US'), new ResourceType('image')
-
+                new DamAssetIdentifier("id_{$id}"),
+                new AssetFamilyCode('packshot'),
+                new Locale('en_US'),
+                new ResourceType('image')
             );
             $asset->addValue('sku', "sku_{$id}");
             $asset->addValue('unused_property', 'unused_value');

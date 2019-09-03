@@ -1,83 +1,87 @@
-structure:
-    packshot:
-        product_link_rules:
-            product_selections:
-                -   field: sku
-                    operator: EQUALS
-                    value: "{{product_ref}}"
-            assign_assets_to:
-                -   attribute: packshot
-                    locale: "{{locale}}"
-                    mode: replace
-        attributes:
-            -
-                code: product_ref
-                type: text
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: title
-                type: text
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: photograph
-                type: single_option
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: country
-                type: single_option
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: end_date
-                type: text
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: preview
-                type: media_link
-                media_type: image
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: original_url
-                type: media_link
-                media_type: image
-                value_per_locale: false
-                value_per_channel: false
+packshot:
+    product_link_rules:
+        product_selections:
+            -   field: sku
+                operator: EQUALS
+                value: "{{product_ref}}"
+        assign_assets_to:
+            -   attribute: packshot
+                locale: "{{locale}}"
+                mode: replace
+    attributes:
+        -
+            code: product_ref
+            type: text
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: title
+            type: text
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: photograph
+            type: single_option
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: country
+            type: single_option
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: end_date
+            type: text
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: preview
+            type: media_link
+            media_type: image
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: original_url
+            type: media_link
+            media_type: image
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: colors
+            type: multiple_options
+            value_per_locale: false
+            value_per_channel: false
 
-    handbook:
-        product_link_rules:
-            product_selections:
-                -   field: sku
-                    operator: EQUALS
-                    value: "{{product_ref}}"
-            assign_assets_to:
-                -   attribute: packshot
-                    locale: "{{locale}}"
-                    mode: replace
-        attributes:
-            -
-                code: product_ref
-                type: text
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: title
-                type: text
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: preview
-                type: media_link
-                media_type: image
-                value_per_locale: false
-                value_per_channel: false
-            -
-                code: original_url
-                type: media_link
-                media_type: other
-                value_per_locale: true
-                value_per_channel: false
+handbook:
+    product_link_rules:
+        product_selections:
+            -   field: sku
+                operator: EQUALS
+                value: "{{product_ref}}"
+        assign_assets_to:
+            -   attribute: packshot
+                locale: "{{locale}}"
+                mode: replace
+    attributes:
+        -
+            code: product_ref
+            type: text
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: title
+            type: text
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: preview
+            type: media_link
+            media_type: image
+            value_per_locale: false
+            value_per_channel: false
+        -
+            code: original_url
+            type: media_link
+            media_type: other
+            value_per_locale: true
+            value_per_channel: false
