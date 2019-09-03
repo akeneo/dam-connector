@@ -2,7 +2,7 @@
 
 namespace AkeneoDAMConnector;
 
-use AkeneoDAMConnector\Application\Mapping\AssetValueConverterInterface;
+use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Infrastructure\DependencyInjection\Compiler\AssetTypeConverterPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -58,7 +58,7 @@ class Kernel extends BaseKernel
     protected function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new AssetTypeConverterPass());
-        $container->registerForAutoconfiguration(AssetValueConverterInterface::class)
+        $container->registerForAutoconfiguration(AssetValueConverter::class)
             ->addTag(AssetTypeConverterPass::SERVICE_TAG);
     }
 }

@@ -13,12 +13,12 @@ class AssetValueConverterRegistry
         $this->converters = [];
     }
 
-    public function registerConverter(AssetValueConverterInterface $converter): void
+    public function registerConverter(AssetValueConverter $converter): void
     {
         $this->converters[$converter->getSupportedType()] = $converter;
     }
 
-    public function getConverter(string $type): AssetValueConverterInterface
+    public function getConverter(string $type): AssetValueConverter
     {
         if (null === $converter = $this->converters[$type]) {
             throw new \RuntimeException(

@@ -9,7 +9,7 @@ use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
 use AkeneoDAMConnector\Domain\AssetAttribute;
 use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
 
-interface AssetValueConverterInterface
+interface AssetValueConverter
 {
     public function getSupportedType(): string;
 
