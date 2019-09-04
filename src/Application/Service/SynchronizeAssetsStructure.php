@@ -35,6 +35,7 @@ class SynchronizeAssetsStructure
     {
         $structureConfig = $this->structureConfigLoader->load();
         foreach ($structureConfig as $assetFamilyCode => $assetFamilyConfig) {
+            echo "Creating family: ". $assetFamilyCode ."\n";
             $assetFamilyData = [
                 'code' => $assetFamilyCode,
             ];
