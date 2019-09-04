@@ -22,4 +22,6 @@ interface UpdateAssetStructure
     public function upsertAttribute(string $familyCode, string $attributeCode, array $data): void;
 
     public function upsertFamily(string $familyCode, array $data): void;
+
+    public function upsertAttributeOption(string $familyCode, string $attributeCode, string $optionCode, array $data): void;
 }

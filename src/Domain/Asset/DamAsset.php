@@ -55,6 +55,7 @@ class DamAsset
         $this->values[(string) $property] = new DamAssetValue($property, $value);
     }
 
+    /** TODO: Check if needed */
     public function getResourceType(): ResourceType
     {
         return $this->resourceType;

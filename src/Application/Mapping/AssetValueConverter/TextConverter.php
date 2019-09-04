@@ -19,7 +19,9 @@ class TextConverter implements AssetValueConverter
 
     public function convert(DamAsset $damAsset, DamAssetValue $damAssetValue, AssetAttribute $attribute): PimAssetValue
     {
-        return new PimAssetValue($attribute, $damAssetValue->value(), (string)$damAsset->locale(), null);
+        $locale = $attribute->isLocalizable() ? (string)$damAsset->locale() : null;
+
+        return new PimAssetValue($attribute, $damAssetValue->value(), $locale, null);
     }
 }
 

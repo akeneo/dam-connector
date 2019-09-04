@@ -21,5 +21,5 @@ use AkeneoDAMConnector\Domain\Asset\PimAssetCollection;
  */
 interface UpdateAsset
 {
-    public function upsertList(AssetFamilyCode $assetFamilyCode, PimAssetCollection $assets): void;
+    public function upsertList(AssetFamilyCode $assetFamilyCode, PimAssetCollection $assets): array;
 }

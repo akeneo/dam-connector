@@ -21,9 +21,9 @@ class AssetTransformer
 
         $this->mapping = [
             'packshot' => [
-                'sku' => new AssetAttribute('product_sku', 'text', false),
+                'sku' => new AssetAttribute('product_ref', 'text', false),
                 'url' => new AssetAttribute('preview', 'media_link', false),
-                'colors' => new AssetAttribute('colors', 'multiple_options', false),
+                'photograph' => new AssetAttribute('photograph', 'single_option', false),
                 'country' => new AssetAttribute('country', 'single_option', false),
             ],
         ];

@@ -26,7 +26,9 @@ class MultiOptionConverter implements AssetValueConverter
             explode(',', $damAssetValue->value())
         );
 
-        return new PimAssetValue($attribute, $options, (string)$damAsset->locale(), null);
+        $locale = $attribute->isLocalizable() ? (string)$damAsset->locale() : null;
+
+        return new PimAssetValue($attribute, $options, $locale, null);
     }
 }
 

@@ -19,8 +19,8 @@ class UpdateAssetApi implements UpdateAsset
         $this->api = $clientBuilder->getClient()->getAssetManagerApi();
     }
 
-    public function upsertList(AssetFamilyCode $assetFamilyCode, PimAssetCollection $assets): void
+    public function upsertList(AssetFamilyCode $assetFamilyCode, PimAssetCollection $assets): array
     {
-        $this->api->upsertList((string) $assetFamilyCode, $assets->normalize());
+        return $this->api->upsertList((string) $assetFamilyCode, $assets->normalize());
     }
 }
