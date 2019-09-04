@@ -14,26 +14,26 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Service;
 
 use Akeneo\Pim\ApiClient\Exception\UnprocessableEntityHttpException;
+use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAssetStructure;
-use AkeneoDAMConnector\Application\StructureConfig\StructureConfigLoader;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
 class SynchronizeAssetsStructure
 {
-    private $loader;
+    private $structureConfigLoader;
     private $updateAssetStructure;
 
-    public function __construct(StructureConfigLoader $loader, UpdateAssetStructure $updateAssetStructure)
+    public function __construct(ConfigLoader $structureConfigLoader, UpdateAssetStructure $updateAssetStructure)
     {
-        $this->loader = $loader;
+        $this->structureConfigLoader = $structureConfigLoader;
         $this->updateAssetStructure = $updateAssetStructure;
     }
 
     public function execute()
     {
-        $structureConfig = $this->loader->load();
+        $structureConfig = $this->structureConfigLoader->load();
         foreach ($structureConfig as $assetFamilyCode => $assetFamilyConfig) {
             $assetFamilyData = [
                 'code' => $assetFamilyCode,
