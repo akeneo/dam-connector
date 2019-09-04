@@ -11,15 +11,28 @@ use AkeneoDAMConnector\Infrastructure\Pim\UpdateAssetApi;
 
 class SynchronizeAssets
 {
+    /** @var FetchAssets */
     private $fetchAssets;
+
+    /** @var AssetTransformer */
     private $assetTransformer;
+
+    /** @var UpdateAssetApi */
     private $assetApi;
 
-    public function __construct(FetchAssets $fetchAssets, AssetTransformer $assetTransformer, UpdateAssetApi $assetApi)
-    {
+    /** @var SynchronizeAttributeOptions */
+    private $synchronizeAttributeOptions;
+
+    public function __construct(
+        FetchAssets $fetchAssets,
+        AssetTransformer $assetTransformer,
+        UpdateAssetApi $assetApi,
+        SynchronizeAttributeOptions $synchronizeAttributeOptions
+    ) {
         $this->fetchAssets = $fetchAssets;
         $this->assetTransformer = $assetTransformer;
         $this->assetApi = $assetApi;
+        $this->synchronizeAttributeOptions = $synchronizeAttributeOptions;
     }
 
     public function execute(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): void
