@@ -24,15 +24,28 @@ use AkeneoDAMConnector\Infrastructure\Pim\UpdateAssetApi;
  */
 class SynchronizeAssets
 {
+    /** @var FetchAssets */
     private $fetchAssets;
+
+    /** @var AssetTransformer */
     private $assetTransformer;
+
+    /** @var UpdateAssetApi */
     private $assetApi;
 
-    public function __construct(FetchAssets $fetchAssets, AssetTransformer $assetTransformer, UpdateAssetApi $assetApi)
-    {
+    /** @var SynchronizeAttributeOptions */
+    private $synchronizeAttributeOptions;
+
+    public function __construct(
+        FetchAssets $fetchAssets,
+        AssetTransformer $assetTransformer,
+        UpdateAssetApi $assetApi,
+        SynchronizeAttributeOptions $synchronizeAttributeOptions
+    ) {
         $this->fetchAssets = $fetchAssets;
         $this->assetTransformer = $assetTransformer;
         $this->assetApi = $assetApi;
+        $this->synchronizeAttributeOptions = $synchronizeAttributeOptions;
     }
 
     public function execute()
@@ -45,15 +58,16 @@ class SynchronizeAssets
         // 2. Fetch assets by family from the DAM
         $damAssets = $this->fetchAssets->fetch($lastFetchDate, $assetFamily);
 
+        // 3. Synchronize attribute options between assets to upsert and PIM
+        $this->synchronizeAttributeOptions->execute($damAssets);
+
         $pimAssets = new PimAssetCollection();
         foreach ($damAssets as $damAsset) {
-            // 3. Transform DAM Asset to PIM Asset filtering and mapping fields
+            // 4. Transform DAM Asset to PIM Asset filtering and mapping fields
             $pimAssets->addAsset($this->assetTransformer->damToPim($damAsset));
         }
 
-        // 4. Push assets in the PIM
+        // 5. Push assets in the PIM
         $results = $this->assetApi->upsertList($assetFamily, $pimAssets);
-
-        var_dump($results);
     }
 }
