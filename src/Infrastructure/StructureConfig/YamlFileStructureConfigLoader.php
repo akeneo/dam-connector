@@ -28,7 +28,7 @@ class YamlFileStructureConfigLoader implements StructureConfigLoader
 
     public function load(): array
     {
-        $filename = realpath(__DIR__ .'/../../../var/resources/pim-assets-structure.yml');
+        $filename = realpath(__DIR__ .'/../../../config/resources/pim-assets-structure.yml');
 
         $yamlParser = new Parser();
         $config = $yamlParser->parseFile($filename);
