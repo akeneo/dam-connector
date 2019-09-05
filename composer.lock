@@ -170,12 +170,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "dfb361b686592c86e3f3e98c1066d97b95f3a762"
+                "reference": "c5eecfcdaa8a7d6bc14d9042a6d1552cd1c7b777"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/dfb361b686592c86e3f3e98c1066d97b95f3a762",
-                "reference": "dfb361b686592c86e3f3e98c1066d97b95f3a762",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/c5eecfcdaa8a7d6bc14d9042a6d1552cd1c7b777",
+                "reference": "c5eecfcdaa8a7d6bc14d9042a6d1552cd1c7b777",
                 "shasum": ""
             },
             "require": {
@@ -214,7 +214,7 @@
                 "image management",
                 "sdk"
             ],
-            "time": "2019-07-02T11:24:18+00:00"
+            "time": "2019-09-04T20:37:17+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -949,12 +949,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-client.git",
-                "reference": "496a823ef742b632934724bf769560c2a5c7c44e"
+                "reference": "fd5d37ae5a76ee3c5301a762faf66bf9519132ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-client/zipball/496a823ef742b632934724bf769560c2a5c7c44e",
-                "reference": "496a823ef742b632934724bf769560c2a5c7c44e",
+                "url": "https://api.github.com/repos/php-fig/http-client/zipball/fd5d37ae5a76ee3c5301a762faf66bf9519132ef",
+                "reference": "fd5d37ae5a76ee3c5301a762faf66bf9519132ef",
                 "shasum": ""
             },
             "require": {
@@ -990,7 +990,7 @@
                 "psr",
                 "psr-18"
             ],
-            "time": "2018-10-30T23:29:13+00:00"
+            "time": "2019-09-04T06:46:09+00:00"
         },
         {
             "name": "psr/http-factory",
@@ -1518,12 +1518,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "684ca9f4cc3ca5f66cae4127017b206c242db9ef"
+                "reference": "be579a784bfb6442dbb1b21a24096220a3a4872c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/684ca9f4cc3ca5f66cae4127017b206c242db9ef",
-                "reference": "684ca9f4cc3ca5f66cae4127017b206c242db9ef",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/be579a784bfb6442dbb1b21a24096220a3a4872c",
+                "reference": "be579a784bfb6442dbb1b21a24096220a3a4872c",
                 "shasum": ""
             },
             "require": {
@@ -1583,7 +1583,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-09-02T17:38:36+00:00"
+            "time": "2019-09-03T19:14:00+00:00"
         },
         {
             "name": "symfony/dotenv",

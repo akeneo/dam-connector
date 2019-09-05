@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\Service;
 
+use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\PimAdapter\GetAssetStructure;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAssetStructure;
 use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
@@ -28,23 +29,25 @@ class SynchronizeAttributeOptions
     /** @var UpdateAssetStructure */
     private $updateAssetStructureApi;
 
-    public function __construct(GetAssetStructure $getAssetStructureApi, UpdateAssetStructure $updateAssetStructureApi)
-    {
+    /** @var array */
+    private $structureConfig;
+
+    public function __construct(
+        ConfigLoader $mappingLoader,
+        ConfigLoader $structureConfigLoader,
+        GetAssetStructure $getAssetStructureApi,
+        UpdateAssetStructure $updateAssetStructureApi
+    ) {
         $this->optionTypes = ['single_option', 'multiple_options'];
-        $this->mapping = [
-            'packshot' => [
-                'sku' => new AssetAttribute('product_ref', 'text', false),
-                'url' => new AssetAttribute('preview', 'media_link', false),
-                'photograph' => new AssetAttribute('photograph', 'single_option', false),
-                'country' => new AssetAttribute('country', 'single_option', false),
-            ],
-        ];
         $this->getAssetStructureApi = $getAssetStructureApi;
         $this->updateAssetStructureApi = $updateAssetStructureApi;
+        $this->mapping = $mappingLoader->load();
+        $this->structureConfig = $structureConfigLoader->load();
     }
 
     public function execute(DamAssetCollection $damAssets): array
     {
+
         $options = $this->getOptionsNotInPim($damAssets);
 
         return $this->upsertAttributeOptions($options);
@@ -58,17 +61,24 @@ class SynchronizeAttributeOptions
             foreach ($damAsset->getValues() as $value) {
                 $familyCode = (string) $damAsset->assetFamilyCode();
                 $propertyCode = $value->property();
-                $familyMapping = $this->mapping[$familyCode] ?? null;
-                if (!$this->isSelectType($propertyCode, $familyMapping)) {
+                $familyMapping = $this->getFamilyMapping($familyCode);
+                if (null === $familyMapping) {
+                    continue;
+                }
+                $attributeCode = $this->convertToPimAttributeCode($familyMapping, $propertyCode);
+                if (null === $attributeCode) {
+                    continue;
+                }
+                if (!$this->isSelectType($familyCode, $attributeCode)) {
                     continue;
                 }
 
-                $optionsFromPim = $pimStructure[$familyCode][$propertyCode] ?? null;
+                $optionsFromPim = $pimStructure[$familyCode][$attributeCode] ?? null;
                 if (null === $optionsFromPim) {
-                    $pimStructure[$familyCode][$propertyCode] = $optionsFromPim =
+                    $pimStructure[$familyCode][$attributeCode] = $optionsFromPim =
                         $this->retrieveAttributeOptionsFromPim(
                             $damAsset->assetFamilyCode(),
-                            $familyMapping[$propertyCode]->getCode()
+                            $attributeCode
                         );
                 }
 
@@ -78,7 +88,7 @@ class SynchronizeAttributeOptions
                     continue;
                 }
 
-                $options[$familyCode][$propertyCode][] = $value->value();
+                $options[$familyCode][$attributeCode][] = $value->value();
             }
         }
 
@@ -109,11 +119,28 @@ class SynchronizeAttributeOptions
         return $responseCodes;
     }
 
-    private function isSelectType(string $propertyCode, ?array $familyMapping): bool
+    private function isSelectType(string $familyCode, string $attributeCode): bool
     {
-        return null !== $familyMapping &&
-            in_array($propertyCode, array_keys($familyMapping)) &&
-            in_array($familyMapping[$propertyCode]->getType(), $this->optionTypes);
+        $familyStructure = $this->structureConfig[$familyCode] ?? null;
+
+        return is_array($familyStructure) &&
+            is_array($familyStructure['attributes']) &&
+            !empty($familyStructure['attributes']) &&
+            !empty(
+                array_filter($familyStructure['attributes'], function ($attribute) use ($attributeCode) {
+                    return $attribute['code'] === $attributeCode && in_array($attribute['type'], $this->optionTypes);
+                })
+            );
+    }
+
+    private function convertToPimAttributeCode(array $familyMapping, string $propertyCode): ?string
+    {
+        return $familyMapping[$propertyCode] ?? null;
+    }
+
+    private function getFamilyMapping(string $familyCode): ?array
+    {
+        return $this->mapping[$familyCode] ?? null;
     }
 
     private function isAlreadyInPimStructure(string $value, array $optionsFromPim): bool
