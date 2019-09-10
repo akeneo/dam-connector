@@ -2,38 +2,38 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Akeneo PIM Enterprise Edition.
- *
- * (c) 2019 Akeneo SAS (http://www.akeneo.com)
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AkeneoDAMConnector\Infrastructure\Command;
 
+use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\Service\SynchronizeAssets;
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Infrastructure\Persistence\Execution;
+use AkeneoDAMConnector\Infrastructure\Persistence\SynchronizeAssetsExecutionRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @author Romain Monceau <romain@akeneo.com>
- */
 class SynchronizeAssetsCommand extends Command
 {
     const NAME = 'dam-connector:assets:synchronize';
-    private $synchronizeAssets;
 
-    public function __construct(SynchronizeAssets $synchronizeAssets)
-    {
+    private $synchronizeAssets;
+    private $mappingConfigLoader;
+    private $synchronizeAssetsExecutionRepository;
+
+    public function __construct(
+        SynchronizeAssets $synchronizeAssets,
+        ConfigLoader $mappingConfigLoader,
+        SynchronizeAssetsExecutionRepository $synchronizeAssetsExecutionRepository
+    ) {
         parent::__construct(self::NAME);
 
         $this->synchronizeAssets = $synchronizeAssets;
+        $this->mappingConfigLoader = $mappingConfigLoader;
+        $this->synchronizeAssetsExecutionRepository = $synchronizeAssetsExecutionRepository;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(self::NAME)
@@ -44,11 +44,28 @@ class SynchronizeAssetsCommand extends Command
     {
         $output->writeln('<info>Synchronizing assets</info>');
 
-        try {
-            $this->synchronizeAssets->execute();
-            $output->writeln('<info>Assets synchronized!!!</info>');
-        } catch (\Exception $e) {
-            $output->writeln('<error>'. $e->getMessage() .'</error>');
+        $familyCodes = array_keys($this->mappingConfigLoader->load());
+        $lastSucceededExecutionTimes = $this->synchronizeAssetsExecutionRepository->findLastSucceededExecutionTimeForFamilyCodes(
+            $familyCodes
+        );
+
+        foreach ($familyCodes as $familyCode) {
+            $this->synchronizeFamily($familyCode, $lastSucceededExecutionTimes[$familyCode]);
         }
+    }
+
+    private function synchronizeFamily(string $familyCode, ?\DateTimeInterface $lastSucceededExecutionTime): void
+    {
+        $assetFamilyCode = new AssetFamilyCode($familyCode);
+
+        $currentExecution = Execution::create($familyCode)->run();
+        $this->synchronizeAssetsExecutionRepository->save($currentExecution);
+
+        $this->synchronizeAssets->execute($assetFamilyCode, $lastSucceededExecutionTime);
+
+        $currentExecution->succeeded();
+        $this->synchronizeAssetsExecutionRepository->save($currentExecution);
+
+        var_dump($currentExecution);
     }
 }
