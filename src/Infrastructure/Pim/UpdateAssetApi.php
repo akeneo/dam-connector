@@ -11,6 +11,8 @@ use AkeneoDAMConnector\Domain\AssetFamilyCode;
 
 class UpdateAssetApi implements UpdateAsset
 {
+    private const BATCH_SIZE = 100;
+
     /** @var AssetApiInterface */
     private $api;
 
@@ -23,24 +25,16 @@ class UpdateAssetApi implements UpdateAsset
 
     public function upsert(AssetFamilyCode $assetFamilyCode, PimAsset $asset): void
     {
-        $this->assets[(string)$assetFamilyCode][] = $asset;
+        $this->assets[(string)$assetFamilyCode][] = $asset->normalize();
 
-        if (count($this->assets) > 100) {
+        if (count($this->assets) >= self::BATCH_SIZE) {
             $this->flush($assetFamilyCode);
         }
     }
 
     public function flush(AssetFamilyCode $assetFamilyCode): void
     {
-        $this->api->upsertList(
-            (string)$assetFamilyCode,
-            array_map(
-                function (PimAsset $pimAsset) {
-                    return $pimAsset->normalize();
-                },
-                $this->assets[(string)$assetFamilyCode]
-            )
-        );
+        $this->api->upsertList((string)$assetFamilyCode, $this->assets[(string)$assetFamilyCode]);
 
         $this->assets[(string)$assetFamilyCode] = [];
     }
