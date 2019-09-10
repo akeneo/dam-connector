@@ -2,24 +2,11 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Akeneo PIM Enterprise Edition.
- *
- * (c) 2019 Akeneo SAS (http://www.akeneo.com)
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AkeneoDAMConnector\Domain\Asset;
 
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Locale;
-use AkeneoDAMConnector\Domain\ResourceType;
 
-/**
- * @author Romain Monceau <romain@akeneo.com>
- */
 class DamAsset
 {
     /** @var DamAssetIdentifier */
@@ -28,45 +15,31 @@ class DamAsset
     /** @var AssetFamilyCode */
     private $assetFamilyCode;
 
-    /** @var Locale */
+    /** @var Locale|null */
     private $locale;
 
-    /** @var []DamAssetValue */
+    /** @var DamAssetValue[] */
     private $values;
-
-    /** @var ResourceType */
-    private $resourceType;
 
     public function __construct(
         DamAssetIdentifier $damAssetIdentifier,
         AssetFamilyCode $assetFamilyCode,
-        Locale $locale,
-        ResourceType $resourceType
+        ?Locale $locale
     ) {
         $this->damAssetIdentifier = $damAssetIdentifier;
         $this->assetFamilyCode = $assetFamilyCode;
         $this->locale = $locale;
-        $this->resourceType = $resourceType;
         $this->values = [];
     }
 
     public function addValue(string $property, string $value): void
     {
-        $this->values[(string) $property] = new DamAssetValue($property, $value);
+        $this->values[$property] = new DamAssetValue($property, $value);
     }
 
-    /** TODO: Check if needed */
-    public function getResourceType(): ResourceType
+    public function damAssetIdentifier(): DamAssetIdentifier
     {
-        return $this->resourceType;
-    }
-
-    /**
-     * @return DamAssetValue[]
-     */
-    public function getValues(): array
-    {
-        return $this->values;
+        return $this->damAssetIdentifier;
     }
 
     public function assetFamilyCode(): AssetFamilyCode
@@ -79,8 +52,11 @@ class DamAsset
         return $this->locale;
     }
 
-    public function damAssetIdentifier(): DamAssetIdentifier
+    /**
+     * @return DamAssetValue[]
+     */
+    public function getValues(): array
     {
-        return $this->damAssetIdentifier;
+        return $this->values;
     }
 }

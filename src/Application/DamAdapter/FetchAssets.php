@@ -31,5 +31,5 @@ interface FetchAssets
      *
      * @return DamAssetCollection
      */
-    public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): DamAssetCollection;
+    public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): \Iterator;
 }
