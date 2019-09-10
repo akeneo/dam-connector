@@ -53,3 +53,7 @@ services:
     AkeneoDAMConnector\Application\Service\SynchronizeAssetsStructure:
         arguments:
             $structureConfigLoader: '@app.pim_structure.config_loader'
+
+    AkeneoDAMConnector\Infrastructure\Command\SynchronizeAssetsCommand:
+        arguments:
+            $mappingConfigLoader: '@app.dam_to_pim_mapping.config_loader'

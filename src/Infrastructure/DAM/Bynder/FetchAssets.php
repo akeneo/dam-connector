@@ -18,14 +18,19 @@ class FetchAssets implements FetchAssetsInterface
     /** @var BynderApi */
     private $client;
 
-    public function __construct(ClientBuilder $clientBuilder)
-    {
+    public function __construct(
+        ClientBuilder $clientBuilder
+    ) {
         $this->client = $clientBuilder->getClient();
     }
 
-    public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): \Iterator
+    public function fetch(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
     {
-        foreach ($this->getFetchMediasIterator((string)$assetFamilyCode, $lastFetchDate, $dateTo) as $media) {
+        if (null === $lastFetchDate) {
+            $lastFetchDate = new \DateTimeImmutable('@0');
+        }
+
+        foreach ($this->getFetchMediasIterator((string)$assetFamilyCode, $lastFetchDate) as $media) {
             $damAsset = new DamAsset(
                 new DamAssetIdentifier($media['id']),
                 $assetFamilyCode,
@@ -45,12 +50,13 @@ class FetchAssets implements FetchAssetsInterface
         }
     }
 
-    private function getFetchMediasIterator(string $familyCode, \DateTime $fromDate, \DateTime $toDate): \Iterator
-    {
+    private function getFetchMediasIterator(
+        string $familyCode,
+        \DateTimeInterface $fromDate
+    ): \Iterator {
         $mediaFilter = [
             'property_'.self::FAMILY_CODE_PROPERTY_NAME => $familyCode,
             'dateModified' => $fromDate->format('c'),
-            'dateModifiedTo' => $toDate->format('c'),
             'orderBy' => 'dateModified asc',
             'total' => 1,
             'limit' => self::LIMIT,
