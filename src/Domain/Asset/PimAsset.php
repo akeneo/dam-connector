@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Domain\Asset;
 
+use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Options;
+
 class PimAsset
 {
     private $code;
 
+    /** @var PimAssetValue[] */
     private $values;
 
-    public function __construct(string $code, $values = [])
+    /** @var AssetFamilyCode */
+    private $familyCode;
+
+    public function __construct(string $code, AssetFamilyCode $familyCode, array $values = [])
     {
         $this->code = $code;
         $this->values = $values;
+        $this->familyCode = $familyCode;
     }
 
     public function getCode(): string
@@ -35,5 +43,18 @@ class PimAsset
                 []
             ),
         ];
+    }
+
+    public function getAttributeOptions(): array
+    {
+        $options = [];
+        foreach ($this->values as $value) {
+            if (in_array($value->getAttribute()->getType(), ['single_option', 'multiple_options'])) {
+                $data = is_array($value->getData()) ? $value->getData() : [$value->getData()];
+                $options[] = new Options($this->familyCode, $value->getAttributeCode(), $data);
+            }
+        }
+
+        return $options;
     }
 }

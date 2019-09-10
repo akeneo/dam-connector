@@ -20,19 +20,14 @@ class SynchronizeAssets
     /** @var UpdateAssetApi */
     private $assetApi;
 
-    /** @var SynchronizeAttributeOptions */
-    private $synchronizeAttributeOptions;
-
     public function __construct(
         FetchAssets $fetchAssets,
         AssetTransformer $assetTransformer,
-        UpdateAssetApi $assetApi,
-        SynchronizeAttributeOptions $synchronizeAttributeOptions
+        UpdateAssetApi $assetApi
     ) {
         $this->fetchAssets = $fetchAssets;
         $this->assetTransformer = $assetTransformer;
         $this->assetApi = $assetApi;
-        $this->synchronizeAttributeOptions = $synchronizeAttributeOptions;
     }
 
     public function execute(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): void
