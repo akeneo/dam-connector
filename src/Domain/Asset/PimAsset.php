@@ -8,9 +8,10 @@ class PimAsset
 {
     private $code;
 
+    /** @var PimAssetValue[] */
     private $values;
 
-    public function __construct(string $code, $values = [])
+    public function __construct(string $code, array $values = [])
     {
         $this->code = $code;
         $this->values = $values;
@@ -35,5 +36,17 @@ class PimAsset
                 []
             ),
         ];
+    }
+
+    public function getValuesWithOptions(): array
+    {
+        $valuesWithOptions = [];
+        foreach ($this->values as $value) {
+            if (in_array($value->getAttribute()->getType(), ['single_option', 'multiple_options'])) {
+                $valuesWithOptions[] = $value;
+            }
+        }
+
+        return $valuesWithOptions;
     }
 }
