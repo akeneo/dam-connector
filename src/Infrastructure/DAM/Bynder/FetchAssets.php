@@ -6,70 +6,73 @@ namespace AkeneoDAMConnector\Infrastructure\DAM\Bynder;
 
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterface;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetCollection;
+use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
-use AkeneoDAMConnector\Domain\Locale;
-use AkeneoDAMConnector\Domain\ResourceType;
 use Bynder\Api\Impl\BynderApi;
 
-/**
- * @author Willy Mesnage <willy.mesnage@akeneo.com>
- */
 class FetchAssets implements FetchAssetsInterface
 {
+    private const FAMILY_CODE_PROPERTY_NAME = 'PIM_asset_family';
+    private const LIMIT = 20;
+
     /** @var BynderApi */
     private $client;
 
-    public function __construct(ClientBuilder $clientBuilder)
-    {
+    public function __construct(
+        ClientBuilder $clientBuilder
+    ) {
         $this->client = $clientBuilder->getClient();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fetch(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): DamAssetCollection
+    public function fetch(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
     {
-        $mediaList = $this->fetchMediaList($lastFetchDate, $assetFamilyCode);
-        $collection = new DamAssetCollection();
+        if (null === $lastFetchDate) {
+            $lastFetchDate = new \DateTimeImmutable('@0');
+        }
 
-        foreach ($mediaList as $media) {
-            $damAsset = new DamAsset($assetFamilyCode, new Locale('en_US'), new ResourceType($media['type']));
+        foreach ($this->getFetchMediasIterator((string)$assetFamilyCode, $lastFetchDate) as $media) {
+            $damAsset = new DamAsset(
+                new DamAssetIdentifier($media['id']),
+                $assetFamilyCode,
+                null
+            );
             foreach ($media as $property => $value) {
                 if (is_array($value)) {
                     foreach ($value as $subProperty => $subValue) {
-                        $damAsset->addValue(sprintf('%s_%s', $property, (string) $subProperty), $subValue);
+                        $damAsset->addValue(sprintf('%s_%s', $property, (string)$subProperty), (string)$subValue);
                     }
+                } else {
+                    $damAsset->addValue($property, (string)$value);
                 }
             }
 
-            $collection->addAsset($damAsset);
+            yield $damAsset;
         }
-
-        return $collection;
     }
 
-    private function fetchMediaList(\DateTime $lastFetchDate, AssetFamilyCode $assetFamilyCode): array
-    {
-        $metaPropertyForFamiliesId = '753C2082-F36F-4AD3-9CBD2A238FDFC761';
-        $metaPropertyForFamilies = $this->client->getAssetBankManager()->getMetaproperty($metaPropertyForFamiliesId)->wait();
-        $damFamilies = $metaPropertyForFamilies['options'];
-
-        $damFamilyId = '';
-        foreach ($damFamilies as $damFamily) {
-            if ((string) $assetFamilyCode === $damFamily['name']) {
-                $damFamilyId = $damFamily['id'];
-                break;
-            }
-        }
-        if ('' === $damFamilyId) {
-            throw new \Exception(sprintf('Family "%" not found in Bynder.', (string) $assetFamilyCode));
-        }
+    private function getFetchMediasIterator(
+        string $familyCode,
+        \DateTimeInterface $fromDate
+    ): \Iterator {
         $mediaFilter = [
-            'propertyOptionId' => $damFamilyId,
-            'dateModified' => $lastFetchDate->format('c'),
+            'property_'.self::FAMILY_CODE_PROPERTY_NAME => $familyCode,
+            'dateModified' => $fromDate->format('c'),
+            'orderBy' => 'dateModified asc',
+            'total' => 1,
+            'limit' => self::LIMIT,
+            'page' => 0,
         ];
 
-        return $this->client->getAssetBankManager()->getMediaList($mediaFilter)->wait();
+        $total = null;
+        do {
+            $mediaFilter['page']++;
+
+            $result = $this->client->getAssetBankManager()->getMediaList($mediaFilter)->wait();
+            if (null === $total) {
+                $total = $result['total']['count'];
+            }
+
+            yield from $result['media'];
+        } while ($mediaFilter['page'] * self::LIMIT < $total);
     }
 }
