@@ -53,6 +53,8 @@ class AttributeOptionsApi
                 $this->api->upsert((string) $familyCode, $attributeCode, $attributeOption, ['code' => $attributeOption]);
             }
         }
+
+        unset($this->attributeOptions[(string) $familyCode]);
     }
 
     public function get(string $familyCode, string $attributeCode): array
