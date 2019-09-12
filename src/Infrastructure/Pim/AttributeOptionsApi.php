@@ -6,56 +6,29 @@ namespace AkeneoDAMConnector\Infrastructure\Pim;
 
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetAttributeOptionApiInterface;
 use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
-use AkeneoDAMConnector\Domain\Options;
-use AkeneoDAMConnector\Domain\OptionsCollection;
 
 /**
  * @author Willy Mesnage <willy.mesnage@akeneo.com>
  */
 class AttributeOptionsApi
 {
-    private const BATCH_SIZE = 100;
-
     /** @var AssetAttributeOptionApiInterface */
     private $api;
 
-    /** @var OptionsCollection */
+    /** @var array */
     private $attributeOptions;
 
-    /** @var OptionsCollection */
+    /** @var array */
     private $pimStructure;
 
     public function __construct(ClientBuilder $clientBuilder)
     {
         $this->api = $clientBuilder->getClient()->getAssetAttributeOptionApi();
         $this->attributeOptions = [];
-        $this->pimStructure = new OptionsCollection();
+        $this->pimStructure = [];
     }
 
-    public function getAttributeOptionList(
-        AssetFamilyCode $familyCode,
-        AssetAttributeCode $attributeCode
-    ): Options
-    {
-        $pimOptions = $this->pimStructure->getOptionsByAttribute($familyCode, $attributeCode);
-
-        if (null === $pimOptions) {
-            $pimOptions = new Options($familyCode, $attributeCode);
-            foreach ($this->api->all((string) $familyCode, (string) $attributeCode) as $option) {
-                $pimOptions->addOption($option['code']);
-            }
-            $this->pimStructure->addOptions($pimOptions);
-        }
-
-        return $pimOptions;
-    }
-
-    /**
-     * @param AssetFamilyCode $familyCode
-     * @param PimAssetValue[] $options
-     */
     public function upsertAttributeOptions(AssetFamilyCode $familyCode, array $assetValues): void
     {
         foreach ($assetValues as $value) {
@@ -68,17 +41,40 @@ class AttributeOptionsApi
             } else {
                 $this->attributeOptions[(string) $familyCode][(string) $value->getAttributeCode()][] = $value->getData();
             }
-
         }
     }
 
-    public function flush(AssetFamilyCode $assetFamily): void
+    public function flush(AssetFamilyCode $familyCode): void
     {
-        foreach ($this->attributeOptions[(string) $assetFamily] as $attributeCode => $attributeOptions) {
-            foreach ($attributeOptions as $attributeOption) {
-                $toto = $this->api->upsert((string) $assetFamily, $attributeCode, $attributeOption, ['code' => $attributeOption]);
-                var_dump($toto);
+        foreach ($this->attributeOptions[(string) $familyCode] as $attributeCode => $attributeOptions) {
+            $pimOptions = $this->get((string) $familyCode, $attributeCode);
+            $optionsToUpsert = array_diff(array_unique($attributeOptions), $pimOptions);
+            foreach ($optionsToUpsert as $attributeOption) {
+                $this->api->upsert((string) $familyCode, $attributeCode, $attributeOption, ['code' => $attributeOption]);
             }
         }
+    }
+
+    public function get(string $familyCode, string $attributeCode): array
+    {
+        if (array_key_exists($familyCode, $this->pimStructure) &&
+            array_key_exists($attributeCode, $this->pimStructure[$familyCode])
+        ) {
+            return $this->pimStructure[$familyCode][$attributeCode];
+        }
+
+        $pimOptions = $this->api->all((string) $familyCode, (string) $attributeCode);
+
+        $this->pimStructure[$familyCode][$attributeCode] = array_reduce(
+            $pimOptions,
+            function ($carry, $option) {
+                $carry[] = $option['code'];
+
+                return $carry;
+            },
+            []
+        );
+
+        return $this->pimStructure[$familyCode][$attributeCode];
     }
 }
