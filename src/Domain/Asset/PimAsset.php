@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Domain\Asset;
 
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
-use AkeneoDAMConnector\Domain\Options;
 
 class PimAsset
 {
@@ -50,8 +49,7 @@ class PimAsset
         $options = [];
         foreach ($this->values as $value) {
             if (in_array($value->getAttribute()->getType(), ['single_option', 'multiple_options'])) {
-                $data = is_array($value->getData()) ? $value->getData() : [$value->getData()];
-                $options[] = new Options($this->familyCode, $value->getAttributeCode(), $data);
+                $options[] = $value;
             }
         }
 

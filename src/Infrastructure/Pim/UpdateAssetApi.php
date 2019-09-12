@@ -30,7 +30,7 @@ class UpdateAssetApi implements UpdateAsset
     public function upsert(AssetFamilyCode $assetFamilyCode, PimAsset $asset): void
     {
         $this->assets[(string) $assetFamilyCode][] = $asset->normalize();
-        $this->attributeOptionsApi->upsertAttributeOptions($asset->getAttributeOptions());
+        $this->attributeOptionsApi->upsertAttributeOptions($assetFamilyCode, $asset->getAttributeOptions());
         if (count($this->assets) >= self::BATCH_SIZE) {
             $this->flush($assetFamilyCode);
         }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Infrastructure\Pim;
 
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetAttributeOptionApiInterface;
+use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
 use AkeneoDAMConnector\Domain\AssetAttributeCode;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Options;
@@ -29,7 +30,7 @@ class AttributeOptionsApi
     public function __construct(ClientBuilder $clientBuilder)
     {
         $this->api = $clientBuilder->getClient()->getAssetAttributeOptionApi();
-        $this->attributeOptions = new OptionsCollection();
+        $this->attributeOptions = [];
         $this->pimStructure = new OptionsCollection();
     }
 
@@ -52,55 +53,32 @@ class AttributeOptionsApi
     }
 
     /**
-     * @param Options[] $options
+     * @param AssetFamilyCode $familyCode
+     * @param PimAssetValue[] $options
      */
-    public function upsertAttributeOptions(array $options): void
+    public function upsertAttributeOptions(AssetFamilyCode $familyCode, array $assetValues): void
     {
-        foreach ($options as $option) {
-            $pimOptions = $this->getAttributeOptionList($option->getFamilyCode(), $option->getAttributeCode());
-            $diff = $pimOptions->getDiff($option);
-            if (false !== $diff) {
-                $this->attributeOptions->addOptions($diff);
-                $this->pimStructure->addOptions($diff);
+        foreach ($assetValues as $value) {
+            if (is_array($value->getData())) {
+                $this->attributeOptions[(string) $familyCode][(string) $value->getAttributeCode()] =
+                    array_merge(
+                        $this->attributeOptions[(string) $familyCode][(string) $value->getAttributeCode()],
+                        $value->getData()
+                    );
+            } else {
+                $this->attributeOptions[(string) $familyCode][(string) $value->getAttributeCode()][] = $value->getData();
             }
-        }
 
-        if ($this->attributeOptions->count() >= self::BATCH_SIZE) {
-            $this->flush();
         }
     }
 
-    public function flush(?AssetFamilyCode $assetFamily = null): array
+    public function flush(AssetFamilyCode $assetFamily): void
     {
-        $optionsToUpsert = null === $assetFamily ?
-            $this->attributeOptions->getOptions() :
-            [(string) $assetFamily => $this->attributeOptions->getOptionsByFamily($assetFamily)];
-
-        $responses = [];
-        foreach ($optionsToUpsert as $familyCode => $optionsByFamily) {
-            foreach ($optionsByFamily as $attributeCode => $options) {
-                foreach ($options->normalize() as $normalizedOption) {
-                    $optionCode = $normalizedOption['code'] ?? null;
-                    if (null === $optionCode) {
-                        continue;
-                    }
-                    $responses[$familyCode][$attributeCode][$optionCode] =
-                        $this->api->upsert(
-                            $familyCode,
-                            $attributeCode,
-                            $optionCode,
-                            $normalizedOption
-                        );
-                }
+        foreach ($this->attributeOptions[(string) $assetFamily] as $attributeCode => $attributeOptions) {
+            foreach ($attributeOptions as $attributeOption) {
+                $toto = $this->api->upsert((string) $assetFamily, $attributeCode, $attributeOption, ['code' => $attributeOption]);
+                var_dump($toto);
             }
         }
-
-        if (null === $assetFamily) {
-            $this->attributeOptions = new OptionsCollection();
-        } else {
-            $this->attributeOptions->removeFamily($assetFamily);
-        }
-
-        return $responses;
     }
 }
