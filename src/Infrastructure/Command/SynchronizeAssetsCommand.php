@@ -54,18 +54,16 @@ class SynchronizeAssetsCommand extends Command
         }
     }
 
-    private function synchronizeFamily(string $familyCode, ?\DateTimeInterface $lastSucceededExecutionTime): void
+    private function synchronizeFamily(string $familyCode, ?\DateTimeInterface $sinceLastSucceededExecutionTime): void
     {
         $assetFamilyCode = new AssetFamilyCode($familyCode);
 
         $currentExecution = Execution::create($familyCode)->run();
         $this->synchronizeAssetsExecutionRepository->save($currentExecution);
 
-        $this->synchronizeAssets->execute($assetFamilyCode, $lastSucceededExecutionTime);
+        $this->synchronizeAssets->execute($assetFamilyCode, $sinceLastSucceededExecutionTime);
 
         $currentExecution->succeeded();
         $this->synchronizeAssetsExecutionRepository->save($currentExecution);
-
-        var_dump($currentExecution);
     }
 }

@@ -15,3 +15,5 @@ services:
       MYSQL_USER: 'dam-connector'
       MYSQL_PASSWORD: 'dam-connector'
       MYSQL_DATABASE: 'dam-connector'
+    volumes:
+      - './config/resources/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql:ro'

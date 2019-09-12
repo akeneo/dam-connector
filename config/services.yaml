@@ -7,6 +7,8 @@ parameters:
     app.dam_name: fake
     app.pim_structure.config_path: '%kernel.project_dir%/config/resources/pim-assets-structure.yml'
     app.dam_to_pim_mapping.config_path: '%kernel.project_dir%/config/resources/dam-to-pim-mapping.yaml'
+    app.database.connection_params:
+        url: '%env(DATABASE_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -23,6 +25,10 @@ services:
             - '../src/{DependencyInjection,Tests,Kernel.php}'
             - '../src/Domain'
             - '../src/Infrastructure/DAM'
+
+    Doctrine\DBAL\Connection:
+        factory: ['Doctrine\DBAL\DriverManager', getConnection]
+        arguments: ['%app.database.connection_params%']
 
     AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder:
         arguments:
