@@ -18,15 +18,19 @@ class UpdateAssetApi implements UpdateAsset
 
     private $assets = [];
 
-    public function __construct(ClientBuilder $clientBuilder)
+    /** @var AttributeOptionsApi */
+    private $attributeOptionsApi;
+
+    public function __construct(ClientBuilder $clientBuilder, AttributeOptionsApi $attributeOptionsApi)
     {
         $this->api = $clientBuilder->getClient()->getAssetManagerApi();
+        $this->attributeOptionsApi = $attributeOptionsApi;
     }
 
     public function upsert(AssetFamilyCode $assetFamilyCode, PimAsset $asset): void
     {
-        $this->assets[(string)$assetFamilyCode][] = $asset->normalize();
-
+        $this->assets[(string) $assetFamilyCode][] = $asset->normalize();
+        $this->attributeOptionsApi->upsertAttributeOptions($assetFamilyCode, $asset->getAttributeOptions());
         if (count($this->assets) >= self::BATCH_SIZE) {
             $this->flush($assetFamilyCode);
         }
@@ -34,6 +38,8 @@ class UpdateAssetApi implements UpdateAsset
 
     public function flush(AssetFamilyCode $assetFamilyCode): void
     {
+        $this->attributeOptionsApi->flush($assetFamilyCode);
+
         $this->api->upsertList((string)$assetFamilyCode, $this->assets[(string)$assetFamilyCode]);
 
         $this->assets[(string)$assetFamilyCode] = [];

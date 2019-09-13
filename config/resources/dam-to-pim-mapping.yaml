@@ -1,3 +1,5 @@
 packshot:
   sku: product_ref
   url: preview
+  photograph: photograph
+  country: country

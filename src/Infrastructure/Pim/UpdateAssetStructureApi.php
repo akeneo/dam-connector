@@ -48,9 +48,4 @@ class UpdateAssetStructureApi implements UpdateAssetStructure
     {
         $this->assetFamilyApi->upsert($familyCode, $data);
     }
-
-    public function upsertAttributeOption(string $familyCode, string $attributeCode, string $optionCode, array $data): void
-    {
-        $this->assetAttributeOptionApi->upsert($familyCode, $attributeCode, $optionCode, $data);
-    }
 }

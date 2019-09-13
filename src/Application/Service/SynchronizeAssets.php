@@ -11,12 +11,20 @@ use AkeneoDAMConnector\Infrastructure\Pim\UpdateAssetApi;
 
 class SynchronizeAssets
 {
+    /** @var FetchAssets */
     private $fetchAssets;
+
+    /** @var AssetTransformer */
     private $assetTransformer;
+
+    /** @var UpdateAssetApi */
     private $assetApi;
 
-    public function __construct(FetchAssets $fetchAssets, AssetTransformer $assetTransformer, UpdateAssetApi $assetApi)
-    {
+    public function __construct(
+        FetchAssets $fetchAssets,
+        AssetTransformer $assetTransformer,
+        UpdateAssetApi $assetApi
+    ) {
         $this->fetchAssets = $fetchAssets;
         $this->assetTransformer = $assetTransformer;
         $this->assetApi = $assetApi;

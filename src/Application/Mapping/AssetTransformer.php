@@ -42,6 +42,6 @@ class AssetTransformer
             $pimAssetValues[] = $this->assetConverter->convert($damAsset, $damAssetValue, $attribute);
         }
 
-        return new PimAsset((string)$damAsset->damAssetIdentifier(), $pimAssetValues);
+        return new PimAsset((string)$damAsset->damAssetIdentifier(), $damAsset->assetFamilyCode(), $pimAssetValues);
     }
 }
