@@ -45,6 +45,7 @@ class SynchronizeAssetsExecutionRepository
             from synchronize_assets_execution
             where status = '$status'
             and family_code in (?)
+            group by family_code
 SQL;
 
         $results = $this->connection->executeQuery(

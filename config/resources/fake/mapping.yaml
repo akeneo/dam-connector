@@ -1,0 +1,9 @@
+packshot:
+    sku: product_ref
+    url: preview
+    colors: main_colors
+
+user_instruction:
+    sku: product_ref
+    url: media_link
+    pages: number_of_pages
