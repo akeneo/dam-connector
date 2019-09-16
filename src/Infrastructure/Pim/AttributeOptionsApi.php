@@ -31,7 +31,15 @@ class AttributeOptionsApi
 
     public function upsertAttributeOptions(AssetFamilyCode $familyCode, array $assetValues): void
     {
+        if (!isset($this->attributeOptions[(string) $familyCode])) {
+            $this->attributeOptions[(string) $familyCode] = [];
+        }
+
         foreach ($assetValues as $value) {
+            if (!isset($this->attributeOptions[(string) $familyCode][(string) $value->getAttributeCode()])) {
+                $this->attributeOptions[(string) $familyCode][(string) $value->getAttributeCode()] = [];
+            }
+
             if (is_array($value->getData())) {
                 $this->attributeOptions[(string) $familyCode][(string) $value->getAttributeCode()] =
                     array_merge(
