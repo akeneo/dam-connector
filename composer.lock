@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2e4387f0c3bac51f84f859a4efcb629",
+    "content-hash": "82692876d7c38045ca8173b15a9cb39b",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -67,12 +67,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeneo/api-php-client-ee.git",
-                "reference": "c459b39b0bf6f25e40448c7a1a8aec6a9b20e2c3"
+                "reference": "10850072346a493a5c22a79d78ef4e98dde38d48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeneo/api-php-client-ee/zipball/c459b39b0bf6f25e40448c7a1a8aec6a9b20e2c3",
-                "reference": "c459b39b0bf6f25e40448c7a1a8aec6a9b20e2c3",
+                "url": "https://api.github.com/repos/akeneo/api-php-client-ee/zipball/10850072346a493a5c22a79d78ef4e98dde38d48",
+                "reference": "10850072346a493a5c22a79d78ef4e98dde38d48",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "source": "https://github.com/akeneo/api-php-client-ee/tree/asset-family",
                 "issues": "https://github.com/akeneo/api-php-client-ee/issues"
             },
-            "time": "2019-08-29T15:22:55+00:00"
+            "time": "2019-09-19T14:32:27+00:00"
         },
         {
             "name": "bynder/bynder-php-sdk",
@@ -166,16 +166,16 @@
         },
         {
             "name": "cloudinary/cloudinary_php",
-            "version": "dev-master",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "45181e56048cdb3b57fd148070cce07f3a64da96"
+                "reference": "d4c947f6728c339649a10999a6a6362e5c7b9490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/45181e56048cdb3b57fd148070cce07f3a64da96",
-                "reference": "45181e56048cdb3b57fd148070cce07f3a64da96",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/d4c947f6728c339649a10999a6a6362e5c7b9490",
+                "reference": "d4c947f6728c339649a10999a6a6362e5c7b9490",
                 "shasum": ""
             },
             "require": {
@@ -214,7 +214,7 @@
                 "image management",
                 "sdk"
             ],
-            "time": "2019-09-10T11:52:46+00:00"
+            "time": "2019-05-13T14:27:40+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -3582,7 +3582,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "akeneo/api-php-client-ee": 20,
-        "cloudinary/cloudinary_php": 20,
         "doctrine/dbal": 20
     },
     "prefer-stable": false,
