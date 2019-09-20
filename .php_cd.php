@@ -25,30 +25,9 @@ $rules = [
      * APPLICATION
      */
     $builder->only([
+        'AkeneoDAMConnector\Application',
         'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Application\PimAdapter'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Application\DamAdapter'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Domain',
-        'AkeneoDAMConnector\Application\ConfigLoader',
-    ])->in('AkeneoDAMConnector\Application\Mapping'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Application\Mapping\AssetValueConverter',
-        'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Application\Mapping\AssetValueConverter'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Application\ConfigLoader',
-        'AkeneoDAMConnector\Application\DamAdapter',
-        'AkeneoDAMConnector\Application\Mapping',
-        'AkeneoDAMConnector\Application\PimAdapter',
-        'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Application\Service'),
+    ])->in('AkeneoDAMConnector\Application'),
 
     /**
      * INFRASTRUCTURE
