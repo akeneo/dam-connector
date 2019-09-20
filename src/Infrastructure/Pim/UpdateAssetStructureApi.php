@@ -42,6 +42,7 @@ class UpdateAssetStructureApi implements UpdateAssetStructure
 
     public function upsertAttribute(string $familyCode, string $attributeCode, array $data): void
     {
+        // TODO: Try/catch done because an error http code is sent when no change on attribute
         try {
             $this->assetAttributeApi->upsert($familyCode, $attributeCode, $data);
         } catch (UnprocessableEntityHttpException $e) {
