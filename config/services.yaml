@@ -8,7 +8,11 @@ parameters:
     app.pim_structure.config_path: null
     app.dam_to_pim_mapping.config_path: null
     app.database.connection_params:
-        url: '%env(DATABASE_URL)%'
+        driver: pdo_mysql
+        host: '%env(APP_DATABASE_HOST)%'
+        dbname: '%env(APP_DATABASE_NAME)%'
+        user: '%env(APP_DATABASE_USER)%'
+        password: '%env(APP_DATABASE_PASSWORD)%'
 
 services:
     # default configuration for services in *this* file
