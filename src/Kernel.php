@@ -43,7 +43,7 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
 
-        $loader->load($confDir.'/services/'.$container->getParameter('app.dam_name').'.yaml');
+        $loader->load($confDir.'/{services}/*'.self::CONFIG_EXTS, 'glob');
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes): void

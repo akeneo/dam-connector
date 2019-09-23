@@ -46,7 +46,7 @@ $rules = [
     $builder->only([
         'AkeneoDAMConnector\Application\DamAdapter',
         'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Infrastructure\DAM\Fake'),
+    ])->in('AkeneoDAMConnector\Infrastructure\DAM\DamExample'),
 
     $builder->only([
         'AkeneoDAMConnector\Application',

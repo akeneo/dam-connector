@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Infrastructure\DAM\Fake;
+namespace AkeneoDAMConnector\Infrastructure\DAM\DamExample;
 
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterface;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
@@ -18,7 +18,7 @@ class FetchAssets implements FetchAssetsInterface
             $id = (string)$i;
 
             $asset = new DamAsset(
-                new DamAssetIdentifier("UID_{$id}"),
+                new DamAssetIdentifier(md5("{$assetFamilyCode}_{$id}")),
                 $assetFamilyCode,
                 new Locale('en_US')
             );
@@ -26,10 +26,10 @@ class FetchAssets implements FetchAssetsInterface
             $asset->addValue('updated', (new \DateTime())->format('c'));
 
             if ((string)$assetFamilyCode === 'packshot') {
-                $asset->addValue('url', "https://cdn.fake-dam.example/{$id}.png");
+                $asset->addValue('url', "https://cdn.dam.example/{$id}.png");
                 $asset->addValue('colors', 'red,blue');
             } elseif ((string)$assetFamilyCode === 'user_instruction') {
-                $asset->addValue('url', "https://cdn.fake-dam.example/{$id}.pdf");
+                $asset->addValue('url', "https://cdn.dam.example/{$id}.pdf");
                 $asset->addValue('pages', '12');
             }
 
