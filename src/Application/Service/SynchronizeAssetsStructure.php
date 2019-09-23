@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\Service;
 
-use Akeneo\Pim\ApiClient\Exception\UnprocessableEntityHttpException;
 use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAssetStructure;
 
@@ -45,16 +44,7 @@ class SynchronizeAssetsStructure
 
             // 2. Adds attribute to family
             foreach ($assetFamilyConfig['attributes'] as $assetAttributeConfig) {
-                // TODO: Try/catch done because an error http code is sent when no change on attribute
-                try {
-                    $this->updateAssetStructure->upsertAttribute($assetFamilyCode, $assetAttributeConfig['code'], $assetAttributeConfig);
-                } catch (UnprocessableEntityHttpException $e) {
-                    foreach ($e->getResponseErrors() as $error) {
-                        if ($error['message'] !== 'There should be updates to perform on the attribute. None found.') {
-                            throw $e;
-                        }
-                    }
-                }
+                $this->updateAssetStructure->upsertAttribute($assetFamilyCode, $assetAttributeConfig['code'], $assetAttributeConfig);
             }
 
             // 3. Adds product rule asset assignation to the family

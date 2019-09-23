@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Infrastructure\Pim;
 
+use Akeneo\Pim\ApiClient\Exception\UnprocessableEntityHttpException;
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetAttributeApiInterface;
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetAttributeOptionApiInterface;
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetFamilyApiInterface;
@@ -41,7 +42,16 @@ class UpdateAssetStructureApi implements UpdateAssetStructure
 
     public function upsertAttribute(string $familyCode, string $attributeCode, array $data): void
     {
-        $this->assetAttributeApi->upsert($familyCode, $attributeCode, $data);
+        // TODO: Try/catch done because an error http code is sent when no change on attribute
+        try {
+            $this->assetAttributeApi->upsert($familyCode, $attributeCode, $data);
+        } catch (UnprocessableEntityHttpException $e) {
+            foreach ($e->getResponseErrors() as $error) {
+                if ($error['message'] !== 'There should be updates to perform on the attribute. None found.') {
+                    throw $e;
+                }
+            }
+        }
     }
 
     public function upsertFamily(string $familyCode, array $data): void
