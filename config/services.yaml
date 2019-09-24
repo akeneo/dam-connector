@@ -4,11 +4,14 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    app.dam_name: fake
-    app.pim_structure.config_path: '%kernel.project_dir%/config/resources/pim-assets-structure.yml'
-    app.dam_to_pim_mapping.config_path: '%kernel.project_dir%/config/resources/dam-to-pim-mapping.yaml'
+    app.pim_structure.config_path: null
+    app.dam_to_pim_mapping.config_path: null
     app.database.connection_params:
-        url: '%env(DATABASE_URL)%'
+        driver: pdo_mysql
+        host: '%env(APP_DATABASE_HOST)%'
+        dbname: '%env(APP_DATABASE_NAME)%'
+        user: '%env(APP_DATABASE_USER)%'
+        password: '%env(APP_DATABASE_PASSWORD)%'
 
 services:
     # default configuration for services in *this* file

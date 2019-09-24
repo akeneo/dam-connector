@@ -1,0 +1,41 @@
+packshot:
+    product_link_rules:
+        product_selections:
+            -   field: sku
+                operator: EQUALS
+                value: "{{product_ref}}"
+        assign_assets_to:
+            -   attribute: packshot
+                locale: "{{locale}}"
+                mode: replace
+    attributes:
+        -   code: locale
+            type: text
+        -   code: product_ref
+            type: text
+        -   code: preview
+            type: media_link
+            media_type: image
+        -   code: main_colors
+            type: multiple_options
+
+user_instruction:
+    product_link_rules:
+        product_selections:
+            -   field: sku
+                operator: EQUALS
+                value: "{{product_ref}}"
+        assign_assets_to:
+            -   attribute: packshot
+                locale: "{{locale}}"
+                mode: replace
+    attributes:
+        -   code: locale
+            type: text
+        -   code: product_ref
+            type: text
+        -   code: media_link
+            type: media_link
+            media_type: other
+        -   code: number_of_pages
+            type: text
