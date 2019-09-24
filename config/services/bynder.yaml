@@ -1,0 +1,22 @@
+parameters:
+    app.pim_structure.config_path: '%kernel.project_dir%/config/resources/bynder/structure.yaml'
+    app.dam_to_pim_mapping.config_path: '%kernel.project_dir%/config/resources/bynder/mapping.yaml'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    AkeneoDAMConnector\Infrastructure\DAM\Bynder\:
+        resource: '../../src/Infrastructure/DAM/Bynder/*'
+
+    AkeneoDAMConnector\Infrastructure\DAM\Bynder\ClientBuilder:
+        arguments:
+            $consumerKey: '%env(BYNDER_CONSUMER_KEY)%'
+            $consumerSecret: '%env(BYNDER_CONSUMER_SECRET)%'
+            $token: '%env(BYNDER_CLIENT_KEY)%'
+            $tokenSecret: '%env(BYNDER_CLIENT_SECRET)%'
+            $baseUrl: '%env(BYNDER_URL)%'
+
+    AkeneoDAMConnector\Application\DamAdapter\FetchAssets: '@AkeneoDAMConnector\Infrastructure\DAM\Bynder\FetchAssets'
