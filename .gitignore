@@ -6,9 +6,17 @@
 /public/
 /var/
 /vendor/
+/bin/
+/composer.lock
+/symfony.lock
 ###< symfony/framework-bundle ###
 .idea/
 
 ###> docker ###
 docker-compose.override.yml
 ###< docker ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
