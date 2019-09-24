@@ -8,32 +8,77 @@ use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterfac
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
-use AkeneoDAMConnector\Domain\Locale;
 
 class FetchAssets implements FetchAssetsInterface
 {
     public function fetch(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
     {
-        for ($i = 0; $i < 2; $i++) {
-            $id = (string)$i;
 
-            $asset = new DamAsset(
-                new DamAssetIdentifier(md5("{$assetFamilyCode}_{$id}")),
-                $assetFamilyCode,
-                new Locale('en_US')
-            );
-            $asset->addValue('sku', "SKU-{$id}");
-            $asset->addValue('updated', (new \DateTime())->format('c'));
+        $response = json_decode($this->getJson(), true);
 
-            if ((string)$assetFamilyCode === 'packshot') {
-                $asset->addValue('url', "https://cdn.dam.example/{$id}.png");
-                $asset->addValue('colors', 'red,blue');
-            } elseif ((string)$assetFamilyCode === 'user_instruction') {
-                $asset->addValue('url', "https://cdn.dam.example/{$id}.pdf");
-                $asset->addValue('pages', '12');
-            }
+        foreach ($response[(string) $assetFamilyCode] as $data) {
+            $asset = $this->denormalize($data, $assetFamilyCode);
 
             yield $asset;
         }
+    }
+
+    private function denormalize(array $data, AssetFamilyCode $assetFamilyCode): DamAsset
+    {
+        $asset = new DamAsset(
+            new DamAssetIdentifier($data['uid']),
+            $assetFamilyCode,
+            null
+        );
+
+        foreach ($data as $property => $value) {
+            if ($property === 'uid') {
+                continue;
+            }
+
+            $asset->addValue($property, (string) $value);
+        }
+
+        return $asset;
+    }
+
+    private function getJson(): string
+    {
+        return <<<JSON
+        {
+            "packshot": [
+                {
+                    "uid": "7373ac00a66f13833e2583f455b58fd5",
+                    "sku": "SKU-0",
+                    "url": "https://cdn.dam.example/0.png",
+                    "colors": "red,blue",
+                    "updated": "2019-09-24T08:00:00+00:00"
+                },
+                {
+                    "uid": "2b36d2ed4f65d347cd2fced7cfd8b11a",
+                    "sku": "SKU-1",
+                    "url": "https://cdn.dam.example/1.png",
+                    "colors": "red",
+                    "updated": "2019-09-24T00:00:00+00:00"
+                }
+            ],
+            "user_instruction": [
+                {
+                    "uid": "e8fe93a2787198bd5fd5ff99715c41f0",
+                    "sku": "SKU-2",
+                    "url": "https://cdn.dam.example/2.png",
+                    "pages": 12,
+                    "updated": "2019-09-24T00:00:00+00:00"
+                },
+                {
+                    "uid": "bb1464f149b65276cf2ac5a8ce1c1106",
+                    "sku": "SKU-3",
+                    "url": "https://cdn.dam.example/3.png",
+                    "pages": 4,
+                    "updated": "2019-09-24T00:00:00+00:00"
+                }
+            ]
+        }
+JSON;
     }
 }
