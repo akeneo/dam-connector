@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "920eb76a8234946d72fa37afde7a5851",
+    "content-hash": "b24208d38a586346a3c437cd75701d99",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -114,107 +114,6 @@
                 "issues": "https://github.com/akeneo/api-php-client-ee/issues"
             },
             "time": "2019-09-19T14:32:27+00:00"
-        },
-        {
-            "name": "bynder/bynder-php-sdk",
-            "version": "1.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Bynder/bynder-php-sdk.git",
-                "reference": "1ba47afff4c986d91a473b69183d4aa35fd913b6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Bynder/bynder-php-sdk/zipball/1ba47afff4c986d91a473b69183d4aa35fd913b6",
-                "reference": "1ba47afff4c986d91a473b69183d4aa35fd913b6",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.0",
-                "guzzlehttp/oauth-subscriber": "0.3.*",
-                "php": ">= 5.6"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "~1",
-                "phpdocumentor/phpdocumentor": "2.*",
-                "phpunit/phpunit": "5.5.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Bynder\\": "src/Bynder"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bynder",
-                    "homepage": "https://github.com/Bynder/bynder-php-sdk"
-                }
-            ],
-            "description": "Bynder PHP Library",
-            "homepage": "https://www.bynder.com",
-            "keywords": [
-                "api",
-                "bynder",
-                "sdk"
-            ],
-            "time": "2019-01-03T09:04:45+00:00"
-        },
-        {
-            "name": "cloudinary/cloudinary_php",
-            "version": "1.14.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "d4c947f6728c339649a10999a6a6362e5c7b9490"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/d4c947f6728c339649a10999a6a6362e5c7b9490",
-                "reference": "d4c947f6728c339649a10999a6a6362e5c7b9490",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.8.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src"
-                ],
-                "files": [
-                    "src/Helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cloudinary",
-                    "homepage": "https://github.com/cloudinary/cloudinary_php/graphs/contributors"
-                }
-            ],
-            "description": "Cloudinary PHP SDK",
-            "homepage": "https://github.com/cloudinary/cloudinary_php",
-            "keywords": [
-                "cdn",
-                "cloud",
-                "cloudinary",
-                "image management",
-                "sdk"
-            ],
-            "time": "2019-05-13T14:27:40+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -511,57 +410,6 @@
                 "web service"
             ],
             "time": "2018-04-22T15:46:56+00:00"
-        },
-        {
-            "name": "guzzlehttp/oauth-subscriber",
-            "version": "0.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/oauth-subscriber.git",
-                "reference": "04960cdef3cd80ea401d6b0ca8b3e110e9bf12cf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/oauth-subscriber/zipball/04960cdef3cd80ea401d6b0ca8b3e110e9bf12cf",
-                "reference": "04960cdef3cd80ea401d6b0ca8b3e110e9bf12cf",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.0",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Subscriber\\Oauth\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle OAuth 1.0 subscriber",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "Guzzle",
-                "oauth"
-            ],
-            "time": "2015-08-15T19:44:28+00:00"
         },
         {
             "name": "guzzlehttp/promises",

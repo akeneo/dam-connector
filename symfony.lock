@@ -8,12 +8,6 @@
     "akeneo/php-coupling-detector": {
         "version": "0.3.1"
     },
-    "bynder/bynder-php-sdk": {
-        "version": "1.0.9"
-    },
-    "cloudinary/cloudinary_php": {
-        "version": "dev-master"
-    },
     "composer/semver": {
         "version": "1.x-dev"
     },
@@ -58,9 +52,6 @@
     },
     "guzzlehttp/guzzle": {
         "version": "6.3-dev"
-    },
-    "guzzlehttp/oauth-subscriber": {
-        "version": "0.3-dev"
     },
     "guzzlehttp/promises": {
         "version": "1.4-dev"

@@ -35,17 +35,6 @@ $rules = [
     $builder->only([
         'AkeneoDAMConnector\Application\DamAdapter',
         'AkeneoDAMConnector\Domain',
-        'Bynder\Api',
-    ])->in('AkeneoDAMConnector\Infrastructure\DAM\Bynder'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Application\DamAdapter',
-        'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Infrastructure\DAM\Cloudinary'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Application\DamAdapter',
-        'AkeneoDAMConnector\Domain',
     ])->in('AkeneoDAMConnector\Infrastructure\DAM\DamExample'),
 
     $builder->only([

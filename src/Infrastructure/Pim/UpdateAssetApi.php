@@ -41,7 +41,7 @@ class UpdateAssetApi implements UpdateAsset
         $this->attributeOptionsApi->flush($assetFamilyCode);
 
         $results = $this->api->upsertList((string)$assetFamilyCode, $this->assets[(string)$assetFamilyCode]);
-        var_dump($results);
+        var_dump($results); // TODO Handle errors
 
         $this->assets[(string)$assetFamilyCode] = [];
     }

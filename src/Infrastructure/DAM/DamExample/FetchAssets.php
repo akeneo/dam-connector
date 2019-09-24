@@ -13,7 +13,6 @@ class FetchAssets implements FetchAssetsInterface
 {
     public function fetch(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
     {
-
         $response = json_decode($this->getJson(), true);
 
         foreach ($response[(string) $assetFamilyCode] as $data) {
