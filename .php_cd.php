@@ -35,6 +35,11 @@ $rules = [
     $builder->only([
         'AkeneoDAMConnector\Application\DamAdapter',
         'AkeneoDAMConnector\Domain',
+    ])->in('AkeneoDAMConnector\Infrastructure\DAM\Cloudinary'),
+    
+    $builder->only([
+        'AkeneoDAMConnector\Application\DamAdapter',
+        'AkeneoDAMConnector\Domain',
     ])->in('AkeneoDAMConnector\Infrastructure\DAM\DamExample'),
 
     $builder->only([
