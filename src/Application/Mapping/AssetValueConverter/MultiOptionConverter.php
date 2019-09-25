@@ -9,7 +9,6 @@ use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
 use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
 use AkeneoDAMConnector\Domain\AssetAttribute;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
 
 class MultiOptionConverter implements AssetValueConverter
 {
