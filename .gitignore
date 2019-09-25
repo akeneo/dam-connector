@@ -6,9 +6,6 @@
 /public/
 /var/
 /vendor/
-/bin/
-/composer.lock
-/symfony.lock
 ###< symfony/framework-bundle ###
 .idea/
 

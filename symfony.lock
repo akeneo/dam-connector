@@ -35,6 +35,9 @@
     "doctrine/event-manager": {
         "version": "1.0.x-dev"
     },
+    "doctrine/instantiator": {
+        "version": "1.2.0"
+    },
     "doctrine/lexer": {
         "version": "1.2.x-dev"
     },
@@ -83,6 +86,24 @@
     "php-http/promise": {
         "version": "1.0-dev"
     },
+    "phpdocumentor/reflection-common": {
+        "version": "2.0.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "4.3.2"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.0.1"
+    },
+    "phpspec/php-diff": {
+        "version": "v1.1.0"
+    },
+    "phpspec/phpspec": {
+        "version": "4.3.4"
+    },
+    "phpspec/prophecy": {
+        "version": "1.8.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -103,6 +124,18 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "sebastian/comparator": {
+        "version": "3.0.2"
+    },
+    "sebastian/diff": {
+        "version": "3.0.2"
+    },
+    "sebastian/exporter": {
+        "version": "3.1.2"
+    },
+    "sebastian/recursion-context": {
+        "version": "3.0.0"
     },
     "symfony/cache": {
         "version": "v4.3.3"
@@ -231,5 +264,8 @@
     },
     "symfony/yaml": {
         "version": "v4.3.3"
+    },
+    "webmozart/assert": {
+        "version": "1.5.0"
     }
 }
