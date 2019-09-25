@@ -17,7 +17,7 @@ class PimAssetValue
 
     private $channel;
 
-    public function __construct(AssetAttribute $attribute, $data, string $locale = null, string $channel = null)
+    public function __construct(AssetAttribute $attribute, $data, ?string $locale = null, ?string $channel = null)
     {
         $this->attribute = $attribute;
         $this->data = $data;
@@ -43,12 +43,12 @@ class PimAssetValue
         return $this->data;
     }
 
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    public function getChannel(): string
+    public function getChannel(): ?string
     {
         return $this->channel;
     }
