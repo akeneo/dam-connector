@@ -28,7 +28,7 @@ class AssetMapperSpec extends ObjectBehavior
         $this->getMappedProperties($familyCode)->shouldReturn(['sku', 'url', 'colors']);
     }
 
-    public function it_throws_an_exception_if_not_mapping_can_be_provided($mappingConfigLoader): void
+    public function it_throws_an_exception_if_no_mapping_can_be_provided($mappingConfigLoader): void
     {
         $mappingConfigLoader->load()->willReturn($this->getMapping());
         $familyCode = new AssetFamilyCode('family');
