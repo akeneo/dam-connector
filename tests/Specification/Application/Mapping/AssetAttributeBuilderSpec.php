@@ -21,15 +21,12 @@ class AssetAttributeBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(AssetAttributeBuilder::class);
     }
 
-    function it_builds_an_attribute(
-        $structureConfigLoader,
-        AssetFamilyCode $familyCode,
-        AssetAttributeCode $attributeCode
-    ): void {
+    function it_builds_an_attribute($structureConfigLoader): void
+    {
         $structureConfigLoader->load()->willReturn($this->getConfig());
 
-        $familyCode->__toString()->willReturn('packshot');
-        $attributeCode->__toString()->willReturn('locale');
+        $familyCode = new AssetFamilyCode('packshot');
+        $attributeCode = new AssetAttributeCode('locale');
 
         $attribute = $this->build($familyCode, $attributeCode);
         $attribute->getCode()->shouldReturn($attributeCode);
@@ -37,15 +34,12 @@ class AssetAttributeBuilderSpec extends ObjectBehavior
         $attribute->isLocalizable()->shouldReturn(false);
     }
 
-    function it_throws_an_exception_if_attribute_does_not_exist(
-        $structureConfigLoader,
-        AssetFamilyCode $familyCode,
-        AssetAttributeCode $attributeCode
-    ): void {
+    function it_throws_an_exception_if_attribute_does_not_exist($structureConfigLoader): void
+    {
         $structureConfigLoader->load()->willReturn($this->getConfig());
 
-        $familyCode->__toString()->willReturn('packshot');
-        $attributeCode->__toString()->willReturn('description');
+        $familyCode = new AssetFamilyCode('packshot');
+        $attributeCode = new AssetAttributeCode('description');
 
         $this
             ->shouldThrow(
