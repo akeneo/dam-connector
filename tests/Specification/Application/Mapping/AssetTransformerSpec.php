@@ -5,12 +5,11 @@ namespace Specification\AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Application\Mapping\AssetConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetMapper;
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
 use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
-use AkeneoDAMConnector\Domain\AssetAttribute;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder;
+use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -23,31 +22,28 @@ class AssetTransformerSpec extends ObjectBehavior
         $this->beConstructedWith($assetMapper, $assetConverter);
     }
 
-    public function it_transforms_a_dam_asset_to_pim_asset(
-        $assetMapper,
-        $assetConverter,
-        DamAsset $damAsset,
-        AssetFamilyCode $familyCode,
-        DamAssetValue $skuValue,
-        DamAssetValue $colorsValue,
-        DamAssetValue $designedByValue,
-        DamAssetIdentifier $damIdentifier,
-        AssetAttribute $skuAttribute,
-        AssetAttribute $colorsAttribute,
-        PimAssetValue $skuPimValue,
-        PimAssetValue $colorsPimValue
-    ): void {
+    public function it_transforms_a_dam_asset_to_pim_asset($assetMapper, $assetConverter): void
+    {
         $mappedProperties = ['sku', 'colors', 'url'];
-        $damValues = [
-            'sku' => $skuValue,
-            'colors' => $colorsValue,
-            'designed_by' => $designedByValue,
-        ];
-        $damAsset->assetFamilyCode()->willReturn($familyCode);
-        $damAsset->getValues()->willReturn($damValues);
-        $damAsset->damAssetIdentifier()->willReturn($damIdentifier);
 
-        $damIdentifier->__toString()->willReturn('dam_identifier');
+        $familyCode = new AssetFamilyCode('packshot');
+        $damAsset = DamAssetBuilder::build(
+            'dam_identifier',
+            'packshot',
+            [
+                'sku' => '123456',
+                'colors' => 'blue, green',
+                'designed_by' => 'stark',
+            ]
+        );
+        $skuValue = new DamAssetValue('sku', '123456');
+        $colorsValue = new DamAssetValue('colors', 'blue, green');
+        $designedByValue = new DamAssetValue('designed_by', 'stark');
+
+        $skuAttribute = AssetAttributeBuilder::build('sku', 'text');
+        $colorsAttribute = AssetAttributeBuilder::build('all_colors', 'multiple_options');
+        $skuPimValue = new PimAssetValue($skuAttribute, '123456');
+        $colorsPimValue = new PimAssetValue($colorsAttribute, ['blue', 'green']);
 
         $assetMapper->getMappedProperties($familyCode)->willReturn($mappedProperties);
         $assetMapper->mapAttribute($familyCode, 'sku')->willReturn($skuAttribute);
@@ -63,5 +59,20 @@ class AssetTransformerSpec extends ObjectBehavior
 
         $pimAsset = $this->damToPim($damAsset);
         $pimAsset->getCode()->shouldReturn('dam_identifier');
+        $pimAsset->normalize()->shouldReturn([
+            'code' => 'dam_identifier',
+            'values' => [
+                'sku' => [[
+                    'locale' => null,
+                    'channel' => null,
+                    'data' => '123456',
+                ]],
+                'all_colors' => [[
+                    'locale' => null,
+                    'channel' => null,
+                    'data' => ['blue', 'green'],
+                ]],
+            ]
+        ]);
     }
 }
