@@ -7,11 +7,10 @@ use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
 use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAsset;
 use AkeneoDAMConnector\Application\Service\SynchronizeAssets;
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\PimAsset;
 use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Tests\Specification\Builder\PimAssetBuilder;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
 
 class SynchronizeAssetsSpec extends ObjectBehavior
 {
@@ -32,13 +31,14 @@ class SynchronizeAssetsSpec extends ObjectBehavior
         $fetchAssets,
         $assetTransformer,
         $assetApi,
-        DamAsset $damTable,
-        DamAsset $damMug,
-        PimAsset $pimTable,
-        PimAsset $pimMug,
-        \Iterator $damAssets,
-        AssetFamilyCode $assetFamilyCode
+        \Iterator $damAssets
     ) {
+        $assetFamilyCode = new AssetFamilyCode('packshot');
+        $damTable = DamAssetBuilder::build('table', 'packshot');
+        $damMug = DamAssetBuilder::build('mug', 'packshot');
+        $pimTable = PimAssetBuilder::build('table', 'packshot');
+        $pimMug = PimAssetBuilder::build('mug', 'packshot');
+
         $damAssets->rewind()->shouldBeCalled();
         $damAssets->valid()->willReturn(true, true, false);
         $damAssets->current()->willReturn($damTable, $damMug);
