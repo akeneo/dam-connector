@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Infrastructure\DAM\DamExample;
 
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterface;
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetIdentifier;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 
 class FetchAssets implements FetchAssetsInterface
 {
-    public function fetch(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
+    public function fetch(FamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
     {
         $response = json_decode($this->getJson(), true);
 
@@ -22,7 +22,7 @@ class FetchAssets implements FetchAssetsInterface
         }
     }
 
-    private function denormalize(array $data, AssetFamilyCode $assetFamilyCode): DamAsset
+    private function denormalize(array $data, FamilyCode $assetFamilyCode): DamAsset
     {
         $asset = new DamAsset(
             new DamAssetIdentifier($data['uid']),

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain\Asset;
+namespace AkeneoDAMConnector\Domain\Model\Pim;
 
 class PimAssetCollection implements \Iterator
 {

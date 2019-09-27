@@ -7,7 +7,7 @@ use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
 use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAsset;
 use AkeneoDAMConnector\Application\Service\SynchronizeAssets;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use AkeneoDAMConnector\Tests\Specification\Builder\PimAssetBuilder;
 use PhpSpec\ObjectBehavior;
 use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
@@ -33,7 +33,7 @@ class SynchronizeAssetsSpec extends ObjectBehavior
         $assetApi,
         \Iterator $damAssets
     ) {
-        $assetFamilyCode = new AssetFamilyCode('packshot');
+        $assetFamilyCode = new FamilyCode('packshot');
         $damTable = DamAssetBuilder::build('table', 'packshot');
         $damMug = DamAssetBuilder::build('mug', 'packshot');
         $pimTable = PimAssetBuilder::build('table', 'packshot');

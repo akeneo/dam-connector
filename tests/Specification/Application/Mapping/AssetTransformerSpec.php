@@ -5,9 +5,9 @@ namespace Specification\AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Application\Mapping\AssetConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetMapper;
-use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
-use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder;
 use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
 use PhpSpec\ObjectBehavior;
@@ -26,7 +26,7 @@ class AssetTransformerSpec extends ObjectBehavior
     {
         $mappedProperties = ['sku', 'colors', 'url'];
 
-        $familyCode = new AssetFamilyCode('packshot');
+        $familyCode = new FamilyCode('packshot');
         $damAsset = DamAssetBuilder::build(
             'dam_identifier',
             'packshot',

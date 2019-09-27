@@ -5,8 +5,8 @@ namespace Specification\AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\Mapping\AssetAttributeBuilder;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use AkeneoDAMConnector\Domain\Exception\AttributeMappingNotFound;
 use AkeneoDAMConnector\Domain\Exception\FamilyMappingNotFound;
 use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder as TestAttributeBuilder;
@@ -23,7 +23,7 @@ class AssetMapperSpec extends ObjectBehavior
     public function it_provides_mapped_properties_of_a_family($mappingConfigLoader): void
     {
         $mappingConfigLoader->load()->willReturn($this->getMapping());
-        $familyCode = new AssetFamilyCode('packshot');
+        $familyCode = new FamilyCode('packshot');
 
         $this->getMappedProperties($familyCode)->shouldReturn(['sku', 'url', 'colors']);
     }
@@ -31,7 +31,7 @@ class AssetMapperSpec extends ObjectBehavior
     public function it_throws_an_exception_if_no_mapping_can_be_provided($mappingConfigLoader): void
     {
         $mappingConfigLoader->load()->willReturn($this->getMapping());
-        $familyCode = new AssetFamilyCode('family');
+        $familyCode = new FamilyCode('family');
 
         $this
             ->shouldThrow(
@@ -45,12 +45,12 @@ class AssetMapperSpec extends ObjectBehavior
         $assetAttributeBuilder
     ): void {
         $mappingConfigLoader->load()->willReturn($this->getMapping());
-        $familyCode = new AssetFamilyCode('packshot');
+        $familyCode = new FamilyCode('packshot');
         $attribute = TestAttributeBuilder::build('preview', 'text');
 
         $assetAttributeBuilder
             ->build('packshot', Argument::that(function ($argument) {
-                return $argument instanceof AssetAttributeCode &&
+                return $argument instanceof AttributeCode &&
                     'preview' === $argument->__toString();
             }))
             ->shouldBeCalled()
@@ -63,7 +63,7 @@ class AssetMapperSpec extends ObjectBehavior
         $mappingConfigLoader
     ): void {
         $mappingConfigLoader->load()->willReturn($this->getMapping());
-        $familyCode = new AssetFamilyCode('packshot');
+        $familyCode = new FamilyCode('packshot');
 
         $this
             ->shouldThrow(

@@ -5,10 +5,10 @@ namespace Specification\AkeneoDAMConnector\Application\Mapping\AssetValueConvert
 
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter\TextConverter;
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
-use AkeneoDAMConnector\Domain\AssetAttribute;
-use AkeneoDAMConnector\Domain\Locale;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Locale;
 use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder;
 use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
 use PhpSpec\ObjectBehavior;

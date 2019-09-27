@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain;
+namespace AkeneoDAMConnector\Domain\Model\Pim;
 
-class AssetAttribute
+class Attribute
 {
     private $code;
 
@@ -12,14 +12,14 @@ class AssetAttribute
 
     private $localizable;
 
-    public function __construct(AssetAttributeCode $code, string $type, bool $localizable)
+    public function __construct(AttributeCode $code, string $type, bool $localizable)
     {
         $this->code = $code;
         $this->type = $type;
         $this->localizable = $localizable;
     }
 
-    public function getCode(): AssetAttributeCode
+    public function getCode(): AttributeCode
     {
         return $this->code;
     }
