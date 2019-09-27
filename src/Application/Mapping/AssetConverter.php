@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\Mapping;
 
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
-use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
-use AkeneoDAMConnector\Domain\AssetAttribute;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
 
 class AssetConverter
 {
@@ -18,7 +18,7 @@ class AssetConverter
         $this->registry = $registry;
     }
 
-    public function convert(DamAsset $damAsset, DamAssetValue $damAssetValue, AssetAttribute $attribute): PimAssetValue
+    public function convert(DamAsset $damAsset, DamAssetValue $damAssetValue, Attribute $attribute): PimAssetValue
     {
         return $this->registry->getConverter($attribute->getType())->convert(
             $damAsset,

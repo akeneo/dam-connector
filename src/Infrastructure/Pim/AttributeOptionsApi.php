@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Infrastructure\Pim;
 
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetAttributeOptionApiInterface;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 
 /**
  * @author Willy Mesnage <willy.mesnage@akeneo.com>
@@ -28,7 +28,7 @@ class AttributeOptionsApi
         $this->pimStructure = [];
     }
 
-    public function upsertAttributeOptions(AssetFamilyCode $familyCode, array $assetValues): void
+    public function upsertAttributeOptions(FamilyCode $familyCode, array $assetValues): void
     {
         if (!isset($this->attributeOptions[(string) $familyCode])) {
             $this->attributeOptions[(string) $familyCode] = [];
@@ -51,7 +51,7 @@ class AttributeOptionsApi
         }
     }
 
-    public function flush(AssetFamilyCode $familyCode): void
+    public function flush(FamilyCode $familyCode): void
     {
         foreach ($this->attributeOptions[(string) $familyCode] as $attributeCode => $attributeOptions) {
             $pimOptions = $this->get((string) $familyCode, $attributeCode);

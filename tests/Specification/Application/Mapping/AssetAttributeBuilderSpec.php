@@ -5,8 +5,8 @@ namespace Specification\AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\Mapping\AssetAttributeBuilder;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use PhpSpec\ObjectBehavior;
 
 class AssetAttributeBuilderSpec extends ObjectBehavior
@@ -25,8 +25,8 @@ class AssetAttributeBuilderSpec extends ObjectBehavior
     {
         $structureConfigLoader->load()->willReturn($this->getConfig());
 
-        $familyCode = new AssetFamilyCode('packshot');
-        $attributeCode = new AssetAttributeCode('locale');
+        $familyCode = new FamilyCode('packshot');
+        $attributeCode = new AttributeCode('locale');
 
         $attribute = $this->build($familyCode, $attributeCode);
         $attribute->getCode()->shouldReturn($attributeCode);
@@ -38,8 +38,8 @@ class AssetAttributeBuilderSpec extends ObjectBehavior
     {
         $structureConfigLoader->load()->willReturn($this->getConfig());
 
-        $familyCode = new AssetFamilyCode('packshot');
-        $attributeCode = new AssetAttributeCode('description');
+        $familyCode = new FamilyCode('packshot');
+        $attributeCode = new AttributeCode('description');
 
         $this
             ->shouldThrow(

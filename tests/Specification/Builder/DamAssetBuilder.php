@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Tests\Specification\Builder;
 
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
-use AkeneoDAMConnector\Domain\Locale;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetIdentifier;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Locale;
 
 class DamAssetBuilder
 {
@@ -17,7 +17,7 @@ class DamAssetBuilder
         ?string $locale = null
     ): DamAsset {
         $identifier = new DamAssetIdentifier($identifier);
-        $assetFamilyCode = new AssetFamilyCode($assetFamilyCode);
+        $assetFamilyCode = new FamilyCode($assetFamilyCode);
         $locale = null !== $locale ? new Locale($locale) : null;
 
         $damAsset = new DamAsset($identifier, $assetFamilyCode, $locale);

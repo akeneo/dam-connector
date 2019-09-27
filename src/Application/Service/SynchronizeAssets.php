@@ -7,7 +7,7 @@ namespace AkeneoDAMConnector\Application\Service;
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
 use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAsset;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 
 class SynchronizeAssets
 {
@@ -30,7 +30,7 @@ class SynchronizeAssets
         $this->assetApi = $assetApi;
     }
 
-    public function execute(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): void
+    public function execute(FamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): void
     {
         $damAssets = $this->fetchAssets->fetch($assetFamilyCode, $lastFetchDate);
 

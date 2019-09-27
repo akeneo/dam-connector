@@ -5,7 +5,7 @@ namespace Specification\AkeneoDAMConnector\Application\Mapping\AssetValueConvert
 
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter\MultiOptionConverter;
-use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
 use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder;
 use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
 use PhpSpec\ObjectBehavior;

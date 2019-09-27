@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain;
+namespace AkeneoDAMConnector\Domain\Model\Pim;
 
-class AssetFamilyCode
+class AttributeCode
 {
     private $code;
 
