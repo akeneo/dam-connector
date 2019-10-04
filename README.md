@@ -6,24 +6,30 @@ It's a **PHP console application** using **Symfony 4** and **MySQL** to hold inf
 
 For more information on how to create your DAM Connector see the [guide](https://api.akeneo.com/documentation/asset-manager.html).
 
-# Requirements
+__Concepts & Resources__
 
-- php >= 7.2
-- composer
-
-or
-
-- Docker & Docker Compose >= 3
+Please refer to our [official documentation](https://api.akeneo.com/documentation/asset-manager.html#concepts-resources)
+This is the source of truth of  our Ubiquitous Language. 
 
 
 # Install
 
 ## Via Composer:
+
+_Requirements:_
+- PHP >= 7.2
+- composer
+
 ```sh
 composer install
 ```
 
 ## Via Docker & Docker Compose:
+
+_Requirements:_
+- Docker & Docker Compose >= 3
+
+
 ```sh
 docker-compose run --rm php-cli composer install
 ```
@@ -83,11 +89,10 @@ We choose to do this with a simple `.yaml` configuration file referenced in a Sy
 
 ## Architecture 🏗️
 
-This skeleton use a simple [hexagonal architecture](http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html) where the code is decoupled between  **Application**, **Domain** and **Infrastructure**.
+This skeleton uses [hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)).
+The code is split in 3 main parts: **Application**, **Domain** and **Infrastructure**.
 
 ### Application
-
-<!-- what for -->
 
 On the _Application_ side we defined a service `Application\Service\SynchronizeAssets` that is handling all the synchronization logic between the PIM and the DAM.
 
@@ -100,14 +105,10 @@ The `Application\Mapping` folder hold all the logic needed to transform a DAM As
 
 ### Domain
 
-<!-- what for -->
-
-`Domain\Model`
+The Domain objects have been defined following our [ubiquitous language](https://api.akeneo.com/documentation/asset-manager.html#concepts-resources) 
 
 
 ### Infrastructure
-
-<!-- what for -->
 
 Define a concrete class that implement the `Application\DamAdapter\FetchAssets` interface.
 See [dam-example.yaml](./config/services/dam-example.yaml).
@@ -120,8 +121,17 @@ Then we have the Symfony Console Command `Infrastructure\Command\SynchronizeAsse
 that is designed to be the entry point of the Connector via `bin/console dam-connector:assets:synchronize`
 and can be called regularly, via a Cron jon for example, to synchronize assets between the DAM and the PIM.
 
+# Run tests
 
-## Concepts & Resources
+Our test stack is based on hexagonal architecture and is composed of different types:
+- Unit tests for logic. Most of the time, you have one unit test class by implemented class.
+- Integration tests for the infrastructure layer. It tests that the input or output are correctly working.
+- End-To-End tests to test the whole stack. We currently don't have these tests but behat and phpunit are good tools for that. 
 
-Please refer to our [official documentation](https://api.akeneo.com/documentation/asset-manager.html#concepts-resources)
-This is the source of truth of  our Ubiquitous Language. 
+## Unit tests
+We suggest [phpspec](https://www.phpspec.net/) and [phpunit](https://phpunit.de) as unit test tools.
+You can run them through `docker-compose run --rm dam-connector_php-cli vendor/bin/phpspec run` and `docker-compose run --rm dam-connector_php-cli bin/phpunit --testsuite unit`
+
+## Integration tests
+We suggest [phpunit](https://phpunit.de) as integration test tool.
+You can run these these with the following command `docker-compose run --rm dam-connector_php-cli bin/phpunit --testsuite integration`.

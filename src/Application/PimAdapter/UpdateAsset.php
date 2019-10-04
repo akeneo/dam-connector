@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\PimAdapter;
 
-use AkeneoDAMConnector\Domain\Model\Pim\PimAsset;
 use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAsset;
 
 interface UpdateAsset
 {

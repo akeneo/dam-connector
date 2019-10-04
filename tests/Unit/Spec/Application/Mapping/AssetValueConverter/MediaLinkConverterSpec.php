@@ -1,14 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Specification\AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
+namespace Spec\AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter\MediaLinkConverter;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
-use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder;
-use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Locale;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
 use PhpSpec\ObjectBehavior;
+use Spec\AkeneoDAMConnector\Builder\AssetAttributeBuilder;
 
 class MediaLinkConverterSpec extends ObjectBehavior
 {
@@ -25,8 +30,13 @@ class MediaLinkConverterSpec extends ObjectBehavior
 
     public function it_converts_a_dam_asset_value_into_a_localized_pim_asset_value(): void
     {
-        $damAsset = DamAssetBuilder::build('table', 'packshot', ['url' => 'here.com'], 'en_US');
-        $attribute = AssetAttributeBuilder::build('url', 'media_link', true);
+        $damAsset = new DamAsset(
+            new DamAssetIdentifier('table'),
+            new FamilyCode('packshot'),
+            new Locale('en_US')
+        );
+        $damAsset->addValue('url', 'here.com');
+        $attribute = new Attribute(new AttributeCode('url'), 'media_link', true);
         $damAssetValue = new DamAssetValue('url', 'here.com');
 
         $pimValue = $this->convert($damAsset, $damAssetValue, $attribute);
@@ -38,8 +48,13 @@ class MediaLinkConverterSpec extends ObjectBehavior
 
     public function it_converts_a_dam_asset_value_into_a_not_localized_pim_asset_value(): void
     {
-        $damAsset = DamAssetBuilder::build('table', 'packshot', ['url' => 'here.com']);
-        $attribute = AssetAttributeBuilder::build('url', 'media_link', false);
+        $damAsset = new DamAsset(
+            new DamAssetIdentifier('table'),
+            new FamilyCode('packshot'),
+            null
+        );
+        $damAsset->addValue('url', 'here.com');
+        $attribute = new Attribute(new AttributeCode('url'), 'media_link', false);
         $damAssetValue = new DamAssetValue('url', 'here.com');
 
         $pimValue = $this->convert($damAsset, $damAssetValue, $attribute);

@@ -26,7 +26,8 @@
     },
     "require-dev": {
         "akeneo/php-coupling-detector": "0.3.*",
-        "phpspec/phpspec": "^4.0"
+        "phpspec/phpspec": "^4.0",
+        "symfony/test-pack": "^1.0"
     },
     "repositories": [
         {

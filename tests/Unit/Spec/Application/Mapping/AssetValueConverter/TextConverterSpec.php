@@ -1,17 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Specification\AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
+namespace Spec\AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter\TextConverter;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
-use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use AkeneoDAMConnector\Domain\Model\Locale;
-use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder;
-use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
 use PhpSpec\ObjectBehavior;
+use Spec\AkeneoDAMConnector\Builder\AssetAttributeBuilder;
 
 class TextConverterSpec extends ObjectBehavior
 {
@@ -28,8 +30,13 @@ class TextConverterSpec extends ObjectBehavior
 
     public function it_converts_a_dam_asset_value_into_a_localized_pim_asset_value(): void
     {
-        $damAsset = DamAssetBuilder::build('table', 'packshot', ['description' => 'pretty'], 'en_US');
-        $attribute = AssetAttributeBuilder::build('description', 'text', true);
+        $damAsset = $damAsset = new DamAsset(
+            new DamAssetIdentifier('table'),
+            new FamilyCode('packshot'),
+            new Locale('en_US')
+        );
+        $damAsset->addValue('description', 'pretty');
+        $attribute = new Attribute(new AttributeCode('description'), 'text', true);
         $damAssetValue = new DamAssetValue('description', 'pretty');
 
         $pimValue = $this->convert($damAsset, $damAssetValue, $attribute);
@@ -41,8 +48,13 @@ class TextConverterSpec extends ObjectBehavior
 
     public function it_converts_a_dam_asset_value_into_a_not_localized_pim_asset_value(): void
     {
-        $damAsset = DamAssetBuilder::build('table', 'packshot', ['description' => 'pretty']);
-        $attribute = AssetAttributeBuilder::build('description', 'text', false);
+        $damAsset = new DamAsset(
+            new DamAssetIdentifier('table'),
+            new FamilyCode('packshot'),
+            null
+        );
+        $damAsset->addValue('color', 'temur');
+        $attribute = new Attribute(new AttributeCode('description'), 'text', false);
         $damAssetValue = new DamAssetValue('description', 'pretty');
 
         $pimValue = $this->convert($damAsset, $damAssetValue, $attribute);

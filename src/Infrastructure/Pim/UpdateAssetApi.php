@@ -6,8 +6,8 @@ namespace AkeneoDAMConnector\Infrastructure\Pim;
 
 use Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetApiInterface;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAsset;
-use AkeneoDAMConnector\Domain\Model\Pim\PimAsset;
 use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAsset;
 
 class UpdateAssetApi implements UpdateAsset
 {
