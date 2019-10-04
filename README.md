@@ -137,4 +137,8 @@ We suggest [phpunit](https://phpunit.de) as integration test tool.
 You can run these these with the following command `docker-compose run --rm dam-connector_php-cli bin/phpunit --testsuite integration`.
 
 ## Checkstyle
-You can launch php-cs-fixer using the following command `docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix src && docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix tests`
+You can launch [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) using the following command `docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix src && docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix tests`
+
+## Coupling Detector
+We use [Akeneo Coupling Detector](https://github.com/akeneo/php-coupling-detector) tool to check coupling between the different layers.
+The rules are defined in [.php_cd.php](.php_cd.php) file and can be launched using `docker-compose run --rm dam-connector_php-cli vendor/bin/php-coupling-detector detect src --config-file=.php_cd.php`. 
