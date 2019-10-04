@@ -17,12 +17,12 @@ class SynchronizeAssetsStructureSpec extends ObjectBehavior
         $this->beConstructedWith($structureConfigLoader, $updateAssetStructure);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(SynchronizeAssetsStructure::class);
     }
 
-    function it_synchronizes_assets_structure(
+    public function it_synchronizes_assets_structure(
         $structureConfigLoader,
         $updateAssetStructure
     ) {

@@ -135,3 +135,6 @@ You can run them through `docker-compose run --rm dam-connector_php-cli vendor/b
 ## Integration tests
 We suggest [phpunit](https://phpunit.de) as integration test tool.
 You can run these these with the following command `docker-compose run --rm dam-connector_php-cli bin/phpunit --testsuite integration`.
+
+## Checkstyle
+You can launch php-cs-fixer using the following command `docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix src && docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix tests`

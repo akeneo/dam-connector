@@ -24,4 +24,3 @@ class MediaLinkConverter implements AssetValueConverter
         return new PimAssetValue($attribute, $damAssetValue->value(), $locale, null);
     }
 }
-

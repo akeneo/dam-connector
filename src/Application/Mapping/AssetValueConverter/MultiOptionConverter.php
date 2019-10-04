@@ -34,4 +34,3 @@ class MultiOptionConverter implements AssetValueConverter
         return new PimAssetValue($attribute, $options, $locale, null);
     }
 }
-

@@ -47,6 +47,3 @@ class AssetAttributeBuilder
         throw new \RuntimeException();
     }
 }
-
-
-

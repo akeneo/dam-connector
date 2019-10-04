@@ -25,12 +25,12 @@ class SynchronizeAssetsSpec extends ObjectBehavior
         $this->beConstructedWith($fetchAssets, $assetTransformer, $assetApi);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(SynchronizeAssets::class);
     }
 
-    function it_synchronizes_assets(
+    public function it_synchronizes_assets(
         $fetchAssets,
         $assetTransformer,
         $assetApi,
