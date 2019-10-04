@@ -43,6 +43,12 @@ UID=$UID GID=$GID COMPOSER_HOME=$HOME/.composer docker-compose run php-cli compo
 
 > Or you can use a custom [Docker Compose override file](https://docs.docker.com/compose/extends/).
 
+# How to use this skeleton?
+
+This skeleton provides 2 Symfony commands:
+- `dam-connector:assets:synchronize-structure` to init/synchronize the assets structure
+- `dam-connector:assets:synchronize` to synchronize the assets
+
 # Development with Docker Compose 🐳
 
 To start the MySQL server:

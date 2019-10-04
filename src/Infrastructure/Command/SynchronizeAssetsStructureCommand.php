@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SynchronizeAssetsStructureCommand extends Command
 {
-    const NAME = 'dam-connector:assets:synchronize-structure';
+    const NAME = 'dam-connector:assets-structure:synchronize';
     private $synchronizeAssetsStructure;
 
     public function __construct(SynchronizeAssetsStructure $synchronizeAssetsStructure)
