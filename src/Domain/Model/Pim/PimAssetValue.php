@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Domain\Model\Pim;
 
-use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
-use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
-
 class PimAssetValue
 {
     private $attribute;

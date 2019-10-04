@@ -7,8 +7,8 @@ namespace AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
-use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
 use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
 
 class TextConverter implements AssetValueConverter
 {

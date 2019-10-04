@@ -6,9 +6,9 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Application\ConfigLoader;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
 use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
-use AkeneoDAMConnector\Domain\Model\FamilyCode;
 
 class AssetAttributeBuilder
 {

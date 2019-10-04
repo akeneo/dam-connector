@@ -10,11 +10,10 @@ use AkeneoDAMConnector\Application\Service\SynchronizeAssets;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\Model\FamilyCode;
-use AkeneoDAMConnector\Domain\Model\Locale;
 use AkeneoDAMConnector\Domain\Model\Pim\PimAsset;
+use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
 use AkeneoDAMConnector\Tests\Specification\Builder\PimAssetBuilder;
 use PhpSpec\ObjectBehavior;
-use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
 
 class SynchronizeAssetsSpec extends ObjectBehavior
 {

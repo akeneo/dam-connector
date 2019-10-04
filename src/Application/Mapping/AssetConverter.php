@@ -6,8 +6,8 @@ namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
-use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
 use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
 
 class AssetConverter
 {
