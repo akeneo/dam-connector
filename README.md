@@ -121,6 +121,7 @@ Then we have the Symfony Console Command `Infrastructure\Command\SynchronizeAsse
 that is designed to be the entry point of the Connector via `bin/console dam-connector:assets:synchronize`
 and can be called regularly, via a Cron jon for example, to synchronize assets between the DAM and the PIM.
 
+
 # Run tests
 
 Our test stack is based on hexagonal architecture and is composed of different types:
