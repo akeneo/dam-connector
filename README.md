@@ -85,7 +85,7 @@ services:
 
 As seen in the [guide](https://api.akeneo.com/documentation/asset-manager.html) we need to define a configuration for the mapping between the DAM Assets Properties and the PIM Assets Attributes.
 
-We choose to do this with a simple `.yaml` configuration file referenced in a Symfony DI parameter `app.dam_to_pim_mapping.config_path` (see [config/services/dam-example.yaml](./config/services/dam-example.yaml)).
+We choose to do this with a simple `.yaml` configuration file referenced in a Symfony DI parameter `app.dam_to_pim_mapping.config_path` (see [config/services/dam-example.yaml](config/services/dam-adapter.yaml)).
 
 ## Architecture 🏗️
 
@@ -111,7 +111,7 @@ The Domain objects have been defined following our [ubiquitous language](https:/
 ### Infrastructure
 
 Define a concrete class that implement the `Application\DamAdapter\FetchAssets` interface.
-See [dam-example.yaml](./config/services/dam-example.yaml).
+See [dam-example.yaml](config/services/dam-adapter.yaml).
 The `Application\Service\SynchronizeAssets` will then have access to your `FetchAssets` implementation.
 
 We already provide a simple implementation for the `Application\PimAdapter\UpdateAsset` interface inside `Infrastructure\Pim`.
@@ -135,3 +135,10 @@ You can run them through `docker-compose run --rm dam-connector_php-cli vendor/b
 ## Integration tests
 We suggest [phpunit](https://phpunit.de) as integration test tool.
 You can run these these with the following command `docker-compose run --rm dam-connector_php-cli bin/phpunit --testsuite integration`.
+
+## Checkstyle
+You can launch [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) using the following command `docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix src && docker-compose run --rm dam-connector_php-cli vendor/bin/php-cs-fixer fix tests`
+
+## Coupling Detector
+We use [Akeneo Coupling Detector](https://github.com/akeneo/php-coupling-detector) tool to check coupling between the different layers.
+The rules are defined in [.php_cd.php](.php_cd.php) file and can be launched using `docker-compose run --rm dam-connector_php-cli vendor/bin/php-coupling-detector detect src --config-file=.php_cd.php`. 
