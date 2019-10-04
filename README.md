@@ -123,8 +123,15 @@ and can be called regularly, via a Cron jon for example, to synchronize assets b
 
 # Run tests
 
+Our test stack is based on hexagonal architecture and is composed of different types:
+- Unit tests for logic. Most of the time, you have one unit test class by implemented class.
+- Integration tests for the infrastructure layer. It tests that the input or output are correctly working.
+- End-To-End tests to test the whole stack. We currently don't have these tests but behat and phpunit are good tools for that. 
+
 ## Unit tests
-We suggest [phpspec](https://www.phpspec.net/) as unit test tool.
-You can run them through `docker-compose run --rm dam-connector_php-cli vendor/bin/phpspec run`.
+We suggest [phpspec](https://www.phpspec.net/) and [phpunit](https://phpunit.de) as unit test tools.
+You can run them through `docker-compose run --rm dam-connector_php-cli vendor/bin/phpspec run` and `docker-compose run --rm dam-connector_php-cli bin/phpunit --testsuite unit`
 
 ## Integration tests
+We suggest [phpunit](https://phpunit.de) as integration test tool.
+You can run these these with the following command `docker-compose run --rm dam-connector_php-cli bin/phpunit --testsuite integration`.
