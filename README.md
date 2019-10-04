@@ -85,7 +85,7 @@ services:
 
 As seen in the [guide](https://api.akeneo.com/documentation/asset-manager.html) we need to define a configuration for the mapping between the DAM Assets Properties and the PIM Assets Attributes.
 
-We choose to do this with a simple `.yaml` configuration file referenced in a Symfony DI parameter `app.dam_to_pim_mapping.config_path` (see [config/services/dam-example.yaml](./config/services/dam-example.yaml)).
+We choose to do this with a simple `.yaml` configuration file referenced in a Symfony DI parameter `app.dam_to_pim_mapping.config_path` (see [config/services/dam-example.yaml](config/services/dam-adapter.yaml)).
 
 ## Architecture 🏗️
 
@@ -111,7 +111,7 @@ The Domain objects have been defined following our [ubiquitous language](https:/
 ### Infrastructure
 
 Define a concrete class that implement the `Application\DamAdapter\FetchAssets` interface.
-See [dam-example.yaml](./config/services/dam-example.yaml).
+See [dam-example.yaml](config/services/dam-adapter.yaml).
 The `Application\Service\SynchronizeAssets` will then have access to your `FetchAssets` implementation.
 
 We already provide a simple implementation for the `Application\PimAdapter\UpdateAsset` interface inside `Infrastructure\Pim`.
