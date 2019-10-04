@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain;
+namespace AkeneoDAMConnector\Domain\Model;
 
 /**
  * @author Willy Mesnage <willy.mesnage@akeneo.com>

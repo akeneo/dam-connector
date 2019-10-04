@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain\Asset;
+namespace AkeneoDAMConnector\Domain\Model\Pim;
 
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 
 class PimAsset
 {
@@ -13,10 +13,10 @@ class PimAsset
     /** @var PimAssetValue[] */
     private $values;
 
-    /** @var AssetFamilyCode */
+    /** @var FamilyCode */
     private $familyCode;
 
-    public function __construct(string $code, AssetFamilyCode $familyCode, array $values = [])
+    public function __construct(string $code, FamilyCode $familyCode, array $values = [])
     {
         $this->code = $code;
         $this->values = $values;

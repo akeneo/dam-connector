@@ -26,7 +26,8 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
-        "akeneo/php-coupling-detector": "0.3.*"
+        "akeneo/php-coupling-detector": "0.3.*",
+        "phpspec/phpspec": "^4.0"
     },
     "repositories": [
         {
@@ -38,7 +39,8 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "bin-dir": "vendor/bin"
     },
     "autoload": {
         "psr-4": {
