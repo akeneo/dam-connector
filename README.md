@@ -1,6 +1,10 @@
 # DAM-connector
 
-<!-- intro -->
+This is a skeleton for an Akeneo PIM Connector between a DAM and the Akeneo PIM API.
+
+It's a **PHP console application** using **Symfony 4** and **MySQL** to hold information on executed commands.
+
+For more information on how to create your DAM Connector see the [guide](#).
 
 # Requirements
 
@@ -33,14 +37,14 @@ UID=$UID GID=$GID COMPOSER_HOME=$HOME/.composer docker-compose run php-cli compo
 
 > Or you can use a custom [Docker Compose override file](https://docs.docker.com/compose/extends/).
 
-# Development with Docker Compose
+# Development with Docker Compose 🐳
 
-To start the mysql-server:
+To start the MySQL server:
 ```sh
 docker-compose up -d
 ```
 
-To access the symfony console:
+To access the Symfony console:
 ```sh
 docker-compose run --rm dam-connector_php-cli bin/console
 ```
@@ -66,7 +70,56 @@ services:
             - akeneo # Access to Akeneo PIM network
 ```
 
+
 # Documentation
+
+> ⚠️ In this DAM connector skeleton we made some structural choices and those may not be the right one for your use case.
+
+## Config
+
+As seen in the [guide](#) we need to define a configuration for the mapping between the DAM Assets Properties and the PIM Assets Attributes.
+
+We choose to do this with a simple `.yaml` configuration file referenced in a Symfony DI parameter `app.dam_to_pim_mapping.config_path` (see [config/services/dam-example.yaml](./config/services/dam-example.yaml)).
+
+## Architecture 🏗️
+
+This skeleton use a simple [hexagonal architecture](http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html) where the code is decoupled between  **Application**, **Domain** and **Infrastructure**.
+
+### Application
+
+<!-- what for -->
+
+On the _Application_ side we defined a service `Application\Service\SynchronizeAssets` that is handling all the synchronization logic between the PIM and the DAM.
+
+We also have some Interfaces that describe what actions are needed to communicate with the DAM and the PIM and you can found the concrete implementation of these classes on the _Infrastructure_ side.
+- `Application\DamAdapter\`
+- `Application\PimAdapter\`
+
+The `Application\Mapping` folder hold all the logic needed to transform a DAM Asset into a PIM Asset. You may have to change this depending on your need, especially for the `Application\Mapping\AssetValueConverter` that is transforming the data format of your DAM to the PIM format.
+
+
+### Domain
+
+<!-- what for -->
+
+`Domain\Model`
+
+
+### Infrastructure
+
+<!-- what for -->
+
+Define a concrete class that implement the `Application\DamAdapter\FetchAssets` interface.
+See [dam-example.yaml](./config/services/dam-example.yaml).
+The `Application\Service\SynchronizeAssets` will then have access to your `FetchAssets` implementation.
+
+We already provide a simple implementation for the `Application\PimAdapter\UpdateAsset` interface inside `Infrastructure\Pim`.
+So you can upsert `PimAsset` right away.
+
+Then we have the Symfony Console Command `Infrastructure\Command\SynchronizeAssetsCommand`
+that is designed to be the entry point of the Connector via `bin/console dam-connector:assets:synchronize`
+and can be called regularly, via a Cron jon for example, to synchronize assets between the DAM and the PIM.
+
 
 ## Ubiquitous Language
 
@@ -80,7 +133,7 @@ A DAM Asset Value contains a property name and a value as string.
 PIM representation of the Asset with a code and a collection of values.
 An Asset is a flexible object that makes it possible to enrich products with images, videos, documents...
 
-An Asset must be part of an Asset Family. That way, it will have its own attributes and lifecycle.
+An Asset must be part of an Asset Family. That way, it will have its own attributes and life cycle.
 
 ### Asset Structure
 
