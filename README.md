@@ -77,7 +77,7 @@ services:
 
 ## Config
 
-As seen in the [guide](#) we need to define a configuration for the mapping between the DAM Assets Properties and the PIM Assets Attributes.
+As seen in the [guide](https://api.akeneo.com/documentation/asset-manager.html) we need to define a configuration for the mapping between the DAM Assets Properties and the PIM Assets Attributes.
 
 We choose to do this with a simple `.yaml` configuration file referenced in a Symfony DI parameter `app.dam_to_pim_mapping.config_path` (see [config/services/dam-example.yaml](./config/services/dam-example.yaml)).
 
