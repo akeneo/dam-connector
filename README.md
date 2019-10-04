@@ -4,7 +4,7 @@ This is a skeleton for an Akeneo PIM Connector between a DAM and the Akeneo PIM 
 
 It's a **PHP console application** using **Symfony 4** and **MySQL** to hold information on executed commands.
 
-For more information on how to create your DAM Connector see the [guide](#).
+For more information on how to create your DAM Connector see the [guide](https://api.akeneo.com/documentation/asset-manager.html).
 
 # Requirements
 
@@ -123,5 +123,5 @@ and can be called regularly, via a Cron jon for example, to synchronize assets b
 
 ## Concepts & Resources
 
-Please refer to our official documentation: https://api.akeneo.com/documentation/asset-manager.html#concepts-resources
+Please refer to our [official documentation](https://api.akeneo.com/documentation/asset-manager.html#concepts-resources)
 This is the source of truth of  our Ubiquitous Language. 
