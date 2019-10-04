@@ -1,14 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Specification\AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
+namespace Spec\AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter\SingleOptionConverter;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
-use AkeneoDAMConnector\Tests\Specification\Builder\AssetAttributeBuilder;
-use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Locale;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
 use PhpSpec\ObjectBehavior;
+use Spec\AkeneoDAMConnector\Builder\AssetAttributeBuilder;
 
 class SingleOptionConverterSpec extends ObjectBehavior
 {
@@ -25,8 +30,13 @@ class SingleOptionConverterSpec extends ObjectBehavior
 
     public function it_converts_a_dam_asset_value_into_a_localized_pim_asset_value(): void
     {
-        $damAsset = DamAssetBuilder::build('table', 'packshot', ['color' => 'temur'], 'en_US');
-        $attribute = AssetAttributeBuilder::build('color', 'single_option', true);
+        $damAsset = $damAsset = new DamAsset(
+            new DamAssetIdentifier('table'),
+            new FamilyCode('packshot'),
+            new Locale('en_US')
+        );
+        $damAsset->addValue('color', 'temur');
+        $attribute = new Attribute(new AttributeCode('color'), 'single_option', true);
         $damAssetValue = new DamAssetValue('color', 'temur');
 
         $pimValue = $this->convert($damAsset, $damAssetValue, $attribute);
@@ -38,8 +48,13 @@ class SingleOptionConverterSpec extends ObjectBehavior
 
     public function it_converts_a_dam_asset_value_into_a_not_localized_pim_asset_value(): void
     {
-        $damAsset = DamAssetBuilder::build('table', 'packshot', ['color' => 'temur']);
-        $attribute = AssetAttributeBuilder::build('color', 'single_option', false);
+        $damAsset = $damAsset = new DamAsset(
+            new DamAssetIdentifier('table'),
+            new FamilyCode('packshot'),
+            null
+        );
+        $damAsset->addValue('color', 'temur');
+        $attribute = new Attribute(new AttributeCode('color'), 'single_option', false);
         $damAssetValue = new DamAssetValue('color', 'temur');
 
         $pimValue = $this->convert($damAsset, $damAssetValue, $attribute);

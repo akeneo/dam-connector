@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Specification\AkeneoDAMConnector\Application\Service;
+namespace Spec\AkeneoDAMConnector\Application\Service;
 
 use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAssetStructure;

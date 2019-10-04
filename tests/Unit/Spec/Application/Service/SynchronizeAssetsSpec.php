@@ -1,13 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Specification\AkeneoDAMConnector\Application\Service;
+namespace Spec\AkeneoDAMConnector\Application\Service;
 
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets;
 use AkeneoDAMConnector\Application\Mapping\AssetTransformer;
 use AkeneoDAMConnector\Application\PimAdapter\UpdateAsset;
 use AkeneoDAMConnector\Application\Service\SynchronizeAssets;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetIdentifier;
 use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Locale;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAsset;
 use AkeneoDAMConnector\Tests\Specification\Builder\PimAssetBuilder;
 use PhpSpec\ObjectBehavior;
 use AkeneoDAMConnector\Tests\Specification\Builder\DamAssetBuilder;
@@ -34,10 +38,10 @@ class SynchronizeAssetsSpec extends ObjectBehavior
         \Iterator $damAssets
     ) {
         $assetFamilyCode = new FamilyCode('packshot');
-        $damTable = DamAssetBuilder::build('table', 'packshot');
-        $damMug = DamAssetBuilder::build('mug', 'packshot');
-        $pimTable = PimAssetBuilder::build('table', 'packshot');
-        $pimMug = PimAssetBuilder::build('mug', 'packshot');
+        $damTable = new DamAsset(new DamAssetIdentifier('table'), new FamilyCode('packshot'), null);
+        $damMug = new DamAsset(new DamAssetIdentifier('mug'), new FamilyCode('packshot'), null);
+        $pimTable = new PimAsset('table', new FamilyCode('packshot'));
+        $pimMug = new PimAsset('mug', new FamilyCode('packshot'));
 
         $damAssets->rewind()->shouldBeCalled();
         $damAssets->valid()->willReturn(true, true, false);
