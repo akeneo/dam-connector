@@ -7,7 +7,7 @@ namespace AkeneoDAMConnector\Infrastructure\DAM\Bynder;
 use AkeneoDAMConnector\Application\DamAdapter\FetchAssets as FetchAssetsInterface;
 use AkeneoDAMConnector\Domain\Asset\DamAsset;
 use AkeneoDAMConnector\Domain\Asset\DamAssetIdentifier;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use Bynder\Api\Impl\BynderApi;
 
 class FetchAssets implements FetchAssetsInterface
@@ -24,7 +24,7 @@ class FetchAssets implements FetchAssetsInterface
         $this->client = $clientBuilder->getClient();
     }
 
-    public function fetch(AssetFamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
+    public function fetch(FamilyCode $assetFamilyCode, ?\DateTimeInterface $lastFetchDate): \Iterator
     {
         if (null === $lastFetchDate) {
             $lastFetchDate = new \DateTimeImmutable('@0');
