@@ -31,14 +31,14 @@ _Requirements:_
 
 
 ```sh
-docker-compose run --rm php-cli composer install
+docker-compose run --rm dam-connector_php-cli composer install
 ```
 
 > Composer default configuration will use a `UID=1000` and `GID=1000` for files permissions and use a local composer configuration folder at `COMPOSER_HOME=~/.composer`.
 
 > If it doesn't suit your need you can override this configuration by running `docker-compose run` commands with different value for each environment variable
 ```sh
-UID=$UID GID=$GID COMPOSER_HOME=$HOME/.composer docker-compose run php-cli composer install
+UID=$UID GID=$GID COMPOSER_HOME=$HOME/.composer docker-compose run dam-connector_php-cli composer install
 ```
 
 > Or you can use a custom [Docker Compose override file](https://docs.docker.com/compose/extends/).

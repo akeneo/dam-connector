@@ -8,8 +8,6 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    app.pim_structure.config_path: null
-    app.dam_to_pim_mapping.config_path: null
     app.database.connection_params:
         driver: pdo_mysql
         host: '%env(APP_DATABASE_HOST)%'
