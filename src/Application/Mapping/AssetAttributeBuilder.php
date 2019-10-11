@@ -6,9 +6,9 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Application\ConfigLoader;
-use AkeneoDAMConnector\Domain\AssetAttribute;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
 
 class AssetAttributeBuilder
 {
@@ -20,11 +20,11 @@ class AssetAttributeBuilder
         $this->structureConfigLoader = $structureConfigLoader;
     }
 
-    public function build(AssetFamilyCode $familyCode, AssetAttributeCode $attributeCode): AssetAttribute
+    public function build(FamilyCode $familyCode, AttributeCode $attributeCode): Attribute
     {
         $attributeType = $this->getAttributeType($familyCode, $attributeCode);
 
-        return new AssetAttribute($attributeCode, $attributeType, false);
+        return new Attribute($attributeCode, $attributeType, false);
     }
 
     private function getStructureConfig(): array
@@ -36,7 +36,7 @@ class AssetAttributeBuilder
         return $this->structureConfig;
     }
 
-    private function getAttributeType(AssetFamilyCode $familyCode, AssetAttributeCode $attributeCode): string
+    private function getAttributeType(FamilyCode $familyCode, AttributeCode $attributeCode): string
     {
         foreach ($this->getStructureConfig()[(string)$familyCode]['attributes'] as $attribute) {
             if ($attribute['code'] === (string)$attributeCode) {
@@ -47,6 +47,3 @@ class AssetAttributeBuilder
         throw new \RuntimeException();
     }
 }
-
-
-

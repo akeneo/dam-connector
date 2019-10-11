@@ -38,6 +38,9 @@
     "doctrine/event-manager": {
         "version": "1.0.x-dev"
     },
+    "doctrine/instantiator": {
+        "version": "1.2.0"
+    },
     "doctrine/lexer": {
         "version": "1.2.x-dev"
     },
@@ -89,6 +92,24 @@
     "php-http/promise": {
         "version": "1.0-dev"
     },
+    "phpdocumentor/reflection-common": {
+        "version": "2.0.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "4.3.2"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.0.1"
+    },
+    "phpspec/php-diff": {
+        "version": "v1.1.0"
+    },
+    "phpspec/phpspec": {
+        "version": "4.3.4"
+    },
+    "phpspec/prophecy": {
+        "version": "1.8.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -109,6 +130,21 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "sebastian/comparator": {
+        "version": "3.0.2"
+    },
+    "sebastian/diff": {
+        "version": "3.0.2"
+    },
+    "sebastian/exporter": {
+        "version": "3.1.2"
+    },
+    "sebastian/recursion-context": {
+        "version": "3.0.0"
+    },
+    "symfony/browser-kit": {
+        "version": "v4.3.4"
     },
     "symfony/cache": {
         "version": "v4.3.3"
@@ -132,11 +168,17 @@
             "config/bootstrap.php"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v4.3.4"
+    },
     "symfony/debug": {
         "version": "v4.3.3"
     },
     "symfony/dependency-injection": {
         "version": "v4.3.3"
+    },
+    "symfony/dom-crawler": {
+        "version": "v4.3.4"
     },
     "symfony/dotenv": {
         "version": "v4.3.3"
@@ -196,6 +238,22 @@
     "symfony/options-resolver": {
         "version": "4.3.x-dev"
     },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "b0582341f1df39aaf3a9a866cdbe49937da35984"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "config/bootstrap.php",
+            "phpunit.xml.dist",
+            "tests/.gitignore"
+        ]
+    },
     "symfony/polyfill-intl-idn": {
         "version": "v1.12.0"
     },
@@ -232,10 +290,16 @@
     "symfony/stopwatch": {
         "version": "4.3.x-dev"
     },
+    "symfony/test-pack": {
+        "version": "v1.0.6"
+    },
     "symfony/var-exporter": {
         "version": "v4.3.3"
     },
     "symfony/yaml": {
         "version": "v4.3.3"
+    },
+    "webmozart/assert": {
+        "version": "1.5.0"
     }
 }

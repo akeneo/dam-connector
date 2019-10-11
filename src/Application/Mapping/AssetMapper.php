@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Mapping;
 
 use AkeneoDAMConnector\Application\ConfigLoader;
-use AkeneoDAMConnector\Domain\AssetAttribute;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
 use AkeneoDAMConnector\Domain\Exception\AttributeMappingNotFound;
 use AkeneoDAMConnector\Domain\Exception\FamilyMappingNotFound;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\AttributeCode;
 
 class AssetMapper
 {
@@ -24,15 +24,15 @@ class AssetMapper
         $this->assetAttributeBuilder = $assetAttributeBuilder;
     }
 
-    public function getMappedProperties(AssetFamilyCode $familyCode): array
+    public function getMappedProperties(FamilyCode $familyCode): array
     {
         return array_keys($this->getFamilyMapping($familyCode));
     }
 
     public function mapAttribute(
-        AssetFamilyCode $familyCode,
+        FamilyCode $familyCode,
         string $damAttributeProperty
-    ): AssetAttribute {
+    ): Attribute {
         $attributeCode = $this->getAttributeCodeFromFamilyMapping(
             $this->getFamilyMapping($familyCode),
             $damAttributeProperty
@@ -50,7 +50,7 @@ class AssetMapper
         return $this->mappingConfig;
     }
 
-    private function getFamilyMapping(AssetFamilyCode $familyCode): array
+    private function getFamilyMapping(FamilyCode $familyCode): array
     {
         $mapping = $this->getMappingConfig();
 
@@ -64,11 +64,11 @@ class AssetMapper
     private function getAttributeCodeFromFamilyMapping(
         array $familyMapping,
         string $damAttributeProperty
-    ): AssetAttributeCode {
+    ): AttributeCode {
         if (!isset($familyMapping[$damAttributeProperty])) {
             throw new AttributeMappingNotFound();
         }
 
-        return new AssetAttributeCode($familyMapping[$damAttributeProperty]);
+        return new AttributeCode($familyMapping[$damAttributeProperty]);
     }
 }

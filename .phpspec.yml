@@ -1,0 +1,7 @@
+suites:
+  dam-connector:
+    namespace: AkeneoDAMConnector
+    psr4_prefix: AkeneoDAMConnector
+    spec_path: tests/Unit
+    spec_prefix: Spec
+    src_path: src/

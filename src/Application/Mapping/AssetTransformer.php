@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AkeneoDAMConnector\Application\Mapping;
 
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\PimAsset;
-use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAsset;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
 
 class AssetTransformer
 {

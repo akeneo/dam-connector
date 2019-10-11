@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
 
 use AkeneoDAMConnector\Application\Mapping\AssetValueConverter;
-use AkeneoDAMConnector\Domain\Asset\DamAsset;
-use AkeneoDAMConnector\Domain\Asset\DamAssetValue;
-use AkeneoDAMConnector\Domain\Asset\PimAssetValue;
-use AkeneoDAMConnector\Domain\AssetAttribute;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAsset;
+use AkeneoDAMConnector\Domain\Model\Dam\DamAssetValue;
+use AkeneoDAMConnector\Domain\Model\Pim\Attribute;
+use AkeneoDAMConnector\Domain\Model\Pim\PimAssetValue;
 
 class MultiOptionConverter implements AssetValueConverter
 {
@@ -21,7 +20,7 @@ class MultiOptionConverter implements AssetValueConverter
     public function convert(
         DamAsset $damAsset,
         DamAssetValue $damAssetValue,
-        AssetAttribute $attribute
+        Attribute $attribute
     ): PimAssetValue {
         $options = array_map(
             function ($option) {
@@ -35,4 +34,3 @@ class MultiOptionConverter implements AssetValueConverter
         return new PimAssetValue($attribute, $options, $locale, null);
     }
 }
-

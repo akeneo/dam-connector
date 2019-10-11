@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AkeneoDAMConnector\Domain\Asset;
-
-use AkeneoDAMConnector\Domain\AssetAttribute;
-use AkeneoDAMConnector\Domain\AssetAttributeCode;
+namespace AkeneoDAMConnector\Domain\Model\Pim;
 
 class PimAssetValue
 {
@@ -17,7 +14,7 @@ class PimAssetValue
 
     private $channel;
 
-    public function __construct(AssetAttribute $attribute, $data, string $locale = null, string $channel = null)
+    public function __construct(Attribute $attribute, $data, ?string $locale = null, ?string $channel = null)
     {
         $this->attribute = $attribute;
         $this->data = $data;
@@ -25,12 +22,12 @@ class PimAssetValue
         $this->channel = $channel;
     }
 
-    public function getAttribute(): AssetAttribute
+    public function getAttribute(): Attribute
     {
         return $this->attribute;
     }
 
-    public function getAttributeCode(): AssetAttributeCode
+    public function getAttributeCode(): AttributeCode
     {
         return $this->attribute->getCode();
     }
@@ -43,12 +40,12 @@ class PimAssetValue
         return $this->data;
     }
 
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    public function getChannel(): string
+    public function getChannel(): ?string
     {
         return $this->channel;
     }

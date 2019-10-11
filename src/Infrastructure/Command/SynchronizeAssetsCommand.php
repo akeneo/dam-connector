@@ -6,7 +6,7 @@ namespace AkeneoDAMConnector\Infrastructure\Command;
 
 use AkeneoDAMConnector\Application\ConfigLoader;
 use AkeneoDAMConnector\Application\Service\SynchronizeAssets;
-use AkeneoDAMConnector\Domain\AssetFamilyCode;
+use AkeneoDAMConnector\Domain\Model\FamilyCode;
 use AkeneoDAMConnector\Infrastructure\Persistence\Execution;
 use AkeneoDAMConnector\Infrastructure\Persistence\SynchronizeAssetsExecutionRepository;
 use Symfony\Component\Console\Command\Command;
@@ -56,7 +56,7 @@ class SynchronizeAssetsCommand extends Command
 
     private function synchronizeFamily(string $familyCode, ?\DateTimeInterface $sinceLastSucceededExecutionTime): void
     {
-        $assetFamilyCode = new AssetFamilyCode($familyCode);
+        $assetFamilyCode = new FamilyCode($familyCode);
 
         $currentExecution = Execution::create($familyCode)->run();
         $this->synchronizeAssetsExecutionRepository->save($currentExecution);

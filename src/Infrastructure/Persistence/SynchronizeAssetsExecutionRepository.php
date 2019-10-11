@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AkeneoDAMConnector\Infrastructure\Persistence;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\PDOConnection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\Types\Type;
 
