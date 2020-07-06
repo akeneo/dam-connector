@@ -1,7 +1,7 @@
 suites:
   dam-connector:
-    namespace: AkeneoDAMConnector
-    psr4_prefix: AkeneoDAMConnector
+    namespace: PimApiTest
+    psr4_prefix: PimApiTest
     spec_path: tests/Unit
     spec_prefix: Spec
     src_path: src/

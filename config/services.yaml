@@ -20,7 +20,7 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    AkeneoDAMConnector\:
+    PimApiTest\:
         resource: '../src/*'
         exclude:
             - '../src/{DependencyInjection,Tests,Kernel.php}'
@@ -29,7 +29,7 @@ services:
         factory: ['Doctrine\DBAL\DriverManager', getConnection]
         arguments: ['%app.database.connection_params%']
 
-    AkeneoDAMConnector\Infrastructure\Pim\ClientBuilder:
+    PimApiTest\Infrastructure\Pim\ClientBuilder:
         arguments:
             $baseUri: '%env(AKENEO_BASE_URI)%'
             $clientId: '%env(AKENEO_CLIENT_ID)%'
