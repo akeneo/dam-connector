@@ -1,6 +1,6 @@
 {
-    "name": "akeneo/dam-connector",
-    "description": "Connector between Akeneo PIM and DAM",
+    "name": "pchasle/dam-connector",
+    "description": "Akeneo PIM API test",
     "license": "MIT",
     "type": "project",
     "authors": [
@@ -13,8 +13,8 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "akeneo/api-php-client-ee": "dev-asset-family@dev",
-        "akeneo/api-php-client": "dev-master@dev",
+        "akeneo/api-php-client-ee": "4.0.*",
+        "akeneo/api-php-client": "4.0.*",
         "doctrine/dbal": "2.9.*",
         "http-interop/http-factory-guzzle": "^1.0",
         "php-http/guzzle6-adapter": "^2.0",

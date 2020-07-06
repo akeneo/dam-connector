@@ -1,22 +1,12 @@
 version: '3'
 
 services:
-    dam-connector_php-cli:
+    pim-api-test_php-cli:
         build: .
         environment:
             COMPOSER_HOME: /tmp
         user: ${UID:-1000}:${GID:-1000}
         volumes:
             - ${COMPOSER_HOME:-~/.composer}:/tmp
-            - .:/srv/dam-connector
-        working_dir: /srv/dam-connector
-
-    dam-connector_mysql:
-        image: mysql:5.7
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: ${APP_DATABASE_USER}
-            MYSQL_PASSWORD: ${APP_DATABASE_PASSWORD}
-            MYSQL_DATABASE: ${APP_DATABASE_NAME}
-        volumes:
-            - ./config/resources/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql:ro
+            - .:/srv/pim-api-test
+        working_dir: /srv/pim-api-test

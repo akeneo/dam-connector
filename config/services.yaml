@@ -1,10 +1,6 @@
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
-imports:
-    # Import the configuration for our DAM example implementation
-    - { resource: services/dam-adapter.yaml }
-
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -28,8 +24,6 @@ services:
         resource: '../src/*'
         exclude:
             - '../src/{DependencyInjection,Tests,Kernel.php}'
-            - '../src/Domain'
-            - '../src/Infrastructure/DAM'
 
     Doctrine\DBAL\Connection:
         factory: ['Doctrine\DBAL\DriverManager', getConnection]
@@ -42,29 +36,3 @@ services:
             $secret: '%env(AKENEO_SECRET)%'
             $username: '%env(AKENEO_USERNAME)%'
             $password: '%env(AKENEO_PASSWORD)%'
-
-    app.pim_structure.config_loader:
-        class: AkeneoDAMConnector\Infrastructure\YamlConfigLoader
-        arguments:
-            $path: '%app.pim_structure.config_path%'
-
-    app.dam_to_pim_mapping.config_loader:
-        class: AkeneoDAMConnector\Infrastructure\YamlConfigLoader
-        arguments:
-            $path: '%app.dam_to_pim_mapping.config_path%'
-
-    AkeneoDAMConnector\Application\Mapping\AssetMapper:
-        arguments:
-            $mappingConfigLoader: '@app.dam_to_pim_mapping.config_loader'
-
-    AkeneoDAMConnector\Application\Mapping\AssetAttributeBuilder:
-        arguments:
-            $structureConfigLoader: '@app.pim_structure.config_loader'
-
-    AkeneoDAMConnector\Application\Service\SynchronizeAssetsStructure:
-        arguments:
-            $structureConfigLoader: '@app.pim_structure.config_loader'
-
-    AkeneoDAMConnector\Infrastructure\Command\SynchronizeAssetsCommand:
-        arguments:
-            $mappingConfigLoader: '@app.dam_to_pim_mapping.config_loader'
