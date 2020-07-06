@@ -1,5 +1,5 @@
 {
-    "name": "pchasle/dam-connector",
+    "name": "pchasle/pim-api-test",
     "description": "Akeneo PIM API test",
     "license": "MIT",
     "type": "project",
@@ -44,12 +44,12 @@
     },
     "autoload": {
         "psr-4": {
-            "AkeneoDAMConnector\\": "src/"
+            "PimApiTest\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AkeneoDAMConnector\\Tests\\": "tests/"
+            "PimApiTest\\Tests\\": "tests/"
         }
     },
     "replace": {

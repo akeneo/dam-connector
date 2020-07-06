@@ -13,55 +13,6 @@ $finder->files()->name('*.php');
 
 $builder = new RuleBuilder();
 
-$rules = [
-    /**
-     * DOMAIN
-     */
-    $builder->only([
-        'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Domain'),
-
-    /**
-     * APPLICATION
-     */
-    $builder->only([
-        'AkeneoDAMConnector\Application',
-        'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Application'),
-
-    /**
-     * INFRASTRUCTURE
-     */
-    $builder->only([
-        'AkeneoDAMConnector\Application\DamAdapter',
-        'AkeneoDAMConnector\Domain',
-    ])->in('AkeneoDAMConnector\Infrastructure\DAM\DamExample'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Application',
-        'AkeneoDAMConnector\Domain',
-        'AkeneoDAMConnector\Infrastructure\Persistence',
-        'Symfony\Component\Console',
-    ])->in('AkeneoDAMConnector\Infrastructure\DAM\Command'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Domain',
-        'Doctrine\DBAL',
-    ])->in('AkeneoDAMConnector\Infrastructure\Persistence'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Application\Mapping\AssetValueConverterRegistry',
-        'Symfony\Component\DependencyInjection',
-    ])->in('AkeneoDAMConnector\Infrastructure\DependencyInjection'),
-
-    $builder->only([
-        'AkeneoDAMConnector\Application\PimAdapter',
-        'AkeneoDAMConnector\Domain',
-        'Akeneo\Pim\ApiClient\Exception',
-        'Akeneo\PimEnterprise\ApiClient\Api\AssetManager',
-        'Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientBuilder',
-        'Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface',
-    ])->in('AkeneoDAMConnector\Infrastructure\Pim'),
-];
+$rules = [];
 
 return new Configuration($rules, $finder);
