@@ -1,13 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace PimApiTest\Infrastructure\Api;
 
+use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 use PimApiTest\Infrastructure\Pim\ClientBuilder;
 
-class ApiAttribute
+class ApiAttributeOptions
 {
     /** @var AkeneoPimEnterpriseClientInterface */
     private $client;
@@ -17,13 +17,13 @@ class ApiAttribute
         $this->client = $clientBuilder->getClient();
     }
 
-    public function get(array $product): array
+    public function all(string $attributeCode): array
     {
-        $attributes = [];
-        foreach ($this->client->getAttributeApi()->all(100) as $attribute) {
-            $attributes[$attribute['code']] = $attribute;
+        $options = [];
+        foreach ($this->client->getAttributeOptionApi()->all($attributeCode) as $option) {
+            $options[$option['code']] = $option['labels'];
         }
 
-        return $attributes;
+        return $options;
     }
 }
