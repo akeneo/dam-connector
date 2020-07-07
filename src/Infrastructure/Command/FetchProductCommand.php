@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PimApiTest\Infrastructure\Command;
 
+use PimApiTest\Infrastructure\Api\ApiCategory;
 use PimApiTest\Infrastructure\Api\ApiFamily;
 use PimApiTest\Infrastructure\Api\ApiProduct;
 use Symfony\Component\Console\Command\Command;
@@ -20,19 +21,25 @@ class FetchProductCommand extends Command
     /** @var ApiFamily */
     private $apiFamily;
 
-    public function __construct(ApiProduct $productApi, ApiFamily $apiFamily)
-    {
+    /** @var ApiCategory */
+    private $apiCategory;
+
+    public function __construct(
+        ApiProduct $productApi,
+        ApiFamily $apiFamily,
+        ApiCategory $apiCategory
+    ) {
         parent::__construct(self::NAME);
 
         $this->productApi = $productApi;
         $this->apiFamily = $apiFamily;
+        $this->apiCategory = $apiCategory;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $product = $this->productApi->get('1597232365353');
         $family = $this->apiFamily->get($product);
-
-        echo json_encode($family, JSON_PRETTY_PRINT);
+        $categories = $this->apiCategory->get($product);
     }
 }
