@@ -41,5 +41,6 @@ class FetchProductCommand extends Command
         $attributes = $this->apiAttribute->get($product);
 
         echo json_encode($attributes, JSON_PRETTY_PRINT);
+        echo "\n" . count($attributes) . "\n";
     }
 }

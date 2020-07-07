@@ -19,6 +19,11 @@ class ApiAttribute
 
     public function get(array $product): array
     {
-        return $product["values"];
+        $attributes = [];
+        foreach ($this->client->getAttributeApi()->all() as $attribute) {
+            $attributes[] = $attribute;
+        }
+
+        return $attributes;
     }
 }
