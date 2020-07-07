@@ -39,8 +39,5 @@ class FetchProductCommand extends Command
         $product = $this->productApi->get('1597232365353');
         $family = $this->apiFamily->get($product);
         $attributes = $this->apiAttribute->get($product);
-
-        echo json_encode($attributes, JSON_PRETTY_PRINT);
-        echo "\n" . count($attributes) . "\n";
     }
 }
