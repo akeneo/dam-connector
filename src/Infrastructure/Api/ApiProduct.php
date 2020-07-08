@@ -9,6 +9,8 @@ use PimApiTest\Infrastructure\Pim\ClientBuilder;
 
 class ApiProduct
 {
+    const ASSET_COLLECTION = 'pim_catalog_asset_collection';
+
     /** @var AkeneoPimEnterpriseClientInterface */
     private $client;
 
@@ -20,5 +22,11 @@ class ApiProduct
     public function get(string $identifier): array
     {
         return $this->client->getProductApi()->get($identifier);
+    }
+
+    public function getAssetAttributes(array $attributes) : array {
+        return array_filter($attributes, function($att) {
+            return $att['type'] === self::ASSET_COLLECTION;
+        });
     }
 }

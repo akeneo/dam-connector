@@ -48,5 +48,6 @@ class FetchProductCommand extends Command
         $family = $this->apiFamily->get($product);
         $categories = $this->apiCategory->get($product);
         $attributes = $this->apiAttribute->get($product);
+        $assetAttributes = $this->productApi->getAssetAttributes($attributes);
     }
 }
