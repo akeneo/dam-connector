@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 namespace PimApiTest\Infrastructure\Api;
 
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 use PimApiTest\Infrastructure\Pim\ClientBuilder;
 
-class ApiProduct
+class ApiAssetAttribute
 {
     /** @var AkeneoPimEnterpriseClientInterface */
     private $client;
@@ -17,8 +15,13 @@ class ApiProduct
         $this->client = $clientBuilder->getClient();
     }
 
-    public function get(string $identifier): array
+    public function get(string $assetFamily, string $assetCode): array
     {
-        return $this->client->getProductApi()->get($identifier);
+        $assetAttributes = [];
+
+        foreach ($this->client->getAssetManagerApi()->get($assetFamily, $assetCode) as $attribute) {
+            $assetAttributes[] = $attribute;
+        }
+        return $assetAttributes;
     }
 }
