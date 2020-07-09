@@ -31,14 +31,16 @@ class ApiAsset
     {
         $assets = [];
 
-        foreach ($product['values'] as $attributeCode => $attributeValue) {
+        foreach ($product['values'] as $attributeCode => $attributeValues) {
             if (!isset($attributes[$attributeCode]) || $attributes[$attributeCode]['type'] !== self::ASSET_COLLECTION) {
                 continue;
             }
 
             $assetFamily = $attributes[$attributeCode]['reference_data_name'];
-            foreach ($attributeValue as $assetCode) {
-                $assets[$assetCode] = $this->apiAssetAttribute->get($assetFamily, $assetCode);
+            foreach ($attributeValues as $value) {
+                foreach ($value['data'] as $assetCode) {
+                    $assets[$assetCode] = $this->get($assetFamily, $assetCode);
+                }
             }
         }
 

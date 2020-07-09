@@ -37,7 +37,7 @@ class ApiAttributeOptions
             ) {
                 continue;
             }
-            $attributeOptions[$attributeCode] = $this->apiAttributeOptions->all((string) $attributeCode);
+            $attributeOptions[$attributeCode] = $this->all((string) $attributeCode);
         }
 
         return $attributeOptions;
