@@ -43,6 +43,10 @@ class ApiAsset
 
             foreach ($attributeValues as $value) {
                 foreach ($value['data'] as $assetCode) {
+                    if (isset($assetsPerFamily[$assetFamilyCode][$assetCode])) {
+                        // Asset is already fetched.
+                        continue;
+                    }
                     $assetsPerFamily[$assetFamilyCode][$assetCode] = $this->get($assetFamilyCode, $assetCode);
                 }
             }
