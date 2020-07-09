@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PimApiTest\Infrastructure\Command;
 
+use PimApiTest\Infrastructure\Api\ApiAsset;
 use PimApiTest\Infrastructure\Api\ApiCategory;
 use PimApiTest\Infrastructure\Api\ApiFamily;
 use PimApiTest\Infrastructure\Api\ApiProduct;
@@ -21,18 +22,22 @@ class FetchProductCommand extends Command
 
     /** @var ApiFamily */
     private $apiFamily;
-  
+
     /** @var ApiAttribute */
     private $apiAttribute;
 
     /** @var ApiCategory */
     private $apiCategory;
 
+    /** @var ApiAsset */
+    private $apiAsset;
+
     public function __construct(
         ApiProduct $productApi,
         ApiFamily $apiFamily,
         ApiCategory $apiCategory,
-        ApiAttribute $apiAttribute
+        ApiAttribute $apiAttribute,
+        ApiAsset $apiAsset
     ) {
         parent::__construct(self::NAME);
 
@@ -40,6 +45,7 @@ class FetchProductCommand extends Command
         $this->apiFamily = $apiFamily;
         $this->apiCategory = $apiCategory;
         $this->apiAttribute = $apiAttribute;
+        $this->apiAsset = $apiAsset;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -48,5 +54,8 @@ class FetchProductCommand extends Command
         $family = $this->apiFamily->get($product);
         $categories = $this->apiCategory->get($product);
         $attributes = $this->apiAttribute->get($product);
+        $assets = $this->apiAsset->getAssets($product, $attributes);
+
+        echo json_encode($assets, JSON_PRETTY_PRINT);
     }
 }
