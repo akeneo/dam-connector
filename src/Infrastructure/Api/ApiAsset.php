@@ -27,23 +27,27 @@ class ApiAsset
         return $assetAttributes;
     }
 
-    public function getAssets(array $product, array $attributes): array
+    public function getAssetsPerFamily(array $product, array $attributes): array
     {
-        $assets = [];
+        $assetsPerFamily = [];
 
         foreach ($product['values'] as $attributeCode => $attributeValues) {
             if (!isset($attributes[$attributeCode]) || $attributes[$attributeCode]['type'] !== self::ASSET_COLLECTION) {
                 continue;
             }
 
-            $assetFamily = $attributes[$attributeCode]['reference_data_name'];
+            $assetFamilyCode = $attributes[$attributeCode]['reference_data_name'];
+            if (!isset($assetsPerFamily[$assetFamilyCode])) {
+                $assetsPerFamily[$assetFamilyCode] = [];
+            }
+
             foreach ($attributeValues as $value) {
                 foreach ($value['data'] as $assetCode) {
-                    $assets[$assetCode] = $this->get($assetFamily, $assetCode);
+                    $assetsPerFamily[$assetFamilyCode][$assetCode] = $this->get($assetFamilyCode, $assetCode);
                 }
             }
         }
 
-        return $assets;
+        return $assetsPerFamily;
     }
 }

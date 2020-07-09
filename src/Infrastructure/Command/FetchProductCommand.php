@@ -61,8 +61,8 @@ class FetchProductCommand extends Command
         $categories = $this->apiCategory->get($product);
         $attributes = $this->apiAttribute->get($product);
         $attributeOptions = $this->apiAttributeOptions->getAttributeOptionsFromProduct($product, $attributes);
-        $assets = $this->apiAsset->getAssets($product, $attributes);
+        $assetsPerFamily = $this->apiAsset->getAssetsPerFamily($product, $attributes);
 
-        echo json_encode($assets, JSON_PRETTY_PRINT);
+        echo json_encode($assetsPerFamily, JSON_PRETTY_PRINT);
     }
 }
