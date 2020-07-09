@@ -21,7 +21,7 @@ class ApiAttribute
     {
         $attributes = [];
         foreach ($this->client->getAttributeApi()->all(100) as $attribute) {
-            $attributes[] = $attribute;
+            $attributes[$attribute['code']] = $attribute;
         }
 
         return $attributes;
