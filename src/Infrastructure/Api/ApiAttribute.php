@@ -17,7 +17,7 @@ class ApiAttribute
         $this->client = $clientBuilder->getClient();
     }
 
-    public function get(array $product): array
+    public function get(): array
     {
         $attributes = [];
         foreach ($this->client->getAttributeApi()->all(100) as $attribute) {

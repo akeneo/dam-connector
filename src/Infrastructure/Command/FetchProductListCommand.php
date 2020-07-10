@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PimApiTest\Infrastructure\Command;
 
+use PimApiTest\Infrastructure\Api\ApiAttribute;
 use PimApiTest\Infrastructure\Api\ApiFamily;
 use PimApiTest\Infrastructure\Api\ApiProduct;
 use Symfony\Component\Console\Command\Command;
@@ -20,12 +21,16 @@ class FetchProductListCommand extends Command
     /** @var ApiFamily */
     private $apiFamily;
 
-    public function __construct(ApiProduct $productApi, ApiFamily $apiFamily)
+    /** @var ApiAttribute */
+    private $apiAttribute;
+
+    public function __construct(ApiProduct $productApi, ApiFamily $apiFamily, ApiAttribute $apiAttribute)
     {
         parent::__construct(self::NAME);
 
         $this->productApi = $productApi;
         $this->apiFamily = $apiFamily;
+        $this->apiAttribute = $apiAttribute;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,5 +48,7 @@ class FetchProductListCommand extends Command
         $numberOfExpectedProducts = 155;
 
         $products = $this->productApi->getList($categoryCode, $numberOfExpectedProducts);
+        $families = $this->apiFamily->getList($products);
+        $attributes = $this->apiAttribute->get();
     }
 }

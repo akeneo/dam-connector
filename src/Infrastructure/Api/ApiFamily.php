@@ -21,4 +21,16 @@ class ApiFamily
     {
         return $this->client->getFamilyApi()->get($product['family']);
     }
+
+    public function getList(array $products): array
+    {
+        $families = [];
+        foreach ($products as $product) {
+            if (!array_key_exists($product['family'], $families)) {
+                $families[$product['family']] = $this->get($product);
+            }
+        }
+
+        return $families;
+    }
 }
